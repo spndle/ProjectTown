@@ -144,6 +144,17 @@ def test_main_success_runs_each_parse_and_unique_capture(
         call for call in calls if "--check-only" not in call[0] and "--editor" not in call[0]
     ]
     assert len(captures) == capture_count and all(call[3] == project for call in calls)
+    fullscreen = [call for call in captures if "--fullscreen" in call[0]]
+    assert len(fullscreen) == fixture_count
+    assert all(
+        call[0][call[0].index("--resolution") + 1] == "1920x1080"
+        for call in fullscreen
+    )
+    assert all(
+        ("--fullscreen" in call[0])
+        == (call[0][call[0].index("--resolution") + 1] == "1920x1080")
+        for call in captures
+    )
     outputs = [call[1]["PROJECTTOWN_VISUAL_OUTPUT"] for call in captures]
     assert len(set(outputs)) == capture_count and all(
         value.endswith(".tmp.png") for value in outputs
@@ -257,12 +268,12 @@ def test_workflow_pins_engine_and_never_sets_update_gate() -> None:
     ):
         assert workflow.count(f"- name: {step_name}") == 1
     assert "shell: powershell" in workflow
-    assert "Set-DisplayResolution -Width 2560 -Height 1440 -Force" in workflow
+    assert "Set-DisplayResolution -Width 1920 -Height 1080 -Force" in workflow
     assert (
         '$display = ((Get-DisplayResolution | Out-String) -replace "\\x00", "").Trim()'
         in workflow
     )
-    assert "$display -ne '2560x1440'" in workflow
+    assert "$display -ne '1920x1080'" in workflow
     assert "capture display resolution mismatch" in workflow
     assert workflow.index("Configure deterministic capture display") < workflow.index(
         "Run Godot visual regression"

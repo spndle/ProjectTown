@@ -170,18 +170,20 @@ def main(argv: list[str] | None = None) -> int:
                         raise RuntimeError("candidate temporary path is a symlink")
                     temporary.unlink()
                 env = base_env | {"PROJECTTOWN_VISUAL_OUTPUT": str(temporary)}
+                command = [
+                    str(engine_value),
+                    "--path",
+                    "godot",
+                    "--rendering-method",
+                    "gl_compatibility",
+                    "--resolution",
+                    f"{width}x{height}",
+                ]
+                if (width, height) == (1920, 1080):
+                    command.append("--fullscreen")
+                command.extend(["-s", f"res://tests/capture/{fixture}.gd"])
                 text = run(
-                    [
-                        str(engine_value),
-                        "--path",
-                        "godot",
-                        "--rendering-method",
-                        "gl_compatibility",
-                        "--resolution",
-                        f"{width}x{height}",
-                        "-s",
-                        f"res://tests/capture/{fixture}.gd",
-                    ],
+                    command,
                     env,
                     logs / f"capture-{fixture}-{width}x{height}.log",
                     project,
