@@ -257,12 +257,12 @@ def test_workflow_pins_engine_and_never_sets_update_gate() -> None:
     ):
         assert workflow.count(f"- name: {step_name}") == 1
     assert "shell: powershell" in workflow
-    assert "Set-DisplayResolution -Width 1920 -Height 1080 -Force" in workflow
+    assert "Set-DisplayResolution -Width 2560 -Height 1440 -Force" in workflow
     assert (
         '$display = ((Get-DisplayResolution | Out-String) -replace "\\x00", "").Trim()'
         in workflow
     )
-    assert "$display -ne '1920x1080'" in workflow
+    assert "$display -ne '2560x1440'" in workflow
     assert "capture display resolution mismatch" in workflow
     assert workflow.index("Configure deterministic capture display") < workflow.index(
         "Run Godot visual regression"

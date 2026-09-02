@@ -32,9 +32,9 @@ jobs:
         shell: powershell
         run: |
           $ErrorActionPreference = 'Stop'
-          Set-DisplayResolution -Width 1920 -Height 1080 -Force
+          Set-DisplayResolution -Width 2560 -Height 1440 -Force
           $display = ((Get-DisplayResolution | Out-String) -replace "\x00", "").Trim()
-          if ($display -ne '1920x1080') { throw 'capture display resolution mismatch' }
+          if ($display -ne '2560x1440') { throw 'capture display resolution mismatch' }
       - name: Run Godot visual regression
         shell: pwsh
         run: |
