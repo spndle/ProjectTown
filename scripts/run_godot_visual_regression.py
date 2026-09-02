@@ -34,6 +34,14 @@ def confined(path: Path, sandbox: Path) -> Path:
     return resolved
 
 
+def log_text(value: str | bytes | None) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, bytes):
+        return value.decode("utf-8", errors="replace")
+    return value
+
+
 def engine_guard(engine: Path, cwd: Path = PROJECT_ROOT) -> None:
     if (
         not engine.is_absolute()
@@ -48,6 +56,8 @@ def engine_guard(engine: Path, cwd: Path = PROJECT_ROOT) -> None:
         [str(engine), "--version"],
         capture_output=True,
         text=True,
+        encoding="utf-8",
+        errors="replace",
         timeout=TIMEOUT_SECONDS,
         check=False,
         cwd=cwd,
@@ -64,6 +74,8 @@ def run(
             list(command),
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=TIMEOUT_SECONDS,
             env=env,
             check=False,
@@ -71,10 +83,11 @@ def run(
         )
     except subprocess.TimeoutExpired as error:
         log.write_text(
-            "TIMEOUT\n" + (error.stdout or "") + (error.stderr or ""), encoding="utf-8"
+            "TIMEOUT\n" + log_text(error.stdout) + log_text(error.stderr),
+            encoding="utf-8",
         )
         raise RuntimeError("subprocess timeout") from error
-    output = result.stdout + result.stderr
+    output = log_text(result.stdout) + log_text(result.stderr)
     log.write_text(output, encoding="utf-8")
     if result.returncode:
         raise RuntimeError("subprocess failed")
@@ -124,6 +137,12 @@ def main(argv: list[str] | None = None) -> int:
         engine_guard(engine_value, project)
         base_env = os.environ.copy()
         base_env.pop("PROJECTTOWN_UPDATE_GOLDENS", None)
+        run(
+            [str(engine_value), "--headless", "--editor", "--path", "godot", "--quit"],
+            base_env,
+            logs / "import.log",
+            project,
+        )
         for fixture in harness.FIXTURE_IDS:
             run(
                 [

@@ -62,14 +62,28 @@ def test_engine_guard_rejects_bad_hash(tmp_path: Path) -> None:
 
 def test_run_timeout_writes_log(tmp_path: Path) -> None:
     expired = __import__("subprocess").TimeoutExpired(
-        ["godot"], 1, output="out", stderr="err"
+        ["godot"], 1, output=b"out\xff", stderr=None
     )
     with (
         patch.object(runner.subprocess, "run", side_effect=expired),
         pytest.raises(RuntimeError),
     ):
         runner.run(["godot"], {}, tmp_path / "run.log")
-    assert "TIMEOUT" in (tmp_path / "run.log").read_text()
+    assert (tmp_path / "run.log").read_text(encoding="utf-8") == "TIMEOUT\nout\ufffd"
+
+
+def test_run_uses_utf8_replaces_invalid_output_and_keeps_nonzero_failure(
+    tmp_path: Path,
+) -> None:
+    result = __import__("subprocess").CompletedProcess([], 7, b"out\xff", None)
+    with (
+        patch.object(runner.subprocess, "run", return_value=result) as run,
+        pytest.raises(RuntimeError, match="subprocess failed"),
+    ):
+        runner.run(["godot"], {}, tmp_path / "run.log")
+    assert (tmp_path / "run.log").read_text(encoding="utf-8") == "out\ufffd"
+    assert run.call_args.kwargs["encoding"] == "utf-8"
+    assert run.call_args.kwargs["errors"] == "replace"
 
 
 def test_capture_command_matrix_is_complete() -> None:
@@ -93,6 +107,8 @@ def test_main_success_runs_each_parse_and_unique_capture(
         calls.append((command, env, log, cwd))
         log.parent.mkdir(parents=True, exist_ok=True)
         log.write_text("log", encoding="utf-8")
+        if "--editor" in command:
+            return "imported"
         if "--check-only" in command:
             return "parsed"
         width, height = map(int, command[command.index("--resolution") + 1].split("x"))
@@ -116,8 +132,17 @@ def test_main_success_runs_each_parse_and_unique_capture(
     assert runner.main(_main_args(project, candidate, diff, report, logs)) == 0
     fixture_count = len(harness.FIXTURE_IDS)
     capture_count = fixture_count * len(harness.VIEWPORTS)
-    assert len([call for call in calls if "--check-only" in call[0]]) == fixture_count
-    captures = [call for call in calls if "--check-only" not in call[0]]
+    imports = [call for call in calls if "--editor" in call[0]]
+    assert len(imports) == 1
+    assert Path(imports[0][0][0]) == Path("C:/Godot.exe")
+    assert imports[0][0][1:] == ["--headless", "--editor", "--path", "godot", "--quit"]
+    assert imports[0][2] == logs / "import.log"
+    assert calls.index(imports[0]) == 0
+    parses = [call for call in calls if "--check-only" in call[0]]
+    assert len(parses) == fixture_count
+    captures = [
+        call for call in calls if "--check-only" not in call[0] and "--editor" not in call[0]
+    ]
     assert len(captures) == capture_count and all(call[3] == project for call in calls)
     outputs = [call[1]["PROJECTTOWN_VISUAL_OUTPUT"] for call in captures]
     assert len(set(outputs)) == capture_count and all(
@@ -137,6 +162,8 @@ def test_main_marker_failure_does_not_accept_old_candidate(
     old.write_bytes(b"old")
 
     def fake_run(command: list[str], env: dict[str, str], log: Path, cwd: Path) -> str:
+        if "--editor" in command:
+            return "imported"
         if stage == "parse" and "--check-only" in command:
             raise RuntimeError("parse failure")
         if "--check-only" in command:
@@ -190,6 +217,8 @@ def test_verify_failure_writes_controlled_report(
     project, _, candidate, diff, report, logs = _project(tmp_path, monkeypatch)
 
     def fake_run(command: list[str], env: dict[str, str], log: Path, cwd: Path) -> str:
+        if "--editor" in command:
+            return "imported"
         if "--check-only" in command:
             return "ok"
         width, height = map(int, command[command.index("--resolution") + 1].split("x"))

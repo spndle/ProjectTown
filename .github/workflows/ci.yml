@@ -10,9 +10,33 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m ruff check backend tests scripts
       - run: python -m compileall -q backend scripts
-      - name: Prepare pytest base temp
-        run: python -c "from pathlib import Path; Path('sandbox/tmp').mkdir(parents=True, exist_ok=True)"
-      - run: python -m pytest -q --basetemp=sandbox/tmp/ci-pytest -ra --cov=backend --cov-report=term-missing --cov-fail-under=80
+      - name: Prepare protected pytest base temp
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $parent = Join-Path $PWD "sandbox/tmp/ci-pytest-parent"
+          New-Item -ItemType Directory -Path $parent -Force | Out-Null
+          $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
+          $currentSid = $identity.User.Value
+          $currentAccount = $identity.Name
+          & "$env:SystemRoot\System32\icacls.exe" $parent /inheritance:r /grant:r "$currentAccount`:(OI)(CI)F" /remove:g "OWNER RIGHTS"
+          if ($LASTEXITCODE -ne 0) {
+            throw "icacls failed while protecting pytest base temp: $LASTEXITCODE"
+          }
+          $acl = Get-Acl -LiteralPath $parent
+          $allowedSids = @($currentSid, "S-1-5-18", "S-1-5-32-544")
+          $unexpectedAllowSids = @(
+            $acl.Access |
+              Where-Object { $_.AccessControlType -eq "Allow" } |
+              ForEach-Object {
+                $_.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value
+              } |
+              Where-Object { $_ -notin $allowedSids }
+          )
+          if (-not $acl.AreAccessRulesProtected -or $unexpectedAllowSids) {
+            throw "pytest base temp ACL guard failed: protected=$($acl.AreAccessRulesProtected) unexpected=$($unexpectedAllowSids -join ',')"
+          }
+      - run: python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run -ra --cov=backend --cov-report=term-missing --cov-fail-under=80
   linux-platform:
     runs-on: ubuntu-latest
     steps:

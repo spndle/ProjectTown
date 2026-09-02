@@ -110,12 +110,21 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert "linux-platform:\n    runs-on: ubuntu-latest" in workflow
     assert "python -m ruff check backend tests scripts" in workflow
     assert "python -m compileall -q backend scripts" in workflow
-    assert "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest" in workflow
+    assert "Prepare protected pytest base temp" in workflow
+    assert workflow.count("Prepare protected pytest base temp") == 1
+    assert "$ErrorActionPreference = \"Stop\"" in workflow
+    assert "[Security.Principal.WindowsIdentity]::GetCurrent()" in workflow
+    assert "$identity.User.Value" in workflow and "$identity.Name" in workflow
+    assert "& \"$env:SystemRoot\\System32\\icacls.exe\"" in workflow
+    assert "AreAccessRulesProtected" in workflow
+    assert "unexpectedAllowSids" in workflow
+    assert "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run" in workflow
+    assert "continue-on-error" not in workflow
     assert " -ra " in workflow
     assert "--cov-fail-under=80" in workflow
     assert workflow.count(
         "Path('sandbox/tmp').mkdir(parents=True, exist_ok=True)"
-    ) == 2
+    ) == 1
     assert "Run Linux security and platform allowlist" in workflow
     assert "--junitxml=sandbox/tmp/linux-platform.xml" in workflow
     assert "Require Linux allowlist to have zero skips or errors" in workflow

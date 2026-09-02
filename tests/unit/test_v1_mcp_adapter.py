@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+import ctypes
 import os
 import sys
 import threading
 import time
+from ctypes import wintypes
 from pathlib import Path
 
 import pytest
@@ -116,10 +118,38 @@ def test_timeout_malformed_and_output_flood_fail_closed(tmp_path):
 def _wait_dead(pid: int) -> bool:
     deadline = time.monotonic() + 3
     while time.monotonic() < deadline:
-        try:
-            os.kill(pid, 0)
-        except OSError:
-            return True
+        if os.name == "nt":
+            kernel32 = ctypes.windll.kernel32
+            kernel32.OpenProcess.argtypes = [
+                wintypes.DWORD,
+                wintypes.BOOL,
+                wintypes.DWORD,
+            ]
+            kernel32.OpenProcess.restype = wintypes.HANDLE
+            kernel32.GetExitCodeProcess.argtypes = [
+                wintypes.HANDLE,
+                ctypes.POINTER(wintypes.DWORD),
+            ]
+            kernel32.GetExitCodeProcess.restype = wintypes.BOOL
+            kernel32.CloseHandle.argtypes = [wintypes.HANDLE]
+            kernel32.CloseHandle.restype = wintypes.BOOL
+            handle = kernel32.OpenProcess(0x1000, False, pid)
+            if not handle:
+                return True
+            exit_code = wintypes.DWORD()
+            try:
+                if (
+                    kernel32.GetExitCodeProcess(handle, ctypes.byref(exit_code))
+                    and exit_code.value != 259
+                ):
+                    return True
+            finally:
+                kernel32.CloseHandle(handle)
+        else:
+            try:
+                os.kill(pid, 0)
+            except OSError:
+                return True
         time.sleep(0.05)
     return False
 
