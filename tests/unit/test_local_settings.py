@@ -57,20 +57,6 @@ def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
     assert "owner denied" in script and "ACL verification failed" in script
     assert "$rule.IsInherited" in script and "AccessControlType]::Deny" in script
     assert "$currentAllowCount -ne 1" in script
-    assert "PROJECTTOWN_ACL_TRACE:" not in script
-    traced = local_settings._windows_acl_restrict_script(directory, trace=True)
-    markers = [
-        f"PROJECTTOWN_ACL_TRACE:{marker}"
-        for marker in local_settings.WINDOWS_ACL_TRACE_MARKERS
-    ]
-    assert all(traced.count(marker) == 1 for marker in markers)
-    assert [traced.index(marker) for marker in markers] == sorted(
-        traced.index(marker) for marker in markers
-    )
-    prepared = traced.index("PROJECTTOWN_ACL_TRACE:DACL_PREPARED")
-    assert traced.index("$acl.AddAccessRule($rule);") < prepared < traced.index(
-        "$item.SetAccessControl($acl);"
-    )
 
 
 def test_windows_acl_scripts_use_sid_native_dotnet_descriptors(
@@ -102,11 +88,7 @@ def test_windows_acl_scripts_use_sid_native_dotnet_descriptors(
         assert "[IO.DirectoryInfo]::new($p)" in script
         assert "$item.Refresh()" in script and "$item.Exists" in script
     assert "[Security.AccessControl.FileSystemAccessRule]::new(" in restrict
-    traced = local_settings._windows_acl_verify_script(True, trace=True)
-    assert "[Console]::Out.WriteLine" in traced and "[Console]::Out.Flush()" in traced
-    assert "AreAccessRulesProtected" in traced
-    assert "$currentAllowCount -ne 1" in traced
-    assert "$group=$acl.GetGroup([Security.Principal.SecurityIdentifier]).Value" in traced
+    assert "$group=$acl.GetGroup([Security.Principal.SecurityIdentifier]).Value" in verify
 
 
 def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(

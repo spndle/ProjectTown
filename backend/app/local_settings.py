@@ -33,20 +33,6 @@ _OPENAI_URL = "https://api.openai.com/v1"
 _OPENAI_MODEL = "gpt-5-mini-2025-08-07"
 _QWEN_MODEL = "qwen-plus"
 WINDOWS_ACL_TIMEOUT_SECONDS = 3
-WINDOWS_ACL_TRACE_MARKERS = (
-    "START",
-    "ITEM_VALIDATED",
-    "IDENTITY_READY",
-    "DESCRIPTOR_READ",
-    "OWNER_VALIDATED",
-    "EXISTING_RULES_ENUMERATED",
-    "DACL_PREPARED",
-    "DACL_APPLIED",
-    "VERIFIED_ITEM",
-    "VERIFIED_DESCRIPTOR",
-    "VERIFIED_RULES_ENUMERATED",
-    "COMPLETE",
-)
 _SUPPORTED_PROVIDERS = frozenset({"openai", "qwen"})
 _TOKEN_BYTES = 32
 _TOKEN_PATTERN_BYTES = frozenset(
@@ -661,7 +647,7 @@ def _acl_target_identity(path: Path, *, directory: bool) -> tuple[int, int]:
     return info.st_dev, info.st_ino
 
 
-def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str:
+def _windows_acl_restrict_script(directory: bool) -> str:
     inheritance = (
         "[System.Security.AccessControl.InheritanceFlags]::ObjectInherit -bor "
         "[System.Security.AccessControl.InheritanceFlags]::ContainerInherit"
@@ -670,61 +656,30 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
     )
     item_ctor = "[IO.DirectoryInfo]::new($p)" if directory else "[IO.FileInfo]::new($p)"
 
-    def marker(stage: str) -> str:
-        return (
-            f"[Console]::Out.WriteLine('PROJECTTOWN_ACL_TRACE:{stage}');"
-            "[Console]::Out.Flush();"
-            if trace
-            else ""
-        )
-
     return (
-        marker("START")
-        +
         "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
         "if([string]::IsNullOrWhiteSpace($p)){throw 'missing path'};"
         f"$item={item_ctor};$item.Refresh();if(-not $item.Exists){{throw 'invalid path type'}};if($item.Attributes -band [IO.FileAttributes]::ReparsePoint){{throw 'reparse path'}};"
-        + marker("ITEM_VALIDATED")
-        +
         "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;"
-        + marker("IDENTITY_READY")
-        +
         "$allowedOwners=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;"
         "$existing=$item.GetAccessControl($sections);$ownerBefore=$existing.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupBefore=$existing.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
-        + marker("DESCRIPTOR_READ")
-        +
         "if($allowedOwners -notcontains $ownerBefore){throw 'owner denied'};"
-        + marker("OWNER_VALIDATED")
-        +
         "$existing.SetAccessRuleProtection($true,$false);"
         "$existingRules=@($existing.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));foreach($rule in $existingRules){if(-not $rule.IsInherited -and ($rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Allow -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny)){$null=$existing.RemoveAccessRuleSpecific($rule)}};"
-        + marker("EXISTING_RULES_ENUMERATED")
-        +
         "$acl=$existing;"
         f"$inheritance={inheritance};"
         "$rule=[Security.AccessControl.FileSystemAccessRule]::new($currentSid,[Security.AccessControl.FileSystemRights]::FullControl,$inheritance,[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);"
         "$acl.AddAccessRule($rule);"
-        + marker("DACL_PREPARED")
-        +
         "$item.SetAccessControl($acl);"
-        + marker("DACL_APPLIED")
-        +
         f"$verifiedItem={item_ctor};$verifiedItem.Refresh();if(-not $verifiedItem.Exists -or ($verifiedItem.Attributes -band [IO.FileAttributes]::ReparsePoint)){{throw 'ACL verification failed'}};"
-        + marker("VERIFIED_ITEM")
-        +
         "$verified=$verifiedItem.GetAccessControl($sections);$ownerAfter=$verified.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupAfter=$verified.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
-        + marker("VERIFIED_DESCRIPTOR")
-        +
         "if(-not $verified.AreAccessRulesProtected -or $ownerAfter -ne $ownerBefore -or $groupAfter -ne $groupBefore -or $allowedOwners -notcontains $ownerAfter){throw 'ACL verification failed'};"
         "$verifiedRules=@($verified.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));$currentAllowCount=0;foreach($rule in $verifiedRules){if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny){throw 'ACL verification failed'};if($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){throw 'ACL verification failed'};$sid=$rule.IdentityReference.Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){throw 'ACL verification failed'};$currentAllowCount++};"
-        + marker("VERIFIED_RULES_ENUMERATED")
-        +
         "if($currentAllowCount -ne 1){throw 'ACL verification failed'}"
-        + marker("COMPLETE")
     )
 
 
-def _windows_acl_verify_script(directory: bool, *, trace: bool = False) -> str:
+def _windows_acl_verify_script(directory: bool) -> str:
     inheritance = (
         "[System.Security.AccessControl.InheritanceFlags]::ObjectInherit -bor "
         "[System.Security.AccessControl.InheritanceFlags]::ContainerInherit"
@@ -733,35 +688,15 @@ def _windows_acl_verify_script(directory: bool, *, trace: bool = False) -> str:
     )
     item_ctor = "[IO.DirectoryInfo]::new($p)" if directory else "[IO.FileInfo]::new($p)"
 
-    def marker(stage: str) -> str:
-        return (
-            f"[Console]::Out.WriteLine('PROJECTTOWN_ACL_TRACE:{stage}');"
-            "[Console]::Out.Flush();"
-            if trace
-            else ""
-        )
-
     return (
-        marker("START")
-        +
         "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
         "if([string]::IsNullOrWhiteSpace($p)){exit 1};"
         f"$item={item_ctor};$item.Refresh();if(-not $item.Exists -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)){{exit 1}};"
-        + marker("ITEM_VALIDATED")
-        +
         "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;$allowed=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');"
-        + marker("IDENTITY_READY")
-        +
         "$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;$acl=$item.GetAccessControl($sections);"
-        + marker("DESCRIPTOR_READ")
-        +
         "if(-not $acl.AreAccessRulesProtected){exit 1};$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;$group=$acl.GetGroup([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};"
-        + marker("OWNER_VALIDATED")
-        +
         f"$inheritance={inheritance};$rules=@($acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));$currentAllowCount=0;foreach($rule in $rules){{if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny -or $rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){{exit 1}};$sid=$rule.IdentityReference.Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){{exit 1}};$currentAllowCount++}};if($currentAllowCount -ne 1){{exit 1}};"
-        + marker("VERIFIED_RULES_ENUMERATED")
-        + marker("COMPLETE")
-        + "exit 0"
+        "exit 0"
     )
 
 
