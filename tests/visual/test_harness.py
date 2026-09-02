@@ -164,6 +164,12 @@ def _manifest_tree(
     return sandbox, manifest, golden, candidate, diff
 
 
+def _enable_local_golden_update(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("CI", raising=False)
+    monkeypatch.delenv("GITHUB_ACTIONS", raising=False)
+    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+
+
 def test_manifest_requires_strict_matrix_hashes_thresholds_and_acceptance(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -329,7 +335,7 @@ def test_path_model_rejects_noncanonical_manifest_and_golden_escape(
         harness.verify(
             outside_manifest, golden, candidate, diff, sandbox, sandbox.parent
         )
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     with pytest.raises(ValueError):
         harness.accept_candidate(
             candidate / "main-2x1.png",
@@ -373,7 +379,7 @@ def test_project_hash_guard_rejects_tamper_without_accept_write_and_path_escape(
         == 2
     )
     assert "test.ttf" not in capsys.readouterr().out
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     target = golden / "main-2x1.png"
     before = target.read_bytes()
     with pytest.raises(ValueError):
@@ -404,7 +410,7 @@ def test_accept_invalid_target_leaves_golden_and_manifest_unchanged(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     sandbox, manifest, golden, candidate, _ = _manifest_tree(tmp_path, monkeypatch)
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     target = golden / "main-2x1.png"
     before_golden, before_manifest = target.read_bytes(), manifest.read_bytes()
     with pytest.raises(ValueError):
@@ -460,7 +466,7 @@ def test_accept_double_gate_syncs_manifest_audit_and_verify_passes(
             (2, 1),
             sandbox.parent,
         )
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     harness.accept_candidate(
         candidate_target,
         target,
@@ -519,7 +525,7 @@ def test_accept_gate_can_register_only_complete_settings_matrix(
     manifest.write_text(json.dumps(data), encoding="utf-8")
     with pytest.raises(ValueError):
         harness.load_manifest(manifest)
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     for viewport in harness.VIEWPORTS:
         name = f"settings-{viewport[0]}x{viewport[1]}.png"
         harness.accept_candidate(
@@ -572,7 +578,7 @@ def test_cli_accept_requires_target_and_cli_verify_succeeds(
         )
         == 0
     )
-    monkeypatch.setenv("PROJECTTOWN_UPDATE_GOLDENS", "1")
+    _enable_local_golden_update(monkeypatch)
     with pytest.raises(SystemExit):
         harness.main(
             [

@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "sandbox/tmp/godot-4.7.1/engine/Godot_v4.7.1-stable_win64_console.exe"
@@ -27,10 +30,18 @@ def _run(script: str, marker: str) -> None:
     assert "test-only-key" not in result.stdout + result.stderr
 
 
+@pytest.mark.skipif(
+    os.name != "nt" or not ENGINE.is_file(),
+    reason="requires the local Windows Godot console executable",
+)
 def test_settings_ui_offline_smoke() -> None:
     _run("settings_ui_smoke.gd", "SETTINGS_UI_SMOKE_OK")
 
 
+@pytest.mark.skipif(
+    os.name != "nt" or not ENGINE.is_file(),
+    reason="requires the local Windows Godot console executable",
+)
 def test_settings_api_client_offline_smoke() -> None:
     _run("settings_api_client_smoke.gd", "SETTINGS_API_CLIENT_SMOKE_OK")
 

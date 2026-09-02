@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
+
+import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / "sandbox/tmp/godot-4.7.1/engine/Godot_v4.7.1-stable_win64_console.exe"
 
 
+@pytest.mark.skipif(
+    os.name != "nt" or not ENGINE.is_file(),
+    reason="requires the local Windows Godot console executable",
+)
 def test_history_ui_offline_smoke() -> None:
     result = subprocess.run(
         [

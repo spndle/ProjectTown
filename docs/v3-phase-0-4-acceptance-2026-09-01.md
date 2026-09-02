@@ -240,6 +240,8 @@ engineering 和 User RC evidence。Study、R1、R2、Summary、User RC 的 canon
 和 hash 核验均 exit 0；offline provider/image/embedding/MCP/network/paid counters 均为 0。当前
 `blocker_count=0`、`next_action=hold_for_version_gate`。
 
+4C 仅只读核验 Phase 3E v4 canonical check/status；v4 Participant 两轮、每轮 EngineeringAcceptanceV4 与 User RC 均为相互独立的只读证据。
+
 | Record | Canonical hash | File SHA-256 |
 | --- | --- | --- |
 | Study | `8f89d1f684be23509943fe30c6f74b6891922d9719b84fc1327fc518b530ca40` | `7aefdd7fea08af52a607c1ec774c5583e12fd246bb856edbf704ba513cc555e9` |

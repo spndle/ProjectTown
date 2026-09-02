@@ -81,7 +81,7 @@ v3 的主产品边界是：本地 Web UI → 任务与显式资料集 → 本地
 | Phase 1：首个纵切（工程验收已通过；plan/PDF 价值仅获范围受限接受） | 完成离线、真实本地文件的建议闭环 | 选择 UTF-8 `.md`、`.txt`、`.json`、`.py` 资料，生成 source-grounded 计划/报告/README 建议、预览、导出/下载与恢复 | 直接 Apply、二进制解析、`/api/v3`、migration 8。 |
 | Phase 2：可用性验证（2026-08-30 范围受限收官） | 用代表性真人结果决定是否开始下一步 | 旧十任务记录工具继续保留；新增两轮、跨 profile、create-only closeout receipt | 声称单一 candidate、v10、report 或 README 已获真人接受。 |
 | Phase 3：受控写入（3A–3D 工程验证；3E v4 canonical chain 已完成） | 按 [Phase 3A–3E 开发蓝图](v3-phase-3.md) 从只读 preflight、可执行提案和单目标受控写入内核，推进到默认关闭的 loopback 预授权操作 UI，再完成两轮 Participant 实例 Study 与独立 User RC | 3A ApplyPlan、3B complete-post-image proposal、3C authorization/backup/ledger/replace/reconcile/独立 restore、3D versioned loopback binding/API/UI，以及 3E v4 Study→R1/R2→Summary→User RC `ACCEPT`；3E current state 为 `hold_for_version_gate` | 任何未授权真实目标写入、自动 Apply/Publish、VERSION、Git tag、Docker 3D、migration 8 或 Release/Distribution。 |
-| Phase 4：本地工作区主入口与选择性扩展（4A/4B、4D bind-only 与 4C 已验证） | 先完成默认关闭的只读与离线 authoring/export，再逐项决定后续门禁 | [`Phase 4 路线`](v3-phase-4.md)、4A verified-task Workbench、4B opaque-source authoring/export、4C 对 Phase 3E v4 的只读七项 checkpoint、4D create-only verified handoff binding | 4D 的逐操作 Apply/restore 授权、VERSION/Git/Release/Distribution，以及 4E 新 provider/MCP/RAG/多代理等扩展解冻。 |
+| Phase 4：本地工作区主入口与选择性扩展（4A/4B、4D bind-only 与 4C 已验证） | 先完成默认关闭的只读与离线 authoring/export，再逐项决定后续门禁 | [`Phase 4 路线`](v3-phase-4.md)、4A verified-task Workbench、4B opaque-source authoring/export、4C 对 Phase 3E v4 的只读 checkpoint（七项）、4D create-only verified handoff binding | 4D 的逐操作 Apply/restore 授权、VERSION/Git/Release/Distribution，以及 4E 新 provider/MCP/RAG/多代理等扩展解冻。 |
 
 Phase 4A 已形成一个默认关闭、native loopback-only 的 Local Workspace Task Workbench 工程切片：它只
 投影预注册且重新核验的 canonical Draft/Result、preview 与 citations；浏览器不接收文件系统路径，不生成
@@ -105,8 +105,8 @@ complete post-image，重新绑定 before/after/scope/Result/plan/diff，并保�
 fail-closed reconcile 与独立授权 restore；3D 新增默认关闭、native loopback-only 的预授权操作
 binding/idempotency records、API 和静态 UI；这些仅在新建 disposable fixtures 上工程验证。
 真实目标仍为 `BLOCKED_PENDING_PER_TARGET_USER_AUTHORIZATION`。3E 的 v2/v3 Study 均作为历史证据
-永久处于 `PROTOCOL_HOLD`；现行 additive v4 已完成同一 Participant 的 R1/R2 实例评价、每轮独立
-`EngineeringAcceptanceV4=PASS`、Summary 与 User RC `ACCEPT`，终态为
+永久处于 `PROTOCOL_HOLD`；现行 `3E v4 additive Study/Round/Summary/User RC records` 已完成同一 Participant 的 R1/R2 实例评价、每轮 EngineeringAcceptanceV4 均独立为
+`PASS`、Summary 与 User RC `ACCEPT`，终态为
 `hold_for_version_gate`。工程验证、Participant 实例评价、EngineeringAcceptanceV4、Summary criteria、
 User acceptance、VERSION 决定与 Git tag/公开发布授权逐级独立，互不替代，详见
 [`v3-phase-3.md`](v3-phase-3.md) 与
