@@ -17,6 +17,7 @@ from backend.app import local_settings
 TRACE_PREFIX = "PROJECTTOWN_ACL_TRACE:"
 DIAGNOSTIC_TIMEOUT_SECONDS = 15
 POWERSHELL = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
+CONTROL_COMMAND = "[Console]::Out.WriteLine('PROJECTTOWN_ACL_TRACE:COMPLETE');exit 0"
 ALLOWED_MARKERS = frozenset(
     f"{TRACE_PREFIX}{marker}" for marker in local_settings.WINDOWS_ACL_TRACE_MARKERS
 )
@@ -32,13 +33,19 @@ def last_marker(output: bytes) -> str | None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--path", type=Path, required=True)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--control", action="store_true")
+    mode.add_argument("--path", type=Path)
     args = parser.parse_args(argv)
-    environment = {
+    environment: dict[str, str] = {
         "SystemRoot": os.environ.get("SystemRoot", r"C:\Windows"),
         "WINDIR": os.environ.get("WINDIR", r"C:\Windows"),
-        "PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path.resolve()),
     }
+    command = CONTROL_COMMAND
+    if not args.control:
+        assert args.path is not None
+        environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] = str(args.path.resolve())
+        command = local_settings._windows_acl_restrict_script(True, trace=True)
     try:
         completed = subprocess.run(
             [
@@ -46,7 +53,7 @@ def main(argv: list[str] | None = None) -> int:
                 "-NoProfile",
                 "-NonInteractive",
                 "-Command",
-                local_settings._windows_acl_restrict_script(True, trace=True),
+                command,
             ],
             stdin=subprocess.DEVNULL,
             stdout=subprocess.PIPE,

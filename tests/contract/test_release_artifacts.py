@@ -126,7 +126,12 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert "system temp must remain outside the repository" in workflow
     for variable in ("TEMP", "TMP", "TMPDIR"):
         assert f'"{variable}=$canonicalSystemTemp" >> $env:GITHUB_ENV' in workflow
-    assert workflow.count("Diagnose Local Settings ACL primitive") == 1
+    control = "Diagnose Windows PowerShell control"
+    acl_probe = "Diagnose Local Settings ACL primitive"
+    assert workflow.count(control) == 1
+    assert "timeout-minutes: 1" in workflow
+    assert "python scripts/diagnose_windows_acl.py --control" in workflow
+    assert workflow.count(acl_probe) == 1
     assert '[Guid]::NewGuid().ToString("N")' in workflow
     assert "New-Item -ItemType Directory -Path $probe | Out-Null" in workflow
     assert "New-Item -ItemType Directory -Path $probe -Force" not in workflow
@@ -139,14 +144,16 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     )
     assert "local_settings._windows_acl_restrict_script(True, trace=True)" in diagnostic
     assert "DIAGNOSTIC_TIMEOUT_SECONDS = 15" in diagnostic
+    assert "CONTROL_COMMAND" in diagnostic
+    assert "Get-Acl" not in diagnostic and ".secrets" not in diagnostic
     assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in diagnostic
-    assert '"PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path.resolve())' in diagnostic
+    assert 'environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] = str(args.path.resolve())' in diagnostic
     assert ".secrets" not in workflow[workflow.index("Diagnose Local Settings ACL primitive"):]
     assert "Remove-Item -LiteralPath $probe -Recurse -Force" in workflow
     pytest_command = "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run"
     assert pytest_command in workflow
-    assert workflow.index("TMPDIR=$canonicalSystemTemp") < workflow.index(
-        "Diagnose Local Settings ACL primitive"
+    assert workflow.index("TMPDIR=$canonicalSystemTemp") < workflow.index(control) < workflow.index(
+        acl_probe
     ) < workflow.index(pytest_command)
     assert "continue-on-error" not in workflow
     assert " -ra " in workflow

@@ -50,6 +50,10 @@ jobs:
           "TEMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
           "TMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
           "TMPDIR=$canonicalSystemTemp" >> $env:GITHUB_ENV
+      - name: Diagnose Windows PowerShell control
+        shell: pwsh
+        timeout-minutes: 1
+        run: python scripts/diagnose_windows_acl.py --control
       - name: Diagnose Local Settings ACL primitive
         shell: pwsh
         timeout-minutes: 2
