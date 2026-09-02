@@ -132,6 +132,8 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert "New-Item -ItemType Directory -Path $probe -Force" not in workflow
     assert "ACL probe must remain outside the repository" in workflow
     assert "settings._windows_acl_restrict_script(True)" in workflow
+    assert "timeout=settings.WINDOWS_ACL_TIMEOUT_SECONDS" in workflow
+    assert "timeout=3" not in workflow
     assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in workflow
     assert "PROJECTTOWN_LOCAL_SETTINGS_PATH': str(probe)" in workflow
     assert ".secrets" not in workflow[workflow.index("Diagnose Local Settings ACL primitive"):]

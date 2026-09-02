@@ -32,6 +32,7 @@ _MAX_BODY_BYTES = 16 * 1024
 _OPENAI_URL = "https://api.openai.com/v1"
 _OPENAI_MODEL = "gpt-5-mini-2025-08-07"
 _QWEN_MODEL = "qwen-plus"
+WINDOWS_ACL_TIMEOUT_SECONDS = 15
 _SUPPORTED_PROVIDERS = frozenset({"openai", "qwen"})
 _TOKEN_BYTES = 32
 _TOKEN_PATTERN_BYTES = frozenset(
@@ -705,7 +706,7 @@ def _run_windows_acl(executable: Path, script: str, path: Path) -> None:
             stdin=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
-            timeout=3,
+            timeout=WINDOWS_ACL_TIMEOUT_SECONDS,
             check=False,
             env=environment,
         )

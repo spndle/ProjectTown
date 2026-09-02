@@ -103,13 +103,13 @@ def test_windows_acl_runner_uses_minimal_environment_and_literal_path(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     path = tmp_path / "space ' & [\u4e2d\u6587].toml"
-    calls: list[tuple[list[str], dict[str, str]]] = []
+    calls: list[tuple[list[str], dict[str, str], dict[str, object]]] = []
 
     class Completed:
         returncode = 0
 
     def fake_run(command, **kwargs):
-        calls.append((command, kwargs["env"]))
+        calls.append((command, kwargs["env"], kwargs))
         return Completed()
 
     monkeypatch.setattr(local_settings.subprocess, "run", fake_run)
@@ -118,7 +118,7 @@ def test_windows_acl_runner_uses_minimal_environment_and_literal_path(
         "Get-Acl -LiteralPath $env:PROJECTTOWN_LOCAL_SETTINGS_PATH",
         path,
     )
-    command, environment = calls[0]
+    command, environment, kwargs = calls[0]
     assert command[:3] == [
         r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
         "-NoProfile",
@@ -127,13 +127,21 @@ def test_windows_acl_runner_uses_minimal_environment_and_literal_path(
     assert set(environment) == {"SystemRoot", "WINDIR", "PROJECTTOWN_LOCAL_SETTINGS_PATH"}
     assert environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] == str(path)
     assert str(path) not in command[-1]
+    assert kwargs["timeout"] == local_settings.WINDOWS_ACL_TIMEOUT_SECONDS
+
+
+def test_windows_acl_timeout_is_fixed_and_bounded() -> None:
+    assert local_settings.WINDOWS_ACL_TIMEOUT_SECONDS == 15
+    assert 3 < local_settings.WINDOWS_ACL_TIMEOUT_SECONDS <= 15
 
 
 @pytest.mark.parametrize(
     "failure",
     [
         type("Completed", (), {"returncode": 1})(),
-        local_settings.subprocess.TimeoutExpired(["powershell"], 3),
+        local_settings.subprocess.TimeoutExpired(
+            ["powershell"], local_settings.WINDOWS_ACL_TIMEOUT_SECONDS
+        ),
         OSError("runner unavailable"),
     ],
 )
