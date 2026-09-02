@@ -131,11 +131,16 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert "New-Item -ItemType Directory -Path $probe | Out-Null" in workflow
     assert "New-Item -ItemType Directory -Path $probe -Force" not in workflow
     assert "ACL probe must remain outside the repository" in workflow
-    assert "settings._windows_acl_restrict_script(True)" in workflow
-    assert "timeout=settings.WINDOWS_ACL_TIMEOUT_SECONDS" in workflow
+    assert "python scripts/diagnose_windows_acl.py --path $env:PROJECTTOWN_ACL_PROBE_PATH" in workflow
+    assert "timeout-minutes: 2" in workflow
     assert "timeout=3" not in workflow
-    assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in workflow
-    assert "PROJECTTOWN_LOCAL_SETTINGS_PATH': str(probe)" in workflow
+    diagnostic = (ROOT / "scripts" / "diagnose_windows_acl.py").read_text(
+        encoding="utf-8"
+    )
+    assert "local_settings._windows_acl_restrict_script(True, trace=True)" in diagnostic
+    assert "DIAGNOSTIC_TIMEOUT_SECONDS = 60" in diagnostic
+    assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in diagnostic
+    assert '"PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path)' in diagnostic
     assert ".secrets" not in workflow[workflow.index("Diagnose Local Settings ACL primitive"):]
     assert "Remove-Item -LiteralPath $probe -Recurse -Force" in workflow
     pytest_command = "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run"

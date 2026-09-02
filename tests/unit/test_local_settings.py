@@ -57,6 +57,20 @@ def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
     assert "owner denied" in script and "ACL verification failed" in script
     assert "$rule.IsInherited" in script and "AccessControlType]::Deny" in script
     assert "$currentAllowCount -ne 1" in script
+    assert "PROJECTTOWN_ACL_TRACE:" not in script
+    traced = local_settings._windows_acl_restrict_script(directory, trace=True)
+    markers = [
+        f"PROJECTTOWN_ACL_TRACE:{marker}"
+        for marker in local_settings.WINDOWS_ACL_TRACE_MARKERS
+    ]
+    assert all(traced.count(marker) == 1 for marker in markers)
+    assert [traced.index(marker) for marker in markers] == sorted(
+        traced.index(marker) for marker in markers
+    )
+    prepared = traced.index("PROJECTTOWN_ACL_TRACE:DACL_PREPARED")
+    assert traced.index("$acl.AddAccessRule($rule);") < prepared < traced.index(
+        "$item.SetAccessControl($acl);"
+    )
 
 
 def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(
@@ -131,8 +145,7 @@ def test_windows_acl_runner_uses_minimal_environment_and_literal_path(
 
 
 def test_windows_acl_timeout_is_fixed_and_bounded() -> None:
-    assert local_settings.WINDOWS_ACL_TIMEOUT_SECONDS == 15
-    assert 3 < local_settings.WINDOWS_ACL_TIMEOUT_SECONDS <= 15
+    assert local_settings.WINDOWS_ACL_TIMEOUT_SECONDS == 3
 
 
 @pytest.mark.parametrize(
