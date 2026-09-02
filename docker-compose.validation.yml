@@ -1,0 +1,8 @@
+# Explicit, local-image-only overlay for validation. It is never a user launch
+# configuration and must be invoked with --env-file config/compose-validation.defaults.
+services:
+  projecttown:
+    image: "${PROJECTTOWN_VALIDATION_IMAGE:?set an existing local image}"
+    build: !reset null
+    ports: !override
+      - "127.0.0.1:${PROJECTTOWN_VALIDATION_PORT:?set a unique loopback port}:8000"

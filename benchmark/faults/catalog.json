@@ -1,0 +1,31 @@
+{
+  "version": "v1",
+  "profiles": {
+    "clean": {
+      "description": "No injected fault",
+      "faults": []
+    },
+    "transient": {
+      "description": "Tool timeout before dispatch followed by bounded retry",
+      "faults": ["tool_timeout_before_call", "malformed_result"]
+    },
+    "duplicate": {
+      "description": "Side effect commits but its response is lost",
+      "faults": ["response_lost_after_effect", "duplicate_delivery"]
+    },
+    "watchdog": {
+      "description": "Repeated action with unchanged WorldState",
+      "faults": ["repeated_action", "constraint_ignored"]
+    },
+    "process_exit": {
+      "description": "Process exits after a deterministic Event sequence",
+      "faults": ["process_exit_after_event", "state_version_conflict"]
+    },
+    "false_completion": {
+      "description": "Executor claims completion without valid Evidence",
+      "faults": ["false_completion_claim"]
+    }
+  },
+  "seeded": true,
+  "notes": "Faults are deterministic Runtime simulations; no external model is called."
+}

@@ -1,0 +1,27 @@
+services:
+  projecttown:
+    environment:
+      PROJECTTOWN_ENABLE_LOCAL_SETTINGS_CONTROL: "true"
+      PROJECTTOWN_PROFILE: development
+      PROJECTTOWN_SECRET_SOURCE: local_file
+      PROJECTTOWN_ALLOW_CONTAINER_LOCAL_SETTINGS: "true"
+      PROJECTTOWN_LOCAL_SETTINGS_TRUSTED_PEER: 172.30.250.1
+    volumes:
+      - type: volume
+        source: projecttown-local-settings
+        target: /app/.secrets
+        read_only: false
+    networks:
+      - local-settings
+
+networks:
+  local-settings:
+    name: projecttown_local_settings
+    ipam:
+      config:
+        - subnet: 172.30.250.0/29
+          gateway: 172.30.250.1
+
+volumes:
+  projecttown-local-settings:
+    name: projecttown_local_settings

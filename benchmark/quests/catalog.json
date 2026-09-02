@@ -1,0 +1,872 @@
+{
+  "version": "v1",
+  "benchmark_policy": {
+    "seed": 1729,
+    "budgets": {"short": {"actions": 5, "max_tool_calls": 15}, "medium": {"actions": 10, "max_tool_calls": 30}, "long": {"actions": 20, "max_tool_calls": 60}},
+    "default_repeats": 3,
+    "deterministic_subset_repeats": 5,
+    "tools": ["read", "write", "inspect"]
+  },
+  "task_templates": {
+    "material_organization": {
+      "title": "Local source synthesis",
+      "goal": "Organize local source set {id} into a cited {length} study report.",
+      "expected_artifacts": ["report.md", "citations.json"],
+      "verifier": "section schema, citation IDs, keyword coverage"
+    },
+    "code_project": {
+      "title": "Deterministic Python project",
+      "goal": "Build and verify local Python fixture {id} at {length} complexity.",
+      "expected_artifacts": ["src/main.py", "tests/test_main.py", "README.md"],
+      "verifier": "tree shape, Python syntax, local tests"
+    },
+    "repository_maintenance": {
+      "title": "Sandbox repository maintenance",
+      "goal": "Apply bounded maintenance task {id} to the local {length} fixture.",
+      "expected_artifacts": ["change_manifest.json", "verification.json"],
+      "verifier": "changed-path scope, target checks, forbidden paths"
+    }
+  },
+  "quests": [
+    {
+      "id": "q01",
+      "index": 1,
+      "family": "material_organization",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1001,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q02",
+      "index": 2,
+      "family": "material_organization",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1002,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q03",
+      "index": 3,
+      "family": "material_organization",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1003,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q04",
+      "index": 4,
+      "family": "material_organization",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1004,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q05",
+      "index": 5,
+      "family": "material_organization",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1005,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q06",
+      "index": 6,
+      "family": "material_organization",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1006,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q07",
+      "index": 7,
+      "family": "material_organization",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1007,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q08",
+      "index": 8,
+      "family": "material_organization",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1008,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q09",
+      "index": 9,
+      "family": "material_organization",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1009,
+      "fault_profile": "duplicate"
+    },
+    {
+      "id": "q10",
+      "index": 10,
+      "family": "material_organization",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1010,
+      "fault_profile": "watchdog"
+    },
+    {
+      "id": "q11",
+      "index": 1,
+      "family": "code_project",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1011,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q12",
+      "index": 2,
+      "family": "code_project",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1012,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q13",
+      "index": 3,
+      "family": "code_project",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1013,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q14",
+      "index": 4,
+      "family": "code_project",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1014,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q15",
+      "index": 5,
+      "family": "code_project",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1015,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q16",
+      "index": 6,
+      "family": "code_project",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1016,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q17",
+      "index": 7,
+      "family": "code_project",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1017,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q18",
+      "index": 8,
+      "family": "code_project",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1018,
+      "fault_profile": "duplicate"
+    },
+    {
+      "id": "q19",
+      "index": 9,
+      "family": "code_project",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1019,
+      "fault_profile": "watchdog"
+    },
+    {
+      "id": "q20",
+      "index": 10,
+      "family": "code_project",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1020,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q21",
+      "index": 1,
+      "family": "repository_maintenance",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1021,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q22",
+      "index": 2,
+      "family": "repository_maintenance",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1022,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q23",
+      "index": 3,
+      "family": "repository_maintenance",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1023,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q24",
+      "index": 4,
+      "family": "repository_maintenance",
+      "length": "short",
+      "required_actions": 5,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 5
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1024,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q25",
+      "index": 5,
+      "family": "repository_maintenance",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1025,
+      "fault_profile": "clean"
+    },
+    {
+      "id": "q26",
+      "index": 6,
+      "family": "repository_maintenance",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1026,
+      "fault_profile": "false_completion"
+    },
+    {
+      "id": "q27",
+      "index": 7,
+      "family": "repository_maintenance",
+      "length": "medium",
+      "required_actions": 10,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 10
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1027,
+      "fault_profile": "process_exit"
+    },
+    {
+      "id": "q28",
+      "index": 8,
+      "family": "repository_maintenance",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1028,
+      "fault_profile": "transient"
+    },
+    {
+      "id": "q29",
+      "index": 9,
+      "family": "repository_maintenance",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1029,
+      "fault_profile": "duplicate"
+    },
+    {
+      "id": "q30",
+      "index": 10,
+      "family": "repository_maintenance",
+      "length": "long",
+      "required_actions": 20,
+      "initial_world_state": {
+        "items": [
+          "seed"
+        ],
+        "version": 1
+      },
+      "gold_constraints": {
+        "must_complete": true,
+        "required_actions": 20
+      },
+      "external_verifier": {
+        "type": "deterministic_json",
+        "spec": "checks required actions and constraints"
+      },
+      "allowed_tools": [
+        "read",
+        "write",
+        "inspect"
+      ],
+      "seed": 1030,
+      "fault_profile": "watchdog"
+    }
+  ]
+}

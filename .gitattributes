@@ -1,0 +1,38 @@
+# Normalize tracked text across platforms.
+* text=auto eol=lf
+
+# Windows command scripts require CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Project and configuration text assets.
+*.gd text
+*.tscn text
+*.tres text
+*.godot text
+*.toml text
+*.yml text
+*.yaml text
+
+# Binary assets and archives.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.svg binary
+*.ttf binary
+*.otf binary
+*.pdf binary
+*.zip binary
+*.wav binary
+*.mp3 binary
+*.ogg binary
+*.mp4 binary
+
+# Proven intentional whitespace in preserved documentation, fixtures, and upstream licenses.
+*.md whitespace=-blank-at-eol
+sandbox/notes/*.md whitespace=-blank-at-eof
+examples/v3-phase-0/negative-inputs/blank.txt whitespace=-blank-at-eol,-blank-at-eof
+godot/assets/fonts/licenses/** whitespace=-blank-at-eol

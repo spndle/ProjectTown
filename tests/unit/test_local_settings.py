@@ -1,0 +1,422 @@
+from __future__ import annotations
+
+import os
+import threading
+from pathlib import Path
+
+import pytest
+
+from backend.app import local_settings
+from backend.app.local_settings import (
+    LocalSettingsError,
+    LocalSettingsService,
+    _set_restricted_permissions,
+)
+
+
+def _service(tmp_path: Path) -> LocalSettingsService:
+    service = LocalSettingsService(root=tmp_path, allow_test_client=True)
+    service.start()
+    return service
+
+
+def test_get_is_redacted_and_put_uses_cas_and_atomic_file(tmp_path: Path) -> None:
+    service = _service(tmp_path)
+    try:
+        first = service.get()
+        assert first["api_key_configured"] is False and first["base_url"].endswith(
+            "/v1"
+        )
+        saved = service.put(
+            {
+                "base_url": first["base_url"],
+                "model": first["model"],
+                "api_key_action": "replace",
+                "api_key": "CANARY_LOCAL_SETTINGS",
+                "expected_revision": first["revision"],
+            }
+        )
+        assert (
+            saved["api_key_configured"] is True
+            and saved["revision"] != first["revision"]
+        )
+        assert "CANARY_LOCAL_SETTINGS" not in str(saved)
+        with pytest.raises(LocalSettingsError) as raised:
+            service.put(
+                {
+                    "base_url": first["base_url"],
+                    "model": first["model"],
+                    "api_key_action": "clear",
+                    "api_key": None,
+                    "expected_revision": first["revision"],
+                }
+            )
+        assert raised.value.code == "LOCAL_SETTINGS_REVISION_CONFLICT"
+        cleared = service.put(
+            {
+                "base_url": saved["base_url"],
+                "model": saved["model"],
+                "api_key_action": "clear",
+                "api_key": None,
+                "expected_revision": saved["revision"],
+            }
+        )
+        assert cleared["api_key_configured"] is False
+        assert "CANARY_LOCAL_SETTINGS" not in (
+            tmp_path / ".secrets" / "model-providers.local.toml"
+        ).read_text(encoding="utf-8")
+    finally:
+        service.close()
+
+
+def test_relaxed_editor_rejects_empty_url_or_model_and_external_change_rotates_revision(
+    tmp_path: Path,
+) -> None:
+    service = _service(tmp_path)
+    try:
+        current = service.get()
+        for field in ("base_url", "model"):
+            payload = {
+                "base_url": current["base_url"],
+                "model": current["model"],
+                "api_key_action": "clear",
+                "api_key": None,
+                "expected_revision": current["revision"],
+            }
+            payload[field] = ""
+            with pytest.raises(LocalSettingsError):
+                service.put(payload)
+        path = tmp_path / ".secrets" / "model-providers.local.toml"
+        path.write_text(
+            'version = 3\n[providers.openai]\nbase_url = "https://api.openai.com/v1"\napi_key = ""\nmodel = "gpt-5-mini-2025-08-07"\n\n[providers.qwen]\nbase_url = ""\napi_key = ""\nmodel = ""\n',
+            encoding="utf-8",
+        )
+        os.chmod(path, 0o600)
+        _set_restricted_permissions(path)
+        assert service.get()["revision"] != current["revision"]
+    finally:
+        service.close()
+
+
+def test_token_cleanup_refuses_replaced_content(tmp_path: Path) -> None:
+    service = _service(tmp_path)
+    token_path = tmp_path / ".secrets" / "projecttown-settings-session.token"
+    token_path.write_text("replacement", encoding="ascii")
+    service.close()
+    assert token_path.exists()
+
+
+def test_container_mode_rotates_a_valid_stale_token_and_releases_lock(
+    tmp_path: Path,
+) -> None:
+    if os.name == "nt":
+        pytest.skip("container lock behavior is verified in a Linux Docker runtime")
+    first = LocalSettingsService(
+        root=tmp_path,
+        allow_test_client=True,
+        container_mode=True,
+        trusted_peer="172.30.250.1",
+    )
+    first.start()
+    stale_token = first.token
+    token_path = tmp_path / ".secrets" / "projecttown-settings-session.token"
+    first._token = None  # Simulate a terminated process which left its token behind.
+    first._token_file_content = None
+    first._release_container_lock()
+
+    second = LocalSettingsService(
+        root=tmp_path,
+        allow_test_client=True,
+        container_mode=True,
+        trusted_peer="172.30.250.1",
+    )
+    try:
+        second.start()
+        assert second.token != stale_token
+        assert token_path.read_text(encoding="ascii") == second.token
+    finally:
+        second.close()
+    assert not token_path.exists()
+
+
+def test_container_mode_allows_only_one_live_instance(tmp_path: Path) -> None:
+    if os.name == "nt":
+        pytest.skip("container lock behavior is verified in a Linux Docker runtime")
+    first = LocalSettingsService(
+        root=tmp_path,
+        allow_test_client=True,
+        container_mode=True,
+        trusted_peer="172.30.250.1",
+    )
+    second = LocalSettingsService(
+        root=tmp_path,
+        allow_test_client=True,
+        container_mode=True,
+        trusted_peer="172.30.250.1",
+    )
+    first.start()
+    try:
+        with pytest.raises(LocalSettingsError) as raised:
+            second.start()
+        assert raised.value.code == "LOCAL_SETTINGS_INSTANCE_LOCKED"
+    finally:
+        first.close()
+
+
+@pytest.mark.parametrize("stale", [b"", b"not-a-generated-token", b"a" * 42])
+def test_container_mode_rejects_invalid_stale_token(
+    tmp_path: Path, stale: bytes
+) -> None:
+    if os.name == "nt":
+        pytest.skip("container lock behavior is verified in a Linux Docker runtime")
+    secrets_dir = tmp_path / ".secrets"
+    secrets_dir.mkdir(mode=0o700)
+    token_path = secrets_dir / "projecttown-settings-session.token"
+    token_path.write_bytes(stale)
+    os.chmod(token_path, 0o600)
+    service = LocalSettingsService(
+        root=tmp_path,
+        allow_test_client=True,
+        container_mode=True,
+        trusted_peer="172.30.250.1",
+    )
+    with pytest.raises(LocalSettingsError) as raised:
+        service.start()
+    assert raised.value.code == "LOCAL_SETTINGS_TOKEN_INVALID"
+    assert token_path.read_bytes() == stale
+
+
+@pytest.mark.parametrize("key", ["", "   ", " key", "key "])
+def test_replace_cannot_clear_or_normalize_key(tmp_path: Path, key: str) -> None:
+    service = _service(tmp_path)
+    try:
+        current = service.get()
+        with pytest.raises(LocalSettingsError) as raised:
+            service.put(
+                {
+                    "base_url": current["base_url"],
+                    "model": current["model"],
+                    "api_key_action": "replace",
+                    "api_key": key,
+                    "expected_revision": current["revision"],
+                }
+            )
+        assert raised.value.code == "LOCAL_SETTINGS_BODY_INVALID"
+    finally:
+        service.close()
+
+
+def test_put_serializes_same_revision_and_detects_external_change_before_replace(
+    tmp_path: Path,
+) -> None:
+    service = _service(tmp_path)
+    try:
+        current = service.get()
+        payload = {
+            "base_url": current["base_url"],
+            "model": current["model"],
+            "api_key_action": "replace",
+            "api_key": "CANARY_THREAD",
+            "expected_revision": current["revision"],
+        }
+        barrier = threading.Barrier(2)
+        outcomes: list[str] = []
+
+        def writer() -> None:
+            barrier.wait()
+            try:
+                service.put(payload)
+                outcomes.append("success")
+            except LocalSettingsError as error:
+                outcomes.append(error.code)
+
+        workers = [threading.Thread(target=writer) for _ in range(2)]
+        for worker in workers:
+            worker.start()
+        for worker in workers:
+            worker.join()
+        assert sorted(outcomes) == ["LOCAL_SETTINGS_REVISION_CONFLICT", "success"]
+
+        latest = service.get()
+        path = tmp_path / ".secrets" / "model-providers.local.toml"
+
+        def inject_external_change() -> None:
+            path.write_text(
+                'version = 3\n[providers.openai]\nbase_url = "https://api.openai.com/v1"\napi_key = "EXTERNAL_MARKER"\nmodel = "gpt-5-mini-2025-08-07"\n\n[providers.qwen]\nbase_url = ""\napi_key = ""\nmodel = ""\n',
+                encoding="utf-8",
+            )
+            _set_restricted_permissions(path)
+
+        service._before_replace = inject_external_change  # type: ignore[method-assign]
+        with pytest.raises(LocalSettingsError) as raised:
+            service.put(
+                {
+                    "base_url": latest["base_url"],
+                    "model": latest["model"],
+                    "api_key_action": "clear",
+                    "api_key": None,
+                    "expected_revision": latest["revision"],
+                }
+            )
+        assert raised.value.code == "LOCAL_SETTINGS_REVISION_CONFLICT"
+        assert "EXTERNAL_MARKER" in path.read_text(encoding="utf-8")
+    finally:
+        service.close()
+
+
+def test_secrets_directory_symlink_is_denied(tmp_path: Path) -> None:
+    target = tmp_path / "target"
+    target.mkdir()
+    secrets_dir = tmp_path / ".secrets"
+    try:
+        os.symlink(target, secrets_dir, target_is_directory=True)
+    except OSError:
+        pytest.skip("symlink creation unavailable")
+    service = LocalSettingsService(root=tmp_path, allow_test_client=True)
+    with pytest.raises(LocalSettingsError) as raised:
+        service.start()
+    assert raised.value.code == "LOCAL_SETTINGS_PATH_DENIED"
+
+
+def test_directory_hardening_failure_happens_before_token_or_settings_write(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    secrets_dir = tmp_path / ".secrets"
+    secrets_dir.mkdir()
+    monkeypatch.setattr(
+        local_settings,
+        "_set_restricted_directory_permissions",
+        lambda path: (_ for _ in ()).throw(OSError("CANARY_DIRECTORY_ACL")),
+    )
+    service = LocalSettingsService(root=tmp_path, allow_test_client=True)
+    with pytest.raises(LocalSettingsError) as raised:
+        service.start()
+    assert raised.value.code == "LOCAL_SETTINGS_PATH_DENIED"
+    assert not (secrets_dir / "projecttown-settings-session.token").exists()
+    assert not (secrets_dir / "model-providers.local.toml").exists()
+
+
+def test_qwen_write_preserves_openai_and_redacts_both_provider_canaries(
+    tmp_path: Path,
+) -> None:
+    service = _service(tmp_path)
+    try:
+        openai = service.get()
+        openai_saved = service.put(
+            {
+                "base_url": openai["base_url"],
+                "model": openai["model"],
+                "api_key_action": "replace",
+                "api_key": "OPENAI_CANARY",
+                "expected_revision": openai["revision"],
+            }
+        )
+        qwen = service.get("qwen")
+        assert qwen["base_url"] == "" and qwen["model_options"] == ["qwen-plus"]
+        qwen_saved = service.put(
+            {
+                "base_url": "https://workspace-example.cn-beijing.maas.aliyuncs.com/api/v1",
+                "model": "qwen-plus",
+                "api_key_action": "replace",
+                "api_key": "QWEN_CANARY",
+                "expected_revision": qwen["revision"],
+            },
+            "qwen",
+        )
+        assert qwen_saved["provider"] == "qwen"
+        assert qwen_saved["api_key_configured"] is True
+        assert qwen_saved["base_url_options"] == [qwen_saved["base_url"]]
+        assert qwen_saved["live_authorized"] is False
+        assert "QWEN_CANARY" not in repr(qwen_saved)
+        preserved = service.get("openai")
+        assert preserved["base_url"] == openai_saved["base_url"]
+        assert preserved["model"] == openai_saved["model"]
+        assert preserved["api_key_configured"] is True
+        assert "OPENAI_CANARY" not in repr(preserved)
+        serialized = (tmp_path / ".secrets" / "model-providers.local.toml").read_text(
+            encoding="utf-8"
+        )
+        assert "OPENAI_CANARY" in serialized and "QWEN_CANARY" in serialized
+    finally:
+        service.close()
+
+
+@pytest.mark.parametrize(
+    "base_url,model",
+    [
+        ("https://example.invalid/api/v1", "qwen-plus"),
+        ("https://workspace-example.cn-beijing.maas.aliyuncs.com/api/v1", "qwen3-8b"),
+    ],
+)
+def test_qwen_put_requires_strict_workspace_url_and_model(
+    tmp_path: Path, base_url: str, model: str
+) -> None:
+    service = _service(tmp_path)
+    try:
+        current = service.get("qwen")
+        with pytest.raises(LocalSettingsError) as raised:
+            service.put(
+                {
+                    "base_url": base_url,
+                    "model": model,
+                    "api_key_action": "replace",
+                    "api_key": "QWEN_CANARY",
+                    "expected_revision": current["revision"],
+                },
+                "qwen",
+            )
+        assert raised.value.code in {
+            "SECRET_BASE_URL_DENIED",
+            "SECRET_MODEL_UNSUPPORTED",
+        }
+        assert "QWEN_CANARY" not in str(raised.value)
+    finally:
+        service.close()
+
+
+def test_cross_provider_same_revision_has_one_winner(tmp_path: Path) -> None:
+    service = _service(tmp_path)
+    try:
+        revision = service.get()["revision"]
+        barrier = threading.Barrier(2)
+        outcomes: list[str] = []
+        payloads = [
+            (
+                "openai",
+                {
+                    "base_url": "https://api.openai.com/v1",
+                    "model": "gpt-5-mini-2025-08-07",
+                    "api_key_action": "replace",
+                    "api_key": "OPENAI_THREAD",
+                    "expected_revision": revision,
+                },
+            ),
+            (
+                "qwen",
+                {
+                    "base_url": "https://workspace-example.cn-beijing.maas.aliyuncs.com/api/v1",
+                    "model": "qwen-plus",
+                    "api_key_action": "replace",
+                    "api_key": "QWEN_THREAD",
+                    "expected_revision": revision,
+                },
+            ),
+        ]
+
+        def writer(provider: str, payload: dict[str, object]) -> None:
+            barrier.wait()
+            try:
+                service.put(payload, provider)
+                outcomes.append("success")
+            except LocalSettingsError as error:
+                outcomes.append(error.code)
+
+        workers = [threading.Thread(target=writer, args=item) for item in payloads]
+        for worker in workers:
+            worker.start()
+        for worker in workers:
+            worker.join()
+        assert sorted(outcomes) == ["LOCAL_SETTINGS_REVISION_CONFLICT", "success"]
+    finally:
+        service.close()

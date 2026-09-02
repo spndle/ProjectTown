@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ProjectTown Local Workspace</title>
+  <link rel="stylesheet" href="/workspace/app.css">
+</head>
+<body>
+  <main>
+    <h1>Local Workspace Tasks</h1>
+    <p id="intro">Browse verified tasks or, when locally enabled, create an offline source-grounded candidate. Candidate exports are create-only local copies.</p>
+    <button id="start" type="button">Open local workspace</button>
+    <p id="status" role="status" aria-live="polite"></p>
+    <section id="authoring" hidden aria-labelledby="authoring-heading">
+      <h2 id="authoring-heading">Create a candidate</h2>
+      <p>Choose only the listed sources. The browser sends opaque source identifiers, never local locations.</p>
+      <form id="draft-form">
+        <fieldset><legend>Sources</legend><table><thead><tr><th scope="col">Select</th><th scope="col">Source</th><th scope="col">Type</th><th scope="col">Size</th></tr></thead><tbody id="catalog-list"></tbody></table></fieldset>
+        <label for="task-input">Task</label><textarea id="task-input" name="task" rows="3" maxlength="4096" required></textarea>
+        <label for="artifact-kind">Candidate type</label><select id="artifact-kind" name="artifact-kind"><option value="plan">Plan</option><option value="report">Report</option><option value="readme">README suggestion</option></select>
+        <div id="readme-target-field" hidden><label for="readme-target">README target (selected Markdown source)</label><select id="readme-target" name="readme-target"></select></div>
+        <fieldset><legend>Optional constraints</legend><div id="constraint-list"></div><button id="add-constraint" type="button">Add constraint</button></fieldset>
+        <button id="create-draft" type="submit">Create draft contract</button>
+      </form>
+      <section id="confirmation" hidden aria-labelledby="confirmation-heading">
+        <h3 id="confirmation-heading">Confirm generation</h3><p>Review the draft contract hash and exact confirmation phrase before generating a candidate.</p>
+        <dl><dt>Contract hash</dt><dd><code id="contract-hash"></code></dd><dt>Confirmation phrase</dt><dd><code id="confirmation-phrase"></code></dd></dl>
+        <label><input id="confirm-generation" type="checkbox"> I reviewed this exact draft contract and want to generate the candidate.</label><button id="generate" type="button" disabled>Generate candidate</button>
+      </section>
+      <section id="candidate" hidden aria-labelledby="candidate-heading">
+        <h3 id="candidate-heading">Candidate state</h3><p id="candidate-state"></p><button id="refresh-state" type="button">Refresh state</button>
+        <h4>Preview</h4><p>This is a candidate preview, not a change to a selected source.</p><pre id="authoring-preview"></pre>
+        <h4>Create-only exports</h4><button data-export="markdown" type="button">Create Markdown copy</button><button data-export="pdf" type="button">Create PDF copy</button><p id="downloads" aria-live="polite"></p>
+      </section>
+    </section>
+    <section id="tasks" hidden aria-labelledby="tasks-heading"><h2 id="tasks-heading">Verified tasks</h2><ul id="task-list"></ul></section>
+    <section id="detail" hidden aria-labelledby="task-title"><h2 id="task-title"></h2><p id="task-meta"></p><h3>Citations</h3><ul id="citations"></ul><h3>Preview</h3><pre id="preview"></pre></section>
+  </main>
+  <script type="module" src="/workspace/app.js"></script>
+</body>
+</html>

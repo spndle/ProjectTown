@@ -1,0 +1,18 @@
+{
+  "schema_version": "v3-phase-2-projecttown-trial-candidates-v10",
+  "candidate_profile": "projecttown-human-pdf-v10",
+  "root_token": "<PROJECT_ROOT>",
+  "record_status": "candidates_require_user_execution_and_rating_not_accepted_records",
+  "entries": [
+    {"id":"T001","label":"human_usability","artifact_kind":"plan","selected_files":["docs/v3-product-direction.md","docs/v3-phase-0.md","docs/v3-phase-1.md","README.md"],"task":"制定 v3 本地资料工作流后续迭代计划","constraints":{"execution":"offline","scope":"phase2_usability_only","exclude":"apply_web_api_db"},"readme_target":null},
+    {"id":"T002","label":"human_usability","artifact_kind":"plan","selected_files":["docs/validation-v1.0.md","docs/v2-closeout.md","docs/limitations.md","README.md"],"task":"制定一次本地交付复验计划，区分可重跑验证、不可重跑历史证据和用户持有的发布事项","constraints":{"execution":"offline","preserve_v1_v2_contracts":true},"readme_target":null},
+    {"id":"T003","label":"human_usability","artifact_kind":"plan","selected_files":["docs/v2-handoff.md","docs/v2-phase-1a.md","docs/limitations.md","README.md"],"task":"制定 provider 配置与最小离线开发检查计划","constraints":{"provider_calls":"zero","no_secrets":true,"no_live_evaluation":true},"readme_target":null},
+    {"id":"T004","label":"human_usability","artifact_kind":"report","selected_files":["docs/v3-phase-1.md","docs/v3-product-direction.md","docs/v3-phase-0.md"],"task":"汇总 Phase 0/1 当前能力、价值缺口与尚未实现范围","constraints":{"separate_engineering_from_value":true,"no_future_claims":true},"readme_target":null},
+    {"id":"T005","label":"human_usability","artifact_kind":"report","selected_files":["docs/architecture.md","docs/limitations.md","README.md","docs/v2-handoff.md"],"task":"输出本地单用户运行边界报告，说明运行时能力与非公共 SaaS 能力","constraints":{"no_deployment_change":true,"no_network":true},"readme_target":null},
+    {"id":"T006","label":"human_usability","artifact_kind":"report","selected_files":["docs/benchmark.md","docs/v2-phase-2.md","README.md","docs/validation-v1.0.md"],"task":"生成评测结果解释报告，区分 deterministic runtime、synthetic RAG 与真实模型评估","constraints":{"real_model_calls":"zero","do_not_merge_metrics":true},"readme_target":null},
+    {"id":"T007","label":"human_usability","artifact_kind":"readme","selected_files":["README.md","docs/v3-phase-1.md","docs/v3-product-direction.md","scripts/run_v3_material_workflow.py"],"task":"提出 README 的离线资料建议 CLI 使用说明和 Phase 1 边界修改建议","constraints":{"suggestion_only":true,"source_preservation":true,"no_apply":true},"readme_target":"README.md"},
+    {"id":"T008","label":"human_usability","artifact_kind":"readme","selected_files":["README.md","docs/limitations.md","docs/v3-phase-1.md","backend/app/safe_files.py"],"task":"提出 README 的资料选择、安全读取、外部导出和不覆盖来源说明建议","constraints":{"suggestion_only":true,"no_absolute_paths_in_artifact":true},"readme_target":"README.md"},
+    {"id":"T009","label":"human_usability","artifact_kind":"readme","selected_files":["README.md","docs/benchmark.md","docs/v2-phase-2.md","docs/validation-v1.0.md"],"task":"提出 README 的测试与评测说明修改建议，区分离线合成评测和真实调用","constraints":{"suggestion_only":true,"provider_calls":"zero"},"readme_target":"README.md"},
+    {"id":"T010","label":"human_usability","artifact_kind":"plan","selected_files":["backend/app/material_workflow.py","backend/app/safe_files.py","scripts/run_v3_material_workflow.py","docs/v3-phase-1.md"],"task":"制定离线资料工作流维护检查清单，覆盖确认、freshness、冲突、恢复和创建式导出","constraints":{"execution":"offline","source_read_only":true,"no_api_db_quest":true},"readme_target":null}
+  ]
+}

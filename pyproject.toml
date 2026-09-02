@@ -1,0 +1,3 @@
+[tool.ruff]
+extend-exclude = [".tmp", "sandbox/tmp"]
+force-exclude = true

@@ -1,0 +1,907 @@
+{
+  "acceptance_log": [
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "eb89fe09da0127bf7a88c21db528db1175ef140341feac638340201f4c17f951",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 1,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "8b25705ed84e53b7c653ceac2655a9649bc5741f2d6414208da9cb390d110f40",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 2,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "721ede9b702329c129fb6c6140a77664cb74e879f1861c2cda559090f2fb10c3",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 3,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "b39b9c8fc0aa57efe54ef6da88e8add7aaf92e940aeb3e32866a0fa27ff3e1c3",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 4,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "7af0010ad3c8922c4afecd0c4d8bee26f35c6114f23259c5083c84720728f9ab",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 5,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "a725d5949eb0a7d60ad1a27a3089036101728f85518d126dba75486b98ae08ff",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 6,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "b03b5b4659aa05c79f553d812bf9e43f72301bf8d67896f7e2d27a43760f4cfa",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 7,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "75edca22deddf6fc9af4e36e7b31a62b01e87b06815a863f1294594a08b8e11f",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 8,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "21f32ccf75b7c796e9dcfa30ef89a95078e7aa9219a431d4e3fd8d440fc165b6",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 9,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "65c82b719f54c8d17b7a11ffb6117ef6803561475d4032ad9922c15e14f17795",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 10,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "cbf498777281416507d1340b5e6703bd3a9cbe8198cd70e920ca7033bdec09ef",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 11,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "fd40e18c69c1a2ff7aff9b58d00c1ab2197bb38cd684a65803057afa294b204e",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 12,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "3e46b963987da2ec434ffdebba6f4f360e9ccf23595f39f2173a5f63ab849937",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 13,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "f8cbe6af93365d31bf027821c74a249d9cb004d99cb9752bd78b99dda86b413c",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 14,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "a3a293d702684fc39c17babc28910d227cfd836595a1798d9c05e7bf9e48be1c",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 15,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "e21a327c3315834c60e6034883f8c6018aebec6be032f2f94a3e7c9438c8f9af",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 16,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "eb2ef9e5efde0f67b309b282abd2497adef687bb9dd2f0e55b8b3a00ec83f8ee",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 17,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "2248420d73f09d428ef760b4747bc62df132847f373ae97fc32dbc6c394c5de7",
+      "old_png_sha256": null,
+      "reason": "Initial Phase 1E baseline after Sol visual review and 3+2 deterministic capture rounds",
+      "reviewed_by": "Sol",
+      "revision": 18,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "494e2713b3f68e0b1c052d5c99f99d8956b569be3fe7cd5e6f872e800be36180",
+      "old_png_sha256": null,
+      "reason": "Add deterministic redacted local model settings panel",
+      "reviewed_by": "Sol",
+      "revision": 19,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "e09524752ae0a70dc0b366d603017b3cfbeb3bf412247784cdc65fd615993e8d",
+      "old_png_sha256": null,
+      "reason": "Add deterministic redacted local model settings panel",
+      "reviewed_by": "Sol",
+      "revision": 20,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "d36f28d558e6dcf116c866f4d779702f8b417608a0f8e6ffbf209a024d04482b",
+      "old_png_sha256": null,
+      "reason": "Add deterministic redacted local model settings panel",
+      "reviewed_by": "Sol",
+      "revision": 21,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "ce450b59a4667055416e09c5c1ac5c680b9ba226cc9a3f7f8a6936f226df3303",
+      "old_png_sha256": "f8cbe6af93365d31bf027821c74a249d9cb004d99cb9752bd78b99dda86b413c",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 22,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "20b8d4b20cbeff1238a1f25781c069db469dc80f39266cb77aa795d7094f3a9e",
+      "old_png_sha256": "65c82b719f54c8d17b7a11ffb6117ef6803561475d4032ad9922c15e14f17795",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 23,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "942252812434da4808cf6fdb3e07dec0ed9d006fe70ff6059cf1be10f4434f2b",
+      "old_png_sha256": "cbf498777281416507d1340b5e6703bd3a9cbe8198cd70e920ca7033bdec09ef",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 24,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "85d51f2c6492b9b3ba80c7fffc0cfa18f57ddb32a5805674532a2c9fecb37ea9",
+      "old_png_sha256": "fd40e18c69c1a2ff7aff9b58d00c1ab2197bb38cd684a65803057afa294b204e",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 25,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "76604cf27f45e483d84035429c6bbd55b1ae8ae132ed853d2d9fb03e686c7977",
+      "old_png_sha256": "b03b5b4659aa05c79f553d812bf9e43f72301bf8d67896f7e2d27a43760f4cfa",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 26,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "d1dc83d079dea911154d2ce3671e32e76d5e195e1fe8bf7f3ac47150a789224f",
+      "old_png_sha256": "75edca22deddf6fc9af4e36e7b31a62b01e87b06815a863f1294594a08b8e11f",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 27,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "d6258cc5ca9fc3dcf171bd80246ecb25d0398db781607e5f8fbffa4355374495",
+      "old_png_sha256": "21f32ccf75b7c796e9dcfa30ef89a95078e7aa9219a431d4e3fd8d440fc165b6",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 28,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "da8bb692672c155efc4e5d5af0c92fd9431d8dcfec618acb2ee2f7ab3a24867a",
+      "old_png_sha256": "eb89fe09da0127bf7a88c21db528db1175ef140341feac638340201f4c17f951",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 29,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "1c504d609178eedb05647e8765474327aa1a14f082ce0d74d198317898446c24",
+      "old_png_sha256": "8b25705ed84e53b7c653ceac2655a9649bc5741f2d6414208da9cb390d110f40",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 30,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "413750567d020db3c8fbc254dafc9ba6f075e5412b97f026e54bf1877fb3fcb2",
+      "old_png_sha256": "721ede9b702329c129fb6c6140a77664cb74e879f1861c2cda559090f2fb10c3",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 31,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "868e7de498637501377fd3fa4d2ca11f7980f961732ab1f315b87c460c24ad18",
+      "old_png_sha256": "e21a327c3315834c60e6034883f8c6018aebec6be032f2f94a3e7c9438c8f9af",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 32,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "f5cc9bfa9e66f42267b675e972f4e22bbd9976fa10ba58e0a17067f081af0b86",
+      "old_png_sha256": "eb2ef9e5efde0f67b309b282abd2497adef687bb9dd2f0e55b8b3a00ec83f8ee",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 33,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "1283a0da45673b1f82816f3097d4e1399b6c65e92a1d18d8ae78ae6378e191b6",
+      "old_png_sha256": "2248420d73f09d428ef760b4747bc62df132847f373ae97fc32dbc6c394c5de7",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 34,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "b59f7639eb5e9003ce09766a2cfcee00926c6e394640c5780c2c75c36085c5bf",
+      "old_png_sha256": "b39b9c8fc0aa57efe54ef6da88e8add7aaf92e940aeb3e32866a0fa27ff3e1c3",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 35,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "df6fbea97942047cb29bc1b2e285b2da219d0309570137a6d3958b98290d3d55",
+      "old_png_sha256": "7af0010ad3c8922c4afecd0c4d8bee26f35c6114f23259c5083c84720728f9ab",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 36,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "1c5ed6810671d7a06b8c8292f43a5f8347ea29b3b23f59a3c2ea686b3ea07427",
+      "old_png_sha256": "a725d5949eb0a7d60ad1a27a3089036101728f85518d126dba75486b98ae08ff",
+      "reason": "Accept deterministic header settings control after reviewed UI change",
+      "reviewed_by": "Sol",
+      "revision": 37,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "8fc68518fc30fb468ae2cd63d3ea079d7302fa116a1a2f8327d95fab0bb346a3",
+      "old_png_sha256": "494e2713b3f68e0b1c052d5c99f99d8956b569be3fe7cd5e6f872e800be36180",
+      "reason": "Add Qwen provider configuration to the redacted local Settings panel",
+      "reviewed_by": "Sol",
+      "revision": 38,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "13cd1a1bded8c2b463caffa54e6c03039adc3c7e76cf59d59e4ba06e637ff4ef",
+      "old_png_sha256": "e09524752ae0a70dc0b366d603017b3cfbeb3bf412247784cdc65fd615993e8d",
+      "reason": "Add Qwen provider configuration to the redacted local Settings panel",
+      "reviewed_by": "Sol",
+      "revision": 39,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "9c265226eb922b700006a1fdfa8f33c1ae65cc4ddc7dfbaa18e73fa2760443fd",
+      "old_png_sha256": "d36f28d558e6dcf116c866f4d779702f8b417608a0f8e6ffbf209a024d04482b",
+      "reason": "Add Qwen provider configuration to the redacted local Settings panel",
+      "reviewed_by": "Sol",
+      "revision": 40,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "05ce978760eb9c5f6e9361e9ecf559cfd3caa445e223fceac44e1b0dffed35cf",
+      "old_png_sha256": "8fc68518fc30fb468ae2cd63d3ea079d7302fa116a1a2f8327d95fab0bb346a3",
+      "reason": "Replace provider Base URL and model selectors with editable bounded text fields",
+      "reviewed_by": "Sol",
+      "revision": 41,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "56aa978ae22b0d2c062ea03abdb49a6ce629bfcf4dc1b5ebb50d3fd38355935a",
+      "old_png_sha256": "13cd1a1bded8c2b463caffa54e6c03039adc3c7e76cf59d59e4ba06e637ff4ef",
+      "reason": "Replace provider Base URL and model selectors with editable bounded text fields",
+      "reviewed_by": "Sol",
+      "revision": 42,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "f8d1e67c997d890fc18ca5e9301ec3975384d2320137ec10bcd52c0ed75bcc60",
+      "old_png_sha256": "9c265226eb922b700006a1fdfa8f33c1ae65cc4ddc7dfbaa18e73fa2760443fd",
+      "reason": "Replace provider Base URL and model selectors with editable bounded text fields",
+      "reviewed_by": "Sol",
+      "revision": 43,
+      "viewport": [
+        900,
+        720
+      ]
+    }
+  ],
+  "asset_hashes": {
+    "godot/assets/fonts/fusion-pixel-12px-proportional-zh-hans.ttf.import": "30028efdc3c1e45a68b93ae3ddad83480e3f9959110cae3bff9e333f84c928f7",
+    "godot/assets/pixel_town/backgrounds/dawn-town-backdrop-v3.png": "74b7fe7f8ef0b70585284b7602be46f1a8d05e03d0d3a94adf108096dc7d4bf8",
+    "godot/assets/pixel_town/backgrounds/dawn-town-backdrop-v3.png.import": "72f420075fd98f2a01583b4c8c710d906299efc3dbd43519020344c4682a72dd",
+    "godot/assets/pixel_town/backgrounds/night-town-backdrop-v3.png": "8a54928a28e80dac4495653253d9fdb55a22e613128c137a3c4694b24df18e49",
+    "godot/assets/pixel_town/backgrounds/night-town-backdrop-v3.png.import": "f018b1d795c801baf647db4d4c4346e62091fb6942f493a3a22c2ec9d3cc3443",
+    "godot/assets/pixel_town/backgrounds/noon-town-backdrop-v3.png": "f8002ee3f67c2b324700c574e9a92c79e02987f7fd765a753b72e237b3c0baa9",
+    "godot/assets/pixel_town/backgrounds/noon-town-backdrop-v3.png.import": "5b9fa954290901ae10c5019b2232306449f027487fe56f898a57482c3273e53a",
+    "godot/assets/pixel_town/backgrounds/sunset-town-backdrop-v2.png": "f63c4eec72579d96f0e1e24afbc4ac3a6e527921244ed4b4880446900e7ba083",
+    "godot/assets/pixel_town/backgrounds/sunset-town-backdrop-v2.png.import": "9e517fb1535ae6d8f462a723b7fc958f5db0724eed672a10256be3bf92c20f2c",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-outline-v4.png": "9ceb98b6ef90c54ae5a3cda3d3db14eea0f9773c6c9342000af993a4a504679d",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-outline-v4.png.import": "03d50a00309171eb43e1db05ec030ca82b96c15d305923eeeccc236a5e7fc4f5",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-smooth-v3.png": "5c9dd5495d0b79cf22bc216de3b7c4e8fefd19ff885cd79f56a56b52a18abcfc",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-smooth-v3.png.import": "264b585124926afb9db61e85b9f0175fbfe727c31c9383a6cf1b5e2277080f0e",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-v2.png": "3340fb27d5d826a6139b99429666f138603189bb042397065b82405af21af6fb",
+    "godot/assets/pixel_town/buildings/guild-buildings-atlas-v2.png.import": "a30bc98180dcdf587d8577a7c960c2c0cff5da7fa89dd5cf87904b3ad912ed78",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-outline-v4.png": "01bb6032de53310b1e38e8c698b5f5f46b7d6d4d59cdaa04ff854e67c3acd838",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-outline-v4.png.import": "1d10395b75dcbe1826f757d081898994403e88374c7c12effabc2a839d0bded2",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-smooth-v3.png": "a83f914eb87cf48c983bd82fec1da517130ca77fffce0619a2b8ec9c3c464cbe",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-smooth-v3.png.import": "351cb1505712453c4bd0780c6d5c017420fe65adccc351c458ab151d6db23bc6",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-v2.png": "e1ae3ae6bd1e9ba480d7cffb630ee6716badfea13d48a525a6802559af8b6fe7",
+    "godot/assets/pixel_town/characters/guild-courier-sheet-v2.png.import": "48575e768b21f9bdd56bab4bd508e2c94891ace3f5fda34ab8a954ea1464cbf1",
+    "godot/assets/pixel_town/clouds/cloud-clusters-atlas-v2.png": "c783596015c781c2e21e96c7e9cbb2bcbdcc7985438add62b1f51059d47edc84",
+    "godot/assets/pixel_town/clouds/cloud-clusters-atlas-v2.png.import": "d70e3af11e3784270fb35f87468f8aa0d3a8183e03ae50f4a820463851816826",
+    "godot/assets/pixel_town/clouds/cloud-far-v1.png": "9d3f7d6bd992ec2ac080c877c0c200494827d719c4996330bda8d5281b62afa5",
+    "godot/assets/pixel_town/clouds/cloud-far-v1.png.import": "606181c10b01da0260b9bbb3c8615e9c888a03457ecdfcbcdf8315aebda02f1e",
+    "godot/assets/pixel_town/clouds/cloud-mid-v1.png": "d359406dd12529a0bb88e65b3a39ce1cd2376bc20bcd9e9bd31b9b7312128cac",
+    "godot/assets/pixel_town/clouds/cloud-mid-v1.png.import": "a6daee0f9d68a1d6d3430191591a692beb5ad478a364e7b85a514a67d7af5c6f",
+    "godot/assets/pixel_town/clouds/cloud-near-v1.png": "0322f5b13784bc38d9074d7ad70986bb237816c782583ca9400292e9d68aa277",
+    "godot/assets/pixel_town/clouds/cloud-near-v1.png.import": "ab94f3e4379f157698d6a206f00b8ee4676e0bb1445ef1cf3f219a992637a00a",
+    "godot/assets/pixel_town/environment/town-props-atlas-outline-v4.png": "3bfb4724d8fe1ddeec53e5eba67ac6560bc9921bbc8e7f3ec5fa5b089e3a9724",
+    "godot/assets/pixel_town/environment/town-props-atlas-outline-v4.png.import": "d8eb9bac0597a474253e34c5e3ebb3f49c72962fa78ef84a493a3c2e561d8891",
+    "godot/assets/pixel_town/environment/town-props-atlas-smooth-v3.png": "da75e5ba3e76a9ab1f61768e1088a41ed5c50ebf7f5e3e79ec176d13ab31cce3",
+    "godot/assets/pixel_town/environment/town-props-atlas-smooth-v3.png.import": "614ffa565700792db4227b944641fdfef720c2b614f1cb4dcc8fad45fbb0e85c",
+    "godot/assets/pixel_town/environment/town-props-atlas-v2.png": "e60bfe08a887bc350de4bd4c66113991bb59953f88fea8205cbc22bbda382f74",
+    "godot/assets/pixel_town/environment/town-props-atlas-v2.png.import": "dd9493c18fcb2bb033bd36440005ba26a55e73af81bf283ceab170f974052159",
+    "godot/assets/pixel_town/portraits/guild-courier-portraits-v2.png": "d03b6e2ba30928178983f11a901427646922162e219fcc89fd42b85400ac6579",
+    "godot/assets/pixel_town/portraits/guild-courier-portraits-v2.png.import": "f77fcf8dfa54562e526efa1b1c56164c4fb1bc4708577b593e66f0187eda6868",
+    "godot/assets/projecttown-fantasy-backdrop-v1.png": "ca716d33f5840748be6b69ed458cb3ebe7e4c6870f1eda6d33d699b780d4caf5",
+    "godot/assets/projecttown-fantasy-backdrop-v1.png.import": "46bd7fadaf84dddcf18b7b57b96209ae957c7c80575f293b0b6bc2b11e622e09",
+    "godot/main.tscn": "f6130e4c2fcbd2371a0db860dea9600abd173b0f0798fe95a02c173a37736d98",
+    "godot/project.godot": "64a609b96f94069daa40b961b4459d121f488f23aef2a925cdeccf424af39d53",
+    "godot/scripts/api_client.gd": "a1807c94e8096f38b7de1c9ab20e11d598dd213e648ff306722875fb9f351325",
+    "godot/scripts/api_client.gd.uid": "b3fa0a1969f607630a4f4a33fcc70c26ea3afc4a5a181f6c6fdec9ff3b3eb295",
+    "godot/scripts/main.gd": "af5fcd70f0ddd0b168ee82917a1d93490641b02fbdf8f4100f696a90d383cae1",
+    "godot/scripts/main.gd.uid": "0ca813e20a5c852f38c00a08fa6a10dbbac54fcb2fbf755f2997a31eeb0fcce6",
+    "godot/scripts/town_draw_layer.gd": "d270fabfb01c1266cca9caa069bb54f1cafac7b0d422ba49d580a417a8a630a2",
+    "godot/scripts/town_draw_layer.gd.uid": "8f34315f1122beb65772227e1cb599de180df70ceb60c4c1a05325a9b909478a",
+    "godot/scripts/town_view.gd": "98a0a2394a4e2c5e26d09d441c811be9408682f53e23eb99192865b427989f77",
+    "godot/scripts/town_view.gd.uid": "b051758e46fdc6f2319ce24ca78f13fc203d0b7710411ed88a95fbaddeaa03ac",
+    "godot/tests/capture/artifact_review_waiting_user.gd": "209b52cc1c7a12954f3cda7e4d6913328257ad1a1c1f21db090f6e64f8882474",
+    "godot/tests/capture/capture_base.gd": "b119f04f2ea186a6d8f3574289ef5676394a2ebe8ed3c7aa547baee6f6f9266d",
+    "godot/tests/capture/failure.gd": "06e511b737601e0d60ffbdda59ec3927accad466958562a4bdec0e6862fbcdde",
+    "godot/tests/capture/history.gd": "6ee7abd0d63b8aba7ecfe97d48bd88b7a315171cdfb34fe6b959fa085db54f58",
+    "godot/tests/capture/main.gd": "b82b635f40d8fe7cf056f39d81a33efa3d90fa6672fb425e1c5bcbdefee66dd1",
+    "godot/tests/capture/restore_waiting_user.gd": "acc0cf8167ae9585684aaf567e031ba5b36b52c9c3af39146ac9178528c63d4e",
+    "godot/tests/capture/settings.gd": "788a06832bed5a02f4b5e73b9b8fc3d78dfa28734d68f02e1baf680e69b99b98",
+    "godot/tests/capture/tutorial.gd": "81110eb86f006a8613e689dffbc96e36f4e367578afbbde64b71d2151d75aec2"
+  },
+  "comparator": {
+    "changed_pixel_ratio": 0.0,
+    "max_channel_error": 0.0,
+    "mean_abs_channel_error": 0.0
+  },
+  "fixtures": [
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "da8bb692672c155efc4e5d5af0c92fd9431d8dcfec618acb2ee2f7ab3a24867a",
+      "expected_rgba_sha256": "eea7627f03b6a2895a4d8feb46dfc01ac60d98e96bc46e1da6485e6856105727",
+      "id": "main",
+      "script": "res://tests/capture/main.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "1c504d609178eedb05647e8765474327aa1a14f082ce0d74d198317898446c24",
+      "expected_rgba_sha256": "f21874d713ab9e90f8bc8f88a92cd93dd8875d51c725f4ba144d95bc3aab0995",
+      "id": "main",
+      "script": "res://tests/capture/main.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "413750567d020db3c8fbc254dafc9ba6f075e5412b97f026e54bf1877fb3fcb2",
+      "expected_rgba_sha256": "732ee74ba222c31238a953b7e695c27a44e8f189c79c4f5a08f6040e73cc7abb",
+      "id": "main",
+      "script": "res://tests/capture/main.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "b59f7639eb5e9003ce09766a2cfcee00926c6e394640c5780c2c75c36085c5bf",
+      "expected_rgba_sha256": "5dc21b1e69f90317a794683f1c6807481fdc0aac5e49de5a3963147da7dcea71",
+      "id": "tutorial",
+      "script": "res://tests/capture/tutorial.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "df6fbea97942047cb29bc1b2e285b2da219d0309570137a6d3958b98290d3d55",
+      "expected_rgba_sha256": "1735a22e0a4dcc07e2ddb2f49f70b6285ea70c2f9045a681bf53165faa492b5a",
+      "id": "tutorial",
+      "script": "res://tests/capture/tutorial.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "1c5ed6810671d7a06b8c8292f43a5f8347ea29b3b23f59a3c2ea686b3ea07427",
+      "expected_rgba_sha256": "3a354d1f76ddf1fd3e140058f652bf5cfd4f6b4133bae9f8bd3f1ed624b350e1",
+      "id": "tutorial",
+      "script": "res://tests/capture/tutorial.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "76604cf27f45e483d84035429c6bbd55b1ae8ae132ed853d2d9fb03e686c7977",
+      "expected_rgba_sha256": "3d6a72e6408fe0626781667dee172fd4ba68852738aa3639a048ec9be1092279",
+      "id": "history",
+      "script": "res://tests/capture/history.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "d1dc83d079dea911154d2ce3671e32e76d5e195e1fe8bf7f3ac47150a789224f",
+      "expected_rgba_sha256": "5b871ea57bc300241d925b8fb164a7667300b33d0649e45102296f663b979e97",
+      "id": "history",
+      "script": "res://tests/capture/history.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "d6258cc5ca9fc3dcf171bd80246ecb25d0398db781607e5f8fbffa4355374495",
+      "expected_rgba_sha256": "e00ef1651c790e0f3886e98719cc5078f8d851dcd250ce6fae8b2e3b7ec555b0",
+      "id": "history",
+      "script": "res://tests/capture/history.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "20b8d4b20cbeff1238a1f25781c069db469dc80f39266cb77aa795d7094f3a9e",
+      "expected_rgba_sha256": "779d974891b7991be74e50baea336e8977311afbeb234d31765122151d01442e",
+      "id": "failure",
+      "script": "res://tests/capture/failure.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "942252812434da4808cf6fdb3e07dec0ed9d006fe70ff6059cf1be10f4434f2b",
+      "expected_rgba_sha256": "c5d016139308a4f8f6d2697adacd92fd7cc245b5e9d74893b6b04d271ae80fb8",
+      "id": "failure",
+      "script": "res://tests/capture/failure.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "85d51f2c6492b9b3ba80c7fffc0cfa18f57ddb32a5805674532a2c9fecb37ea9",
+      "expected_rgba_sha256": "16f59f286dd4b462625901c993d06ce5c4dc606531238c67aca08fc911f1c156",
+      "id": "failure",
+      "script": "res://tests/capture/failure.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "3e46b963987da2ec434ffdebba6f4f360e9ccf23595f39f2173a5f63ab849937",
+      "expected_rgba_sha256": "044b0102e21d9e7b391d21cb2bd6a087c88184ff0418d646f634475e346ec8b0",
+      "id": "artifact_review_waiting_user",
+      "script": "res://tests/capture/artifact_review_waiting_user.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "ce450b59a4667055416e09c5c1ac5c680b9ba226cc9a3f7f8a6936f226df3303",
+      "expected_rgba_sha256": "6b9773826eb11ac4de1670bcaf2b4be122a6cada58170454f9652ccb4be86541",
+      "id": "artifact_review_waiting_user",
+      "script": "res://tests/capture/artifact_review_waiting_user.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "a3a293d702684fc39c17babc28910d227cfd836595a1798d9c05e7bf9e48be1c",
+      "expected_rgba_sha256": "d1f63f8e763686a13f6aabdea750bf4fb5e7a44ae4c936bc6a2189ccbf319fe7",
+      "id": "artifact_review_waiting_user",
+      "script": "res://tests/capture/artifact_review_waiting_user.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "868e7de498637501377fd3fa4d2ca11f7980f961732ab1f315b87c460c24ad18",
+      "expected_rgba_sha256": "3dde436ad26ea5155b5acf807bae8d6402cbbfb6b0a22dd3c4e1f45d06575c99",
+      "id": "restore_waiting_user",
+      "script": "res://tests/capture/restore_waiting_user.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "f5cc9bfa9e66f42267b675e972f4e22bbd9976fa10ba58e0a17067f081af0b86",
+      "expected_rgba_sha256": "110f392db9cca91c17af7b813f13b81817762e6b9825b7601c2e38deb641d4fa",
+      "id": "restore_waiting_user",
+      "script": "res://tests/capture/restore_waiting_user.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "1283a0da45673b1f82816f3097d4e1399b6c65e92a1d18d8ae78ae6378e191b6",
+      "expected_rgba_sha256": "499bd64c0e15f1436693e0d2dda599920a976919816c2a18e13b4fec0d8e5bc7",
+      "id": "restore_waiting_user",
+      "script": "res://tests/capture/restore_waiting_user.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "05ce978760eb9c5f6e9361e9ecf559cfd3caa445e223fceac44e1b0dffed35cf",
+      "expected_rgba_sha256": "bd98cea41f6d23d5dee0cc87b816a244b1c7a4fde33babb4bad5bd4769ffdad6",
+      "id": "settings",
+      "script": "res://tests/capture/settings.gd",
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "56aa978ae22b0d2c062ea03abdb49a6ce629bfcf4dc1b5ebb50d3fd38355935a",
+      "expected_rgba_sha256": "67b69330e878fdf0d0c6e6b05470e2cc264cfbdba442ef8c6746e08e95aea567",
+      "id": "settings",
+      "script": "res://tests/capture/settings.gd",
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "comparator": {
+        "changed_pixel_ratio": 0.0,
+        "max_channel_error": 0.0,
+        "mean_abs_channel_error": 0.0
+      },
+      "expected_png_sha256": "f8d1e67c997d890fc18ca5e9301ec3975384d2320137ec10bcd52c0ed75bcc60",
+      "expected_rgba_sha256": "dd7a41333021249f6553856923c35c49055dc41028466d39bc49e412e1deb7a9",
+      "id": "settings",
+      "script": "res://tests/capture/settings.gd",
+      "viewport": [
+        900,
+        720
+      ]
+    }
+  ],
+  "font_hashes": {
+    "godot/assets/fonts/fusion-pixel-12px-proportional-zh-hans.ttf": "5f43f090748d2ee00792d942a1257f44723b807b5cfefa133a856a3a0c5ff702"
+  },
+  "godot_version": "4.7.1.stable.official.a13da4feb",
+  "renderer": "gl_compatibility",
+  "schema_version": 1
+}

@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and local secrets
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.secrets/
+
+# Runtime data
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+logs/
+data/
+
+# Generated Quest workspaces; keep the checked-in learning notes.
+sandbox/quests/
+sandbox/tmp/
+
+# Godot-generated files
+.godot/
+godot/.godot/
+
+# Editors and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Keep the active project-level Sol-Terra config, but do not publish local
+# rollback copies or inactive Luna role files.
+.codex/backups/
+.codex/agents/luna-*.toml
+
+# Local generated evidence and temporary debris; retain locally, never track.
+.tmp/
+tmp/
+.pytest-basetemp-*/
+sandbox/visual-*/
+/0

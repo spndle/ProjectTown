@@ -1,0 +1,58 @@
+{
+  "schema_version": "v3-phase-1-fixtures-v1",
+  "scenarios": [
+    {
+      "name": "research-plan-cn",
+      "root": "research-plan-cn",
+      "files": ["brief.md", "methods.txt", "milestones.json"],
+      "task": "制定中文田野访谈研究计划，优先安排样本招募和匿名化检查。",
+      "artifact_kind": "plan",
+      "readme_target": null,
+      "constraints": {
+        "execution": "offline",
+        "privacy": "deidentify_interview_records",
+        "priority": "recruitment_screening_first"
+      },
+      "expected_state": "generated"
+    },
+    {
+      "name": "report-multisource",
+      "root": "report-multisource",
+      "files": ["observations.md", "metrics.json", "decision-log.txt"],
+      "task": "汇总温室节水试验的多来源周报，说明节水结果与下一步校准事项。",
+      "artifact_kind": "report",
+      "readme_target": null,
+      "constraints": {
+        "evidence": "cite_observations_and_metrics",
+        "structure": "separate_completed_and_pending"
+      },
+      "expected_state": "generated"
+    },
+    {
+      "name": "python-readme-suggestion",
+      "root": "python-readme-suggestion",
+      "files": ["README.md", "src/slugify.py", "pyproject.json"],
+      "task": "为 Python 文本清理工具提出 README 使用示例和边界说明。",
+      "artifact_kind": "readme",
+      "readme_target": "README.md",
+      "constraints": {
+        "operation": "suggestion_only",
+        "source_preservation": "readme_unchanged",
+        "coverage": "document_empty_string_behavior"
+      },
+      "expected_state": "generated"
+    },
+    {
+      "name": "fullwidth-mode-conflict",
+      "root": "fullwidth-mode-conflict",
+      "files": ["brief.md", "constraints.txt"],
+      "task": "整理采集脚本运行计划。",
+      "artifact_kind": "plan",
+      "readme_target": null,
+      "constraints": {
+        "review": "required"
+      },
+      "expected_state": "needs_user_decision"
+    }
+  ]
+}

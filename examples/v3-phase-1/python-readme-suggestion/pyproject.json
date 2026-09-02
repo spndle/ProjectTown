@@ -1,0 +1,6 @@
+{
+  "project": {
+    "name": "text-tidy",
+    "requires-python": ">=3.11"
+  }
+}

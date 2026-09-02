@@ -1,0 +1,15 @@
+.git
+.agents
+.codex
+.venv
+.pytest_cache
+.ruff_cache
+data
+sandbox
+tests
+benchmark/results
+*.pyc
+.secrets/
+.env
+.env.*
+!.env.example

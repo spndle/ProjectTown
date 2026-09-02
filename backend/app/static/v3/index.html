@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProjectTown local controlled write</title>
+  <link rel="stylesheet" href="/v3/app.css">
+</head>
+<body>
+  <main>
+    <h1>ProjectTown local controlled write</h1>
+    <p id="status" aria-live="polite">Session not started. Buttons execute only an already independent 3C authorization.</p>
+    <button id="start-session" type="button">Start local session</button>
+    <label for="operation">Pre-authorized operation</label>
+    <select id="operation" disabled><option value="">Select an operation</option></select>
+    <pre id="details" aria-live="polite"></pre>
+    <button id="check" type="button" disabled>Check state</button>
+    <fieldset>
+      <legend>Explicit action</legend>
+      <label for="confirmation">Type the exact confirmation shown in operation details</label>
+      <input id="confirmation" autocomplete="off">
+      <button data-action="apply" type="button" disabled>Apply</button>
+      <button data-action="reconcile" type="button" disabled>Reconcile</button>
+      <button data-action="restore" type="button" disabled>Restore</button>
+    </fieldset>
+  </main>
+  <script type="module" src="/v3/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+:root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+body { margin: 2rem auto; max-width: 46rem; padding: 0 1rem; }
+main { display: grid; gap: 1rem; }
+fieldset { display: flex; flex-wrap: wrap; gap: .6rem; }
+input, select, button { font: inherit; padding: .45rem; }
+pre { overflow-wrap: anywhere; white-space: pre-wrap; }
+button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid Highlight; outline-offset: 2px; }

@@ -1,0 +1,10 @@
+-r requirements.txt
+
+pytest>=8.3,<9.0
+pytest-asyncio>=0.25,<1.0
+pytest-cov>=6.0,<8.0
+pypdf>=6.10,<7.0
+ruff>=0.11,<1.0
+# Starlette 1.4's TestClient adapter requires the successor package.  This
+# declaration is intentionally not installed by repository validation scripts.
+httpx2>=2,<3

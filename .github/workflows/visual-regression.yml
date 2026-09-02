@@ -1,0 +1,28 @@
+name: Visual regression
+on:
+  push:
+    paths: ["godot/**", "scripts/run_godot_visual_regression.py", "tests/visual/**", ".github/workflows/visual-regression.yml"]
+  pull_request:
+    paths: ["godot/**", "scripts/run_godot_visual_regression.py", "tests/visual/**", ".github/workflows/visual-regression.yml"]
+  workflow_dispatch:
+jobs:
+  visual-regression:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements-dev.txt
+      - run: pytest tests/test_visual_regression_runner.py tests/visual -q
+      - run: ruff check scripts/run_godot_visual_regression.py tests/test_visual_regression_runner.py tests/visual
+      - shell: pwsh
+        run: |
+          $url = 'https://github.com/godotengine/godot-builds/releases/download/4.7.1-stable/Godot_v4.7.1-stable_win64.exe.zip'
+          Invoke-WebRequest $url -OutFile godot.zip
+          if ((Get-FileHash godot.zip -Algorithm SHA256).Hash -ne 'C7A289051EAEFB460B0106B60E9CD5BEE0EF55FD102DCB2BED1EB356CF3D90A1') { throw 'Godot zip hash mismatch' }
+          Expand-Archive godot.zip godot-engine
+          $env:CI = 'true'
+          python scripts/run_godot_visual_regression.py --godot (Resolve-Path godot-engine/Godot_v4.7.1-stable_win64_console.exe)
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with: {name: visual-regression-evidence, path: sandbox/visual-*}

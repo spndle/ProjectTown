@@ -1,0 +1,183 @@
+{
+  "schema_version": "v3-phase-2-engineering-fixtures-v1",
+  "aggregate_limit": "engineering_only",
+  "source_fixture_manifest": "../v3-phase-1/manifest.json",
+  "source_files_copied": false,
+  "entries": [
+    {
+      "id": "T001",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "research-plan-cn",
+      "artifact_kind": "plan",
+      "task": "制定中文田野访谈研究计划，优先安排样本招募和匿名化检查。",
+      "constraints": {
+        "execution": "offline",
+        "privacy": "deidentify_interview_records",
+        "priority": "recruitment_screening_first"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T002",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "research-plan-cn",
+      "artifact_kind": "plan",
+      "task": "制定中文田野访谈研究计划，优先安排样本招募和匿名化检查。",
+      "constraints": {
+        "execution": "offline",
+        "privacy": "deidentify_interview_records",
+        "priority": "recruitment_screening_first"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T003",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "fullwidth-mode-conflict",
+      "artifact_kind": "plan",
+      "task": "整理采集脚本运行计划。",
+      "constraints": {
+        "review": "required"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "workflow_failed",
+        "failure_stage": "confirmation",
+        "failure_code": "needs_user_decision"
+      }
+    },
+    {
+      "id": "T004",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "report-multisource",
+      "artifact_kind": "report",
+      "task": "汇总温室节水试验的多来源周报，说明节水结果与下一步校准事项。",
+      "constraints": {
+        "evidence": "cite_observations_and_metrics",
+        "structure": "separate_completed_and_pending"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T005",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "report-multisource",
+      "artifact_kind": "report",
+      "task": "汇总温室节水试验的多来源周报，说明节水结果与下一步校准事项。",
+      "constraints": {
+        "evidence": "cite_observations_and_metrics",
+        "structure": "separate_completed_and_pending"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T006",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "report-multisource",
+      "artifact_kind": "report",
+      "task": "汇总温室节水试验的多来源周报，说明节水结果与下一步校准事项。",
+      "constraints": {
+        "evidence": "cite_observations_and_metrics",
+        "structure": "separate_completed_and_pending"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T007",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "python-readme-suggestion",
+      "artifact_kind": "readme",
+      "task": "为 Python 文本清理工具提出 README 使用示例和边界说明。",
+      "constraints": {
+        "coverage": "document_empty_string_behavior",
+        "operation": "suggestion_only",
+        "source_preservation": "readme_unchanged"
+      },
+      "readme_target": "README.md",
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": false,
+        "kept": false,
+        "disposition": "structural_rewrite_not_kept"
+      }
+    },
+    {
+      "id": "T008",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "python-readme-suggestion",
+      "artifact_kind": "readme",
+      "task": "为 Python 文本清理工具提出 README 使用示例和边界说明。",
+      "constraints": {
+        "coverage": "document_empty_string_behavior",
+        "operation": "suggestion_only",
+        "source_preservation": "readme_unchanged"
+      },
+      "readme_target": "README.md",
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T009",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "python-readme-suggestion",
+      "artifact_kind": "readme",
+      "task": "为 Python 文本清理工具提出 README 使用示例和边界说明。",
+      "constraints": {
+        "coverage": "document_empty_string_behavior",
+        "operation": "suggestion_only",
+        "source_preservation": "readme_unchanged"
+      },
+      "readme_target": "README.md",
+      "synthetic_rating": {
+        "outcome": "completed",
+        "adoptable_without_structural_rewrite": true,
+        "kept": true
+      }
+    },
+    {
+      "id": "T010",
+      "label": "synthetic_engineering_fixture",
+      "scenario_id": "research-plan-cn",
+      "artifact_kind": "plan",
+      "task": "制定中文田野访谈研究计划，优先安排样本招募和匿名化检查。",
+      "constraints": {
+        "execution": "offline",
+        "privacy": "deidentify_interview_records",
+        "priority": "recruitment_screening_first"
+      },
+      "readme_target": null,
+      "synthetic_rating": {
+        "outcome": "abandoned",
+        "abandonment_reason": "synthetic_fixture_not_a_human_value_record"
+      }
+    }
+  ]
+}

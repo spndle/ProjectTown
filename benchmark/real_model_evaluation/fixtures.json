@@ -1,0 +1,29 @@
+{
+  "dataset_version": "phase1c-synthetic-v1",
+  "fixtures": [
+    {
+      "fixture_id": "synthetic_plan_low",
+      "summary": {
+        "schema_version": 1,
+        "task_category": "planning",
+        "deliverable_kind": "implementation_plan",
+        "complexity": "low",
+        "acceptance_checks": ["scope_defined", "constraints_listed"],
+        "allowed_tools": ["read", "check_markdown"],
+        "max_steps": 3
+      }
+    },
+    {
+      "fixture_id": "synthetic_validation_medium",
+      "summary": {
+        "schema_version": 1,
+        "task_category": "analysis",
+        "deliverable_kind": "validation_plan",
+        "complexity": "medium",
+        "acceptance_checks": ["risks_listed", "success_criteria_listed"],
+        "allowed_tools": ["inspect", "check_markdown"],
+        "max_steps": 4
+      }
+    }
+  ]
+}

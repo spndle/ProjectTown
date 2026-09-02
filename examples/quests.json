@@ -1,0 +1,40 @@
+{
+  "version": "0.1",
+  "description": "ProjectTown /api/v1 兼容层的三个历史固定 Quest；workspace 均相对于 sandbox 根目录。",
+  "quests": [
+    {
+      "name": "生成 Agent 项目简报",
+      "request": {
+        "template_id": "project_brief",
+        "goal": "为一个面向个人开发者的可靠长任务 Agent 生成项目简报",
+        "workspace": "quests/demo-project-brief"
+      },
+      "expected_artifacts": [
+        "deliverables/project_brief.md"
+      ]
+    },
+    {
+      "name": "创建 Python CLI 起步项目",
+      "request": {
+        "template_id": "python_starter",
+        "goal": "创建一个可以从命令行接收姓名并输出问候语的 Python 起步项目",
+        "workspace": "quests/demo-python-starter"
+      },
+      "expected_artifacts": [
+        "src/main.py",
+        "README.md"
+      ]
+    },
+    {
+      "name": "生成项目 README",
+      "request": {
+        "template_id": "readme_builder",
+        "goal": "为一个个人学习进度追踪工具生成清晰的 README",
+        "workspace": "quests/demo-readme-builder"
+      },
+      "expected_artifacts": [
+        "README.md"
+      ]
+    }
+  ]
+}

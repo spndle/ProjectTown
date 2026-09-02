@@ -1,0 +1,31 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# Project-scoped Sol control plane. Provider, sandbox, approval, network, MCP,
+# hook, plugin, and telemetry settings continue to inherit from user/admin layers.
+model = "gpt-5.6-sol"
+model_reasoning_effort = "medium"
+
+[features]
+multi_agent = true
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3
+default_subagent_model = "gpt-5.6-terra"
+default_subagent_reasoning_effort = "medium"
+
+[agents.terra_explorer]
+description = "Read-only explorer for bounded codebase tracing and evidence collection."
+config_file = "agents/terra-explorer.toml"
+
+[agents.terra_implementer]
+description = "Workspace-only implementer for small, explicitly bounded, reversible changes."
+config_file = "agents/terra-implementer.toml"
+
+[agents.terra_tester]
+description = "Test and build runner that reports commands, exit status, logs, and artifacts without editing product code."
+config_file = "agents/terra-tester.toml"
+
+[agents.sol_escalation]
+description = "Read-only Sol High decision reviewer, reserved for explicitly defined high-impact escalation conditions."
+config_file = "agents/sol-escalation.toml"

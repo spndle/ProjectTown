@@ -1,0 +1,1257 @@
+{
+  "events": [
+    {
+      "created_at": "2026-08-07T05:16:29.093Z",
+      "event_schema_version": 1,
+      "event_type": "QuestDrafted",
+      "id": 1,
+      "payload": {
+        "patch": {
+          "budget_usage": {
+            "messages": 0,
+            "replans": 0,
+            "steps": 0,
+            "tokens": 0,
+            "tool_calls": 0
+          },
+          "contract": {
+            "acceptance_criteria": [
+              {
+                "allowed_paths": [],
+                "changed_paths": [],
+                "description": "markdown check for README.md",
+                "id": "criterion_cf8c1a51032b",
+                "kind": "markdown",
+                "path": "README.md",
+                "required": true,
+                "required_keys": []
+              }
+            ],
+            "budget": {
+              "max_messages": 30,
+              "max_replans": 5,
+              "max_seconds": 300.0,
+              "max_steps": 50,
+              "max_tokens": 20000,
+              "max_tool_calls": 50
+            },
+            "confirmed": false,
+            "confirmed_at": null,
+            "constraints": [
+              "All tool access must stay inside the Quest workspace.",
+              "Only configured allowlisted tools may execute."
+            ],
+            "created_at": null,
+            "goal": "Create a README while detecting a repeated false write",
+            "id": "contract_aee6ab77f1fd",
+            "non_goals": [
+              "No network or external-account side effects."
+            ],
+            "quest_id": "qv1_7e7c82b90cac",
+            "version": 1
+          },
+          "created_at": "2026-08-07T05:16:29.093Z",
+          "current_milestone_id": null,
+          "error": null,
+          "finished_at": null,
+          "goal": "Create a README while detecting a repeated false write",
+          "id": "qv1_7e7c82b90cac",
+          "legacy_unverified": false,
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 0,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "pending",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "pending",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "pause_requested": false,
+          "plan_id": "plan_be6839ea4f7e",
+          "plan_metadata": {
+            "roots": [
+              "milestone_ca6a925708d3"
+            ],
+            "template_id": "readme_builder"
+          },
+          "plan_version": 1,
+          "progress": 0.0,
+          "recovery_required": false,
+          "route": [
+            "agent"
+          ],
+          "started_at": null,
+          "state_version": 1,
+          "status": "draft",
+          "template_id": "readme_builder",
+          "updated_at": "2026-08-07T05:16:29.093Z",
+          "workspace": "replays/loop-blocked"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 1,
+      "state_hash": "875b20af4fdae6ab6c1a6fac5d81aec24ccc797af38027fc33e564b16e8862aa",
+      "state_version_after": 1,
+      "state_version_before": 0
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.094Z",
+      "event_schema_version": 1,
+      "event_type": "GoalContractConfirmed",
+      "id": 2,
+      "payload": {
+        "patch": {
+          "contract": {
+            "acceptance_criteria": [
+              {
+                "allowed_paths": [],
+                "changed_paths": [],
+                "description": "markdown check for README.md",
+                "id": "criterion_cf8c1a51032b",
+                "kind": "markdown",
+                "path": "README.md",
+                "required": true,
+                "required_keys": []
+              }
+            ],
+            "budget": {
+              "max_messages": 30,
+              "max_replans": 5,
+              "max_seconds": 300.0,
+              "max_steps": 50,
+              "max_tokens": 20000,
+              "max_tool_calls": 50
+            },
+            "confirmed": true,
+            "confirmed_at": "2026-08-07T05:16:29.094Z",
+            "constraints": [
+              "All tool access must stay inside the Quest workspace.",
+              "Only configured allowlisted tools may execute."
+            ],
+            "created_at": null,
+            "goal": "Create a README while detecting a repeated false write",
+            "id": "contract_aee6ab77f1fd",
+            "non_goals": [
+              "No network or external-account side effects."
+            ],
+            "quest_id": "qv1_7e7c82b90cac",
+            "version": 2
+          },
+          "error": null,
+          "goal": "Create a README while detecting a repeated false write",
+          "state_version": 2,
+          "status": "planned",
+          "updated_at": "2026-08-07T05:16:29.094Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 2,
+      "state_hash": "302541fc41d5ef425b35382d1cfcaa4fb17e5866e58071a545eb8ecee20e8095",
+      "state_version_after": 2,
+      "state_version_before": 1
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.096Z",
+      "event_schema_version": 1,
+      "event_type": "QuestStarted",
+      "id": 3,
+      "payload": {
+        "patch": {
+          "error": null,
+          "started_at": "2026-08-07T05:16:29.096Z",
+          "state_version": 3,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.096Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 3,
+      "state_hash": "6f39c061aefa2e796691e51284ef6a39128017b7076b020522c02eec59bb77f9",
+      "state_version_after": 3,
+      "state_version_before": 2
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.097Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneStarted",
+      "id": 4,
+      "payload": {
+        "patch": {
+          "budget_usage": {
+            "messages": 0,
+            "replans": 0,
+            "steps": 1,
+            "tokens": 0,
+            "tool_calls": 1
+          },
+          "current_milestone_id": "milestone_ca6a925708d3",
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "running",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "pending",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 4,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.097Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 4,
+      "state_hash": "536040936b6201b09c23826b83960fdfc5d1809ec122908edd5ec18fdb01d471",
+      "state_version_after": 4,
+      "state_version_before": 3
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.100Z",
+      "event_schema_version": 1,
+      "event_type": "ToolCommitted",
+      "id": 5,
+      "payload": {
+        "patch": {
+          "last_receipt": {
+            "action_id": "action_a5b2e45bb67a9853",
+            "error": null,
+            "idempotency_key": "qv1_7e7c82b90cac:milestone_ca6a925708d3:1",
+            "result": {
+              "count": 0,
+              "entries": [],
+              "path": "."
+            },
+            "status": "committed"
+          },
+          "state_version": 5,
+          "updated_at": "2026-08-07T05:16:29.100Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 5,
+      "state_hash": "de11c4ade252bf79d89e5bcca056f1753fad57a4381c58a5be35bbf8a5235368",
+      "state_version_after": 5,
+      "state_version_before": 4
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.101Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneVerificationStarted",
+      "id": 6,
+      "payload": {
+        "patch": {
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "verifying",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "pending",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 6,
+          "status": "verifying",
+          "updated_at": "2026-08-07T05:16:29.101Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 6,
+      "state_hash": "00da082cf86b01b3b1a5e7dcbf9e3627be246523ccddd118deaf00abf6489d6e",
+      "state_version_after": 6,
+      "state_version_before": 5
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.104Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneVerified",
+      "id": 7,
+      "payload": {
+        "patch": {
+          "current_milestone_id": null,
+          "last_verified_milestone_id": "milestone_ca6a925708d3",
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "pending",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "progress": 0.3333333333333333,
+          "state_version": 7,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.104Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 7,
+      "state_hash": "e8b2c7a9cf5300350b04904e0922a79f3cfe2967c00783dc068358d3141b23c8",
+      "state_version_after": 7,
+      "state_version_before": 6
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.106Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneStarted",
+      "id": 8,
+      "payload": {
+        "patch": {
+          "budget_usage": {
+            "messages": 0,
+            "replans": 0,
+            "steps": 2,
+            "tokens": 0,
+            "tool_calls": 2
+          },
+          "current_milestone_id": "milestone_cd327cd293a6",
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 1,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "running",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 8,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.106Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 8,
+      "state_hash": "aace3a3514817e28a4a38ea22a617ef8c9c79047fcc5955621bc5e8cc2c14e4c",
+      "state_version_after": 8,
+      "state_version_before": 7
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.110Z",
+      "event_schema_version": 1,
+      "event_type": "ToolCommitted",
+      "id": 9,
+      "payload": {
+        "patch": {
+          "last_receipt": {
+            "action_id": "action_d3658bdce8ea565f",
+            "error": null,
+            "idempotency_key": "qv1_7e7c82b90cac:milestone_cd327cd293a6:1",
+            "result": {
+              "created": true,
+              "path": "README.md"
+            },
+            "status": "committed"
+          },
+          "state_version": 9,
+          "updated_at": "2026-08-07T05:16:29.110Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 9,
+      "state_hash": "c6a8537082975ac1caec7de7c9cc041fcad129202a1173b1d3c1dba71a434366",
+      "state_version_after": 9,
+      "state_version_before": 8
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.111Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneVerificationStarted",
+      "id": 10,
+      "payload": {
+        "patch": {
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 1,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_cd327cd293a6",
+              "plan_version": 1,
+              "position": 2,
+              "status": "verifying",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 0,
+              "dependencies": [
+                "milestone_cd327cd293a6"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_ab2370f48583",
+              "plan_version": 1,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 10,
+          "status": "verifying",
+          "updated_at": "2026-08-07T05:16:29.111Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 10,
+      "state_hash": "4745002868cc63d81bd9ac1dbb5e977ab16f8d2f3c52b5f8fd02ae059adc8e97",
+      "state_version_after": 10,
+      "state_version_before": 9
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.114Z",
+      "event_schema_version": 1,
+      "event_type": "ReplanningStarted",
+      "id": 11,
+      "payload": {
+        "patch": {
+          "budget_usage": {
+            "messages": 0,
+            "replans": 1,
+            "steps": 2,
+            "tokens": 0,
+            "tool_calls": 2
+          },
+          "last_failure_hypothesis": "missing markdown artifact",
+          "state_version": 11,
+          "status": "replanning",
+          "updated_at": "2026-08-07T05:16:29.114Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 11,
+      "state_hash": "ca920302db29e59c584280bfb35a9e8cebd4697501b9437e7eb4e9926322a5f4",
+      "state_version_after": 11,
+      "state_version_before": 10
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.115Z",
+      "event_schema_version": 1,
+      "event_type": "PlanReplanned",
+      "id": 12,
+      "payload": {
+        "patch": {
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 2,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_6f1b9a530546",
+              "plan_version": 2,
+              "position": 2,
+              "status": "pending",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 1,
+              "dependencies": [
+                "milestone_6f1b9a530546"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_3cc26d777169",
+              "plan_version": 2,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "plan_id": "plan_be6839ea4f7e",
+          "plan_metadata": {
+            "roots": [
+              "milestone_ca6a925708d3"
+            ],
+            "superseded": [
+              {
+                "failure_hypothesis": "missing markdown artifact",
+                "node_ids": [
+                  "milestone_cd327cd293a6",
+                  "milestone_ab2370f48583"
+                ],
+                "plan_version": 1
+              }
+            ],
+            "template_id": "readme_builder"
+          },
+          "plan_version": 2,
+          "state_version": 12,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.115Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 12,
+      "state_hash": "0568d92d10b92832e4e2c8508224bfe3c923dbc5de2aa635344b4cdda5a99d20",
+      "state_version_after": 12,
+      "state_version_before": 11
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.116Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneStarted",
+      "id": 13,
+      "payload": {
+        "patch": {
+          "budget_usage": {
+            "messages": 0,
+            "replans": 1,
+            "steps": 3,
+            "tokens": 0,
+            "tool_calls": 3
+          },
+          "current_milestone_id": "milestone_6f1b9a530546",
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 3,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_6f1b9a530546",
+              "plan_version": 2,
+              "position": 2,
+              "status": "running",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 1,
+              "dependencies": [
+                "milestone_6f1b9a530546"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_3cc26d777169",
+              "plan_version": 2,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 13,
+          "status": "running",
+          "updated_at": "2026-08-07T05:16:29.116Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 13,
+      "state_hash": "a35a93427b25795b9089e5aa6f5b64cf324b4b933c852bb757889b8ca9398a74",
+      "state_version_after": 13,
+      "state_version_before": 12
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.120Z",
+      "event_schema_version": 1,
+      "event_type": "ToolCommitted",
+      "id": 14,
+      "payload": {
+        "patch": {
+          "last_receipt": {
+            "action_id": "action_25bce4e57f636212",
+            "error": null,
+            "idempotency_key": "qv1_7e7c82b90cac:milestone_6f1b9a530546:3",
+            "result": {
+              "created": true,
+              "path": "README.md"
+            },
+            "status": "committed"
+          },
+          "state_version": 14,
+          "updated_at": "2026-08-07T05:16:29.120Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 14,
+      "state_hash": "43221fdb0d0a7b435ce6de2a1a012be7a16d84b1f5e1eff6e56c30d98a8a55a7",
+      "state_version_after": 14,
+      "state_version_before": 13
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.121Z",
+      "event_schema_version": 1,
+      "event_type": "MilestoneVerificationStarted",
+      "id": 15,
+      "payload": {
+        "patch": {
+          "milestones": [
+            {
+              "acceptance_criteria": [],
+              "attempt": 1,
+              "dependencies": [],
+              "description": "\u5217\u51fa\u5de5\u4f5c\u533a\u5185\u5bb9\u3002",
+              "evidence_ids": [
+                "73e644e3d78bdc654f02496f"
+              ],
+              "id": "milestone_ca6a925708d3",
+              "plan_version": 1,
+              "position": 1,
+              "status": "completed",
+              "title": "\u68c0\u67e5\u5de5\u4f5c\u533a",
+              "tool_args": {
+                "path": "."
+              },
+              "tool_name": "list_directory"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 3,
+              "dependencies": [
+                "milestone_ca6a925708d3"
+              ],
+              "description": "\u5199\u5165\u76ee\u6807\u3001\u5feb\u901f\u5f00\u59cb\u3001\u5f53\u524d\u80fd\u529b\u548c\u8def\u7ebf\u56fe\u3002",
+              "evidence_ids": [],
+              "id": "milestone_6f1b9a530546",
+              "plan_version": 2,
+              "position": 2,
+              "status": "verifying",
+              "title": "\u751f\u6210 README",
+              "tool_args": {
+                "content": "# Personal Project\n\n## \u9879\u76ee\u76ee\u6807\n\nCreate a README while detecting a repeated false write\n\n## \u5feb\u901f\u5f00\u59cb\n\n1. \u9605\u8bfb\u9879\u76ee\u76ee\u6807\u548c\u8303\u56f4\u3002\n2. \u914d\u7f6e\u672c\u5730\u5f00\u53d1\u73af\u5883\u3002\n3. \u8fd0\u884c\u6700\u5c0f\u793a\u4f8b\u5e76\u68c0\u67e5\u8f93\u51fa\u3002\n\n## \u5f53\u524d\u80fd\u529b\n\n- \u7ed3\u6784\u5316\u8bb0\u5f55\u4efb\u52a1\u6b65\u9aa4\u3002\n- \u5728\u9694\u79bb\u5de5\u4f5c\u533a\u5185\u751f\u6210\u9879\u76ee\u4ea7\u7269\u3002\n- \u4f7f\u7528\u786e\u5b9a\u6027\u5de5\u5177\u68c0\u67e5\u751f\u6210\u7ed3\u679c\u3002\n\n## \u8def\u7ebf\u56fe\n\n- [x] v1.0 Goal Contract \u4e0e DAG\n- [x] v1.0 Evidence \u4e0e\u72ec\u7acb Verifier\n- [x] v1.0 Checkpoint\u3001\u5e42\u7b49\u4e0e\u6062\u590d\n",
+                "path": "README.md"
+              },
+              "tool_name": "write_file"
+            },
+            {
+              "acceptance_criteria": [
+                "criterion_cf8c1a51032b"
+              ],
+              "attempt": 1,
+              "dependencies": [
+                "milestone_6f1b9a530546"
+              ],
+              "description": "\u786e\u8ba4 README \u975e\u7a7a\u4e14 Markdown \u56f4\u680f\u5b8c\u6574\u3002",
+              "evidence_ids": [],
+              "id": "milestone_3cc26d777169",
+              "plan_version": 2,
+              "position": 3,
+              "status": "pending",
+              "title": "\u68c0\u67e5 README",
+              "tool_args": {
+                "path": "README.md"
+              },
+              "tool_name": "check_markdown"
+            }
+          ],
+          "state_version": 15,
+          "status": "verifying",
+          "updated_at": "2026-08-07T05:16:29.121Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 15,
+      "state_hash": "bd832ec9aef5d4e2b7a2e67784851e45ca6d779e8ec9c0fbcbe26c461c829280",
+      "state_version_after": 15,
+      "state_version_before": 14
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.124Z",
+      "event_schema_version": 1,
+      "event_type": "LoopDetected",
+      "id": 16,
+      "payload": {
+        "patch": {
+          "error": {
+            "code": "LOOP_DETECTED",
+            "message": "Repeated actions produced no new WorldState or Evidence"
+          },
+          "state_version": 16,
+          "status": "waiting_user",
+          "updated_at": "2026-08-07T05:16:29.124Z"
+        }
+      },
+      "quest_id": "qv1_7e7c82b90cac",
+      "sequence": 16,
+      "state_hash": "4b8fe7d47b621042d5e141fbacf8401bd03b4497d78f87b71381200f5da0fa8f",
+      "state_version_after": 16,
+      "state_version_before": 15
+    }
+  ],
+  "evidence": [
+    {
+      "action_attempt": "action_a5b2e45bb67a9853",
+      "artifact_hash": "f26c665645829ac93c484284897213a6e3fcf550718713f23f1ab65061977c0f",
+      "artifact_path": ".",
+      "created_at": "2026-08-07T05:16:29.103Z",
+      "criterion_id": "observation:milestone_ca6a925708d3",
+      "criterion_version": 1,
+      "details": {
+        "result_keys": [
+          "count",
+          "entries",
+          "path"
+        ],
+        "tool_name": "list_directory"
+      },
+      "id": "73e644e3d78bdc654f02496f",
+      "milestone_id": "milestone_ca6a925708d3",
+      "passed": true,
+      "quest_id": "qv1_7e7c82b90cac",
+      "source_event_sequence": 5,
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    },
+    {
+      "action_attempt": "action_d3658bdce8ea565f",
+      "artifact_hash": null,
+      "artifact_path": "README.md",
+      "created_at": "2026-08-07T05:16:29.112Z",
+      "criterion_id": "criterion_cf8c1a51032b",
+      "criterion_version": 2,
+      "details": {},
+      "id": "56d4c205bb3229777f74d49f",
+      "milestone_id": "milestone_cd327cd293a6",
+      "passed": false,
+      "quest_id": "qv1_7e7c82b90cac",
+      "source_event_sequence": 9,
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    },
+    {
+      "action_attempt": "action_25bce4e57f636212",
+      "artifact_hash": null,
+      "artifact_path": "README.md",
+      "created_at": "2026-08-07T05:16:29.123Z",
+      "criterion_id": "criterion_cf8c1a51032b",
+      "criterion_version": 2,
+      "details": {},
+      "id": "3bea469b8c83c8deee19a581",
+      "milestone_id": "milestone_6f1b9a530546",
+      "passed": false,
+      "quest_id": "qv1_7e7c82b90cac",
+      "source_event_sequence": 14,
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    }
+  ],
+  "final_error": {
+    "code": "LOOP_DETECTED",
+    "message": "Repeated actions produced no new WorldState or Evidence"
+  },
+  "final_status": "waiting_user",
+  "generated_from_runtime": true,
+  "progress_entries": [
+    {
+      "action_signature": "e3be46f25dbe826b3dbca9320dcfd134c182aa87ec21f9f6a70c49ab527b82d8",
+      "created_at": "2026-08-07T05:16:29.106Z",
+      "event_sequence": 7,
+      "evidence_ids": [
+        "73e644e3d78bdc654f02496f"
+      ],
+      "id": "progress_qv1_7e7c82b90cac_7",
+      "progress": 0.3333333333333333,
+      "quest_id": "qv1_7e7c82b90cac",
+      "world_state_hash": "4e0e53e2e1fd4f1f0b81729226d40a23065564590ccfcc42e300deca2663fef1"
+    },
+    {
+      "action_signature": "4e61a1e7c204fc11a6342b75333a49b09dd92ba08bb918c18be07c37e15b78ce",
+      "created_at": "2026-08-07T05:16:29.113Z",
+      "event_sequence": 10,
+      "evidence_ids": [
+        "73e644e3d78bdc654f02496f"
+      ],
+      "id": "progress_qv1_7e7c82b90cac_10",
+      "progress": 0.3333333333333333,
+      "quest_id": "qv1_7e7c82b90cac",
+      "world_state_hash": "4e0e53e2e1fd4f1f0b81729226d40a23065564590ccfcc42e300deca2663fef1"
+    },
+    {
+      "action_signature": "4e61a1e7c204fc11a6342b75333a49b09dd92ba08bb918c18be07c37e15b78ce",
+      "created_at": "2026-08-07T05:16:29.123Z",
+      "event_sequence": 15,
+      "evidence_ids": [
+        "73e644e3d78bdc654f02496f"
+      ],
+      "id": "progress_qv1_7e7c82b90cac_15",
+      "progress": 0.3333333333333333,
+      "quest_id": "qv1_7e7c82b90cac",
+      "world_state_hash": "4e0e53e2e1fd4f1f0b81729226d40a23065564590ccfcc42e300deca2663fef1"
+    }
+  ],
+  "quest_id": "qv1_7e7c82b90cac",
+  "receipts": [
+    {
+      "action_id": "action_a5b2e45bb67a9853",
+      "error": null,
+      "idempotency_key": "qv1_7e7c82b90cac:milestone_ca6a925708d3:1",
+      "result": {
+        "count": 0,
+        "entries": [],
+        "path": "."
+      },
+      "status": "committed"
+    },
+    {
+      "action_id": "action_d3658bdce8ea565f",
+      "error": null,
+      "idempotency_key": "qv1_7e7c82b90cac:milestone_cd327cd293a6:1",
+      "result": {
+        "created": true,
+        "path": "README.md"
+      },
+      "status": "committed"
+    },
+    {
+      "action_id": "action_25bce4e57f636212",
+      "error": null,
+      "idempotency_key": "qv1_7e7c82b90cac:milestone_6f1b9a530546:3",
+      "result": {
+        "created": true,
+        "path": "README.md"
+      },
+      "status": "committed"
+    }
+  ],
+  "scenario": "watchdog-loop-blocked",
+  "verification_results": [
+    {
+      "created_at": "2026-08-07T05:16:29.104Z",
+      "criterion_id": "observation:milestone_ca6a925708d3",
+      "criterion_version": 1,
+      "evidence": {
+        "action_attempt": "action_a5b2e45bb67a9853",
+        "artifact_hash": "f26c665645829ac93c484284897213a6e3fcf550718713f23f1ab65061977c0f",
+        "artifact_path": ".",
+        "created_at": null,
+        "criterion_id": "observation:milestone_ca6a925708d3",
+        "criterion_version": 1,
+        "details": {
+          "result_keys": [
+            "count",
+            "entries",
+            "path"
+          ],
+          "tool_name": "list_directory"
+        },
+        "id": "73e644e3d78bdc654f02496f",
+        "milestone_id": "milestone_ca6a925708d3",
+        "passed": true,
+        "quest_id": "qv1_7e7c82b90cac",
+        "source_event_sequence": 5,
+        "verifier": "projecttown.deterministic",
+        "verifier_version": "1.0"
+      },
+      "id": "76183c5fcac6e92e654fdd06",
+      "milestone_id": "milestone_ca6a925708d3",
+      "passed": true,
+      "quest_id": "qv1_7e7c82b90cac",
+      "reason": "ok",
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.113Z",
+      "criterion_id": "criterion_cf8c1a51032b",
+      "criterion_version": 2,
+      "evidence": {
+        "action_attempt": "action_d3658bdce8ea565f",
+        "artifact_hash": null,
+        "artifact_path": "README.md",
+        "created_at": null,
+        "criterion_id": "criterion_cf8c1a51032b",
+        "criterion_version": 2,
+        "details": {},
+        "id": "56d4c205bb3229777f74d49f",
+        "milestone_id": "milestone_cd327cd293a6",
+        "passed": false,
+        "quest_id": "qv1_7e7c82b90cac",
+        "source_event_sequence": 9,
+        "verifier": "projecttown.deterministic",
+        "verifier_version": "1.0"
+      },
+      "id": "175fa49973ad817a77f70147",
+      "milestone_id": "milestone_cd327cd293a6",
+      "passed": false,
+      "quest_id": "qv1_7e7c82b90cac",
+      "reason": "missing markdown artifact",
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    },
+    {
+      "created_at": "2026-08-07T05:16:29.123Z",
+      "criterion_id": "criterion_cf8c1a51032b",
+      "criterion_version": 2,
+      "evidence": {
+        "action_attempt": "action_25bce4e57f636212",
+        "artifact_hash": null,
+        "artifact_path": "README.md",
+        "created_at": null,
+        "criterion_id": "criterion_cf8c1a51032b",
+        "criterion_version": 2,
+        "details": {},
+        "id": "3bea469b8c83c8deee19a581",
+        "milestone_id": "milestone_6f1b9a530546",
+        "passed": false,
+        "quest_id": "qv1_7e7c82b90cac",
+        "source_event_sequence": 14,
+        "verifier": "projecttown.deterministic",
+        "verifier_version": "1.0"
+      },
+      "id": "035f8985ee272571250524cc",
+      "milestone_id": "milestone_6f1b9a530546",
+      "passed": false,
+      "quest_id": "qv1_7e7c82b90cac",
+      "reason": "missing markdown artifact",
+      "verifier": "projecttown.deterministic",
+      "verifier_version": "1.0"
+    }
+  ],
+  "version": "1.0.0"
+}

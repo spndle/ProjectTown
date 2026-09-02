@@ -1,0 +1,14 @@
+{
+  "command": "python -m backend.app.v1.evaluation --output <output> --profile formal --seed 1729",
+  "profile": "formal",
+  "row_count": 4320,
+  "runtime_simulation": true,
+  "seed": 1729,
+  "sha256": {
+    "report.md": "21ba42602336fd34015df50ef2f2bba24f90d0bf8645172c870c6d4418128f0b",
+    "results.csv": "4f24fac7930945aaa7986e905cf5ac7f6393499fa8bd4caaa61162be6712d1c6",
+    "results.json": "f8b5d380fc87a37f071b28f38d69988ad8938470da4dbbc3663583111a193d06",
+    "success.svg": "5181d5fec3434925aa9ea9c85a688c5e169ce82065cb54a16c8509c9910af3d5"
+  },
+  "simulator_version": "1.0"
+}

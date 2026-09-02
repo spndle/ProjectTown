@@ -1,0 +1,1 @@
+{"version":"1.0.0","illustrative":true,"quests":[{"id":"quest-001","goal":"Create a project brief","expected_artifacts":["deliverables/project_brief.md"]},{"id":"quest-002","goal":"Create a Python starter","expected_artifacts":["src/main.py","README.md"]},{"id":"quest-003","goal":"Write a README","expected_artifacts":["README.md"]}]}

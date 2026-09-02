@@ -1,0 +1,4 @@
+interface:
+  display_name: "Sol-Luna Workflow"
+  short_description: "Delegate bounded work and verify every result"
+  default_prompt: "Use $sol-luna to plan, delegate, verify, and accept this project task."
