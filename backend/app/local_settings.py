@@ -615,13 +615,13 @@ def _directory_nonreparse(info: os.stat_result) -> bool:
 def _restricted_permissions(path: Path, info: os.stat_result) -> bool:
     if os.name != "nt":
         return (stat.S_IMODE(info.st_mode) & 0o077) == 0
-    return _windows_acl_is_restricted(path)
+    return _windows_acl_is_restricted(path, directory=False)
 
 
 def _restricted_directory_permissions(path: Path, info: os.stat_result) -> bool:
     if os.name != "nt":
         return (stat.S_IMODE(info.st_mode) & 0o077) == 0
-    return _windows_acl_is_restricted(path)
+    return _windows_acl_is_restricted(path, directory=True)
 
 
 def _set_restricted_directory_permissions(path: Path) -> None:
@@ -646,7 +646,7 @@ def _icacls_restrict(path: Path, *, directory: bool) -> None:
         after = _acl_target_identity(path, directory=directory)
     except OSError:
         raise OSError("local settings ACL operation failed") from None
-    if before != after or not _windows_acl_is_restricted(path):
+    if before != after or not _windows_acl_is_restricted(path, directory=directory):
         raise OSError("local settings ACL operation failed")
 
 
@@ -668,19 +668,22 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
         if directory
         else "[System.Security.AccessControl.InheritanceFlags]::None"
     )
-    expected_container = "$true" if directory else "$false"
-    expected_type = "[IO.DirectoryInfo]" if directory else "[IO.FileInfo]"
+    item_ctor = "[IO.DirectoryInfo]::new($p)" if directory else "[IO.FileInfo]::new($p)"
 
     def marker(stage: str) -> str:
-        return f"Write-Output 'PROJECTTOWN_ACL_TRACE:{stage}';" if trace else ""
+        return (
+            f"[Console]::Out.WriteLine('PROJECTTOWN_ACL_TRACE:{stage}');"
+            "[Console]::Out.Flush();"
+            if trace
+            else ""
+        )
 
     return (
         marker("START")
         +
         "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
         "if([string]::IsNullOrWhiteSpace($p)){throw 'missing path'};"
-        "$item=Get-Item -LiteralPath $p -Force;if($item.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'reparse path'};"
-        f"if(-not ($item -is {expected_type}) -or $item.PSIsContainer -ne {expected_container}){{throw 'invalid path type'}};"
+        f"$item={item_ctor};$item.Refresh();if(-not $item.Exists){{throw 'invalid path type'}};if($item.Attributes -band [IO.FileAttributes]::ReparsePoint){{throw 'reparse path'}};"
         + marker("ITEM_VALIDATED")
         +
         "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;"
@@ -699,14 +702,14 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
         +
         "$acl=$existing;"
         f"$inheritance={inheritance};"
-        "$rule=New-Object Security.AccessControl.FileSystemAccessRule($currentSid,[Security.AccessControl.FileSystemRights]::FullControl,$inheritance,[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);"
+        "$rule=[Security.AccessControl.FileSystemAccessRule]::new($currentSid,[Security.AccessControl.FileSystemRights]::FullControl,$inheritance,[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);"
         "$acl.AddAccessRule($rule);"
         + marker("DACL_PREPARED")
         +
         "$item.SetAccessControl($acl);"
         + marker("DACL_APPLIED")
         +
-        f"$verifiedItem=Get-Item -LiteralPath $p -Force;if(($verifiedItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -or -not ($verifiedItem -is {expected_type}) -or $verifiedItem.PSIsContainer -ne $item.PSIsContainer){{throw 'ACL verification failed'}};"
+        f"$verifiedItem={item_ctor};$verifiedItem.Refresh();if(-not $verifiedItem.Exists -or ($verifiedItem.Attributes -band [IO.FileAttributes]::ReparsePoint)){{throw 'ACL verification failed'}};"
         + marker("VERIFIED_ITEM")
         +
         "$verified=$verifiedItem.GetAccessControl($sections);$ownerAfter=$verified.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupAfter=$verified.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
@@ -721,16 +724,51 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
     )
 
 
-def _windows_acl_is_restricted(path: Path) -> bool:
-    executable = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
-    script = (
-        "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
-        "if([string]::IsNullOrWhiteSpace($p)){exit 1};$item=Get-Item -LiteralPath $p -Force;$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;$acl=$item.GetAccessControl($sections);"
-        "if(-not $acl.AreAccessRulesProtected){exit 1};$current=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value;$allowed=@($current,'S-1-5-18','S-1-5-32-544');$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};$currentFull=$false;$rules=@($acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));"
-        "foreach($r in $rules){if($r.AccessControlType -eq 'Allow'){$sid=$r.IdentityReference.Value;if($allowed -notcontains $sid){exit 1};if($sid -eq $current -and (($r.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -eq [Security.AccessControl.FileSystemRights]::FullControl)){$currentFull=$true}}};if(-not $currentFull){exit 1};exit 0"
+def _windows_acl_verify_script(directory: bool, *, trace: bool = False) -> str:
+    inheritance = (
+        "[System.Security.AccessControl.InheritanceFlags]::ObjectInherit -bor "
+        "[System.Security.AccessControl.InheritanceFlags]::ContainerInherit"
+        if directory
+        else "[System.Security.AccessControl.InheritanceFlags]::None"
     )
+    item_ctor = "[IO.DirectoryInfo]::new($p)" if directory else "[IO.FileInfo]::new($p)"
+
+    def marker(stage: str) -> str:
+        return (
+            f"[Console]::Out.WriteLine('PROJECTTOWN_ACL_TRACE:{stage}');"
+            "[Console]::Out.Flush();"
+            if trace
+            else ""
+        )
+
+    return (
+        marker("START")
+        +
+        "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
+        "if([string]::IsNullOrWhiteSpace($p)){exit 1};"
+        f"$item={item_ctor};$item.Refresh();if(-not $item.Exists -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)){{exit 1}};"
+        + marker("ITEM_VALIDATED")
+        +
+        "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;$allowed=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');"
+        + marker("IDENTITY_READY")
+        +
+        "$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;$acl=$item.GetAccessControl($sections);"
+        + marker("DESCRIPTOR_READ")
+        +
+        "if(-not $acl.AreAccessRulesProtected){exit 1};$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;$group=$acl.GetGroup([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};"
+        + marker("OWNER_VALIDATED")
+        +
+        f"$inheritance={inheritance};$rules=@($acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));$currentAllowCount=0;foreach($rule in $rules){{if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny -or $rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){{exit 1}};$sid=$rule.IdentityReference.Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){{exit 1}};$currentAllowCount++}};if($currentAllowCount -ne 1){{exit 1}};"
+        + marker("VERIFIED_RULES_ENUMERATED")
+        + marker("COMPLETE")
+        + "exit 0"
+    )
+
+
+def _windows_acl_is_restricted(path: Path, *, directory: bool) -> bool:
+    executable = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
     try:
-        _run_windows_acl(executable, script, path)
+        _run_windows_acl(executable, _windows_acl_verify_script(directory), path)
     except OSError:
         return False
     return True

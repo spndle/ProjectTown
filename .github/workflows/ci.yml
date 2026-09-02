@@ -70,6 +70,8 @@ jobs:
             $env:PROJECTTOWN_ACL_PROBE_PATH = $probe
             python scripts/diagnose_windows_acl.py --path $env:PROJECTTOWN_ACL_PROBE_PATH
             if ($LASTEXITCODE -ne 0) { throw "Local Settings ACL primitive probe failed: $LASTEXITCODE" }
+            python scripts/diagnose_windows_acl.py --verify-path $env:PROJECTTOWN_ACL_PROBE_PATH
+            if ($LASTEXITCODE -ne 0) { throw "Local Settings ACL verifier probe failed: $LASTEXITCODE" }
           }
           finally {
             Remove-Item -LiteralPath $probe -Recurse -Force

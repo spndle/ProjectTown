@@ -36,6 +36,7 @@ def main(argv: list[str] | None = None) -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--control", action="store_true")
     mode.add_argument("--path", type=Path)
+    mode.add_argument("--verify-path", type=Path)
     args = parser.parse_args(argv)
     environment: dict[str, str] = {
         "SystemRoot": os.environ.get("SystemRoot", r"C:\Windows"),
@@ -43,9 +44,14 @@ def main(argv: list[str] | None = None) -> int:
     }
     command = CONTROL_COMMAND
     if not args.control:
-        assert args.path is not None
-        environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] = str(args.path.resolve())
-        command = local_settings._windows_acl_restrict_script(True, trace=True)
+        path = args.path or args.verify_path
+        assert path is not None
+        environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] = str(path.resolve())
+        command = (
+            local_settings._windows_acl_restrict_script(True, trace=True)
+            if args.path is not None
+            else local_settings._windows_acl_verify_script(True, trace=True)
+        )
     try:
         completed = subprocess.run(
             [

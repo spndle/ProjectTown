@@ -43,9 +43,9 @@ def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
     assert "RemoveAccessRuleSpecific" in script
     assert inheritance in script
     assert "$item.SetAccessControl($acl)" in script
-    assert "$verifiedItem=Get-Item -LiteralPath $p -Force" in script
-    assert "$item -is [IO.DirectoryInfo]" in local_settings._windows_acl_restrict_script(True)
-    assert "$item -is [IO.FileInfo]" in local_settings._windows_acl_restrict_script(False)
+    assert "$verifiedItem=[IO.FileInfo]::new($p)" in script or "$verifiedItem=[IO.DirectoryInfo]::new($p)" in script
+    assert "$item=[IO.DirectoryInfo]::new($p)" in local_settings._windows_acl_restrict_script(True)
+    assert "$item=[IO.FileInfo]::new($p)" in local_settings._windows_acl_restrict_script(False)
     assert "$groupBefore" in script and "$groupAfter" in script
     assert "$allowedOwners -notcontains $ownerBefore" in script
     assert "$allowedOwners -notcontains $ownerAfter" in script
@@ -83,10 +83,11 @@ def test_windows_acl_scripts_use_sid_native_dotnet_descriptors(
         "_run_windows_acl",
         lambda _executable, script, _path: captured.append(script),
     )
-    assert local_settings._windows_acl_is_restricted(tmp_path)
+    assert local_settings._windows_acl_is_restricted(tmp_path, directory=True)
     verify = captured[0]
     for script in (restrict, verify):
-        assert "Get-Acl" not in script and "Translate(" not in script
+        for forbidden in ("Get-Item", "Write-Output", "New-Object", "Get-Acl", "Translate("):
+            assert forbidden not in script
         assert "$existing.Access" not in script
         assert "$verified.Access" not in script
         assert "$acl.Access" not in script
@@ -98,6 +99,14 @@ def test_windows_acl_scripts_use_sid_native_dotnet_descriptors(
         assert "Audit" not in script and "SACL" not in script
         assert "PSModulePath" not in script
         assert "LOCALAPPDATA" not in script and "USERPROFILE" not in script
+        assert "[IO.DirectoryInfo]::new($p)" in script
+        assert "$item.Refresh()" in script and "$item.Exists" in script
+    assert "[Security.AccessControl.FileSystemAccessRule]::new(" in restrict
+    traced = local_settings._windows_acl_verify_script(True, trace=True)
+    assert "[Console]::Out.WriteLine" in traced and "[Console]::Out.Flush()" in traced
+    assert "AreAccessRulesProtected" in traced
+    assert "$currentAllowCount -ne 1" in traced
+    assert "$group=$acl.GetGroup([Security.Principal.SecurityIdentifier]).Value" in traced
 
 
 def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(
@@ -111,7 +120,9 @@ def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(
         "_run_windows_acl",
         lambda executable, script, target: calls.append((executable, script, target)),
     )
-    monkeypatch.setattr(local_settings, "_windows_acl_is_restricted", lambda target: True)
+    monkeypatch.setattr(
+        local_settings, "_windows_acl_is_restricted", lambda target, *, directory: True
+    )
     local_settings._icacls_restrict(path, directory=False)
     assert calls[0][0] == Path(
         r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"

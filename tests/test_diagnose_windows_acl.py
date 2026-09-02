@@ -17,7 +17,7 @@ def test_script_entrypoint_can_import_backend_from_repository_root() -> None:
         check=False,
     )
     assert completed.returncode == 0
-    assert "--path" in completed.stdout and "--control" in completed.stdout
+    assert "--path" in completed.stdout and "--verify-path" in completed.stdout and "--control" in completed.stdout
 
 
 def test_last_marker_reverse_scans_only_allowlisted_utf8_markers() -> None:
@@ -82,6 +82,19 @@ def test_control_timeout_with_safe_marker_still_fails_closed(capsys) -> None:
     with patch.object(diagnose.subprocess, "run", side_effect=timeout):
         assert diagnose.main(["--control"]) == 1
     assert capsys.readouterr().out == "PROJECTTOWN_ACL_TRACE:COMPLETE\n"
+
+
+def test_verify_path_uses_production_verifier(tmp_path: Path, capsys) -> None:
+    completed = subprocess.CompletedProcess(
+        [], 0, b"PROJECTTOWN_ACL_TRACE:COMPLETE\n", b""
+    )
+    with (
+        patch.object(diagnose.subprocess, "run", return_value=completed) as run,
+        patch.object(diagnose.local_settings, "_windows_acl_verify_script", return_value="VERIFY"),
+    ):
+        assert diagnose.main(["--verify-path", str(tmp_path)]) == 0
+    assert capsys.readouterr().out == "PROJECTTOWN_ACL_TRACE:COMPLETE\n"
+    assert run.call_args.args[0][-1] == "VERIFY"
 
 
 def test_main_prints_safe_marker_but_fails_for_nonzero_or_incomplete_stage(
