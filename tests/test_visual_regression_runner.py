@@ -219,6 +219,13 @@ def test_workflow_pins_engine_and_never_sets_update_gate() -> None:
         in workflow
     )
     assert "PROJECTTOWN_UPDATE_GOLDENS" not in workflow
+    for step_name in (
+        "Download pinned Godot archive",
+        "Verify pinned Godot archive hash",
+        "Extract pinned Godot archive",
+        "Run Godot visual regression",
+    ):
+        assert workflow.count(f"- name: {step_name}") == 1
     assert (
         "- run: pytest tests/test_visual_regression_runner.py tests/visual -q"
         in workflow

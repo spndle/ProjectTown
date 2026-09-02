@@ -229,7 +229,7 @@ def _mirror_path() -> Path:
     ):
         raise ManagementError("LOCAL_SETTINGS_MIRROR_DIRECTORY_DENIED")
     target = directory / TOKEN_NAME
-    if target.exists():
+    if target.exists() or target.is_symlink():
         _validate_mirror_file(target)
     return target
 

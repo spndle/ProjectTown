@@ -106,11 +106,20 @@ def test_opt_in_docker_settings_override_is_explicit_and_preserves_base_safety()
 
 def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     workflow = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+    assert "checks:\n    runs-on: windows-latest" in workflow
+    assert "linux-platform:\n    runs-on: ubuntu-latest" in workflow
     assert "python -m ruff check backend tests scripts" in workflow
     assert "python -m compileall -q backend scripts" in workflow
     assert "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest" in workflow
     assert " -ra " in workflow
     assert "--cov-fail-under=80" in workflow
+    assert workflow.count(
+        "Path('sandbox/tmp').mkdir(parents=True, exist_ok=True)"
+    ) == 2
+    assert "Run Linux security and platform allowlist" in workflow
+    assert "--junitxml=sandbox/tmp/linux-platform.xml" in workflow
+    assert "Require Linux allowlist to have zero skips or errors" in workflow
+    assert "linux platform junit gate failed" in workflow
 
 
 def test_readme_direct_launch_and_quickstart_docker_path() -> None:

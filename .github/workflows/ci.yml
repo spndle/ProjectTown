@@ -2,7 +2,7 @@ name: ci
 on: [push, pull_request]
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -10,4 +10,48 @@ jobs:
       - run: python -m pip install -r requirements-dev.txt
       - run: python -m ruff check backend tests scripts
       - run: python -m compileall -q backend scripts
+      - name: Prepare pytest base temp
+        run: python -c "from pathlib import Path; Path('sandbox/tmp').mkdir(parents=True, exist_ok=True)"
       - run: python -m pytest -q --basetemp=sandbox/tmp/ci-pytest -ra --cov=backend --cov-report=term-missing --cov-fail-under=80
+  linux-platform:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install -r requirements-dev.txt
+      - name: Prepare pytest base temp
+        run: python -c "from pathlib import Path; Path('sandbox/tmp').mkdir(parents=True, exist_ok=True)"
+      - name: Run Linux security and platform allowlist
+        run: >-
+          python -m pytest -q -ra --basetemp=sandbox/tmp/linux-platform
+          --junitxml=sandbox/tmp/linux-platform.xml
+          tests/unit/test_local_settings.py
+          tests/integration/test_v3_usability_trials_cli.py::test_reparse_candidate_manifest_rejects_without_study_publication
+          tests/unit/test_controlled_apply.py::test_rejects_reparse_target_when_supported
+          tests/unit/test_controlled_apply.py::test_rejects_invalid_result_file_shapes
+          tests/unit/test_executable_proposal.py::test_symlinked_external_proposal_is_rejected_when_supported
+          tests/unit/test_manage_docker_local_settings.py::test_mirror_rejects_symlink_and_wide_permission_probe
+          tests/unit/test_materials.py::test_symlink_unstable_and_no_leakage
+          tests/unit/test_provider_secrets.py::test_local_file_missing_oversize_malformed_and_symlink_are_denied
+          tests/unit/test_v1_provenance.py::test_snapshot_rejects_links_and_reparse_points
+          tests/unit/test_v1_provenance.py::test_snapshot_rejects_special_files_when_supported
+          tests/unit/test_v1_provenance.py::test_snapshot_reparse_is_rejected_with_cross_platform_monkeypatch
+          tests/visual/test_harness.py::test_confined_rejects_symlink_escape_when_supported
+      - name: Require Linux allowlist to have zero skips or errors
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+
+          root = ET.parse("sandbox/tmp/linux-platform.xml").getroot()
+          suites = [root] if root.tag == "testsuite" else root.findall(".//testsuite")
+          totals = {
+              name: sum(int(suite.get(name, "0")) for suite in suites)
+              for name in ("tests", "failures", "errors", "skipped")
+          }
+          if totals["tests"] <= 0 or any(
+              totals[name] for name in ("failures", "errors", "skipped")
+          ):
+              raise SystemExit(f"linux platform junit gate failed: {totals}")
+          print(f"linux platform junit gate passed: {totals}")
+          PY

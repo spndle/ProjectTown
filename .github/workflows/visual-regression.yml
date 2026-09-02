@@ -15,12 +15,22 @@ jobs:
       - run: pip install -r requirements-dev.txt
       - run: pytest tests/test_visual_regression_runner.py tests/visual -q
       - run: ruff check scripts/run_godot_visual_regression.py tests/test_visual_regression_runner.py tests/visual
-      - shell: pwsh
+      - name: Download pinned Godot archive
+        shell: pwsh
         run: |
           $url = 'https://github.com/godotengine/godot-builds/releases/download/4.7.1-stable/Godot_v4.7.1-stable_win64.exe.zip'
           Invoke-WebRequest $url -OutFile godot.zip
+      - name: Verify pinned Godot archive hash
+        shell: pwsh
+        run: |
           if ((Get-FileHash godot.zip -Algorithm SHA256).Hash -ne 'C7A289051EAEFB460B0106B60E9CD5BEE0EF55FD102DCB2BED1EB356CF3D90A1') { throw 'Godot zip hash mismatch' }
+      - name: Extract pinned Godot archive
+        shell: pwsh
+        run: |
           Expand-Archive godot.zip godot-engine
+      - name: Run Godot visual regression
+        shell: pwsh
+        run: |
           $env:CI = 'true'
           python scripts/run_godot_visual_regression.py --godot (Resolve-Path godot-engine/Godot_v4.7.1-stable_win64_console.exe)
       - if: always()
