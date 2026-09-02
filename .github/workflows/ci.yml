@@ -50,6 +50,26 @@ jobs:
           "TEMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
           "TMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
           "TMPDIR=$canonicalSystemTemp" >> $env:GITHUB_ENV
+      - name: Diagnose Local Settings ACL primitive
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $probe = Join-Path $env:TEMP ("projecttown-acl-probe-" + [Guid]::NewGuid().ToString("N"))
+          New-Item -ItemType Directory -Path $probe | Out-Null
+          $probe = (Resolve-Path -LiteralPath $probe).Path
+          $workspace = (Resolve-Path -LiteralPath $env:GITHUB_WORKSPACE).Path.TrimEnd('\')
+          if ($probe -eq $workspace -or $probe.StartsWith("$workspace\", [StringComparison]::OrdinalIgnoreCase)) {
+            throw "ACL probe must remain outside the repository"
+          }
+          try {
+            $env:PROJECTTOWN_ACL_PROBE_PATH = $probe
+            python -c "import os, subprocess, sys; from pathlib import Path; from backend.app import local_settings as settings; probe = Path(os.environ['PROJECTTOWN_ACL_PROBE_PATH']); environment = {'SystemRoot': os.environ.get('SystemRoot', r'C:\Windows'), 'WINDIR': os.environ.get('WINDIR', r'C:\Windows'), 'PROJECTTOWN_LOCAL_SETTINGS_PATH': str(probe)}; completed = subprocess.run([r'C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe', '-NoProfile', '-NonInteractive', '-Command', settings._windows_acl_restrict_script(True)], stdin=subprocess.DEVNULL, timeout=3, check=False, env=environment); raise SystemExit(completed.returncode)"
+            if ($LASTEXITCODE -ne 0) { throw "Local Settings ACL primitive probe failed: $LASTEXITCODE" }
+          }
+          finally {
+            Remove-Item -LiteralPath $probe -Recurse -Force
+            Remove-Item Env:PROJECTTOWN_ACL_PROBE_PATH -ErrorAction SilentlyContinue
+          }
       - run: python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run -ra --cov=backend --cov-report=term-missing --cov-fail-under=80
   linux-platform:
     runs-on: ubuntu-latest

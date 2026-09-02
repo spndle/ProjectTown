@@ -126,9 +126,21 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert "system temp must remain outside the repository" in workflow
     for variable in ("TEMP", "TMP", "TMPDIR"):
         assert f'"{variable}=$canonicalSystemTemp" >> $env:GITHUB_ENV' in workflow
+    assert workflow.count("Diagnose Local Settings ACL primitive") == 1
+    assert '[Guid]::NewGuid().ToString("N")' in workflow
+    assert "New-Item -ItemType Directory -Path $probe | Out-Null" in workflow
+    assert "New-Item -ItemType Directory -Path $probe -Force" not in workflow
+    assert "ACL probe must remain outside the repository" in workflow
+    assert "settings._windows_acl_restrict_script(True)" in workflow
+    assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in workflow
+    assert "PROJECTTOWN_LOCAL_SETTINGS_PATH': str(probe)" in workflow
+    assert ".secrets" not in workflow[workflow.index("Diagnose Local Settings ACL primitive"):]
+    assert "Remove-Item -LiteralPath $probe -Recurse -Force" in workflow
     pytest_command = "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run"
     assert pytest_command in workflow
-    assert workflow.index("TMPDIR=$canonicalSystemTemp") < workflow.index(pytest_command)
+    assert workflow.index("TMPDIR=$canonicalSystemTemp") < workflow.index(
+        "Diagnose Local Settings ACL primitive"
+    ) < workflow.index(pytest_command)
     assert "continue-on-error" not in workflow
     assert " -ra " in workflow
     assert "--cov-fail-under=80" in workflow
