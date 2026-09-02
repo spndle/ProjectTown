@@ -18,7 +18,7 @@ services:
       PROJECTTOWN_TOOL_ALLOWLIST: "${PROJECTTOWN_TOOL_ALLOWLIST:-check_markdown,check_python_syntax,list_directory,read_file,write_file}"
       PROJECTTOWN_HIGH_RISK_TOOLS: "${PROJECTTOWN_HIGH_RISK_TOOLS:-}"
       PROJECTTOWN_ENABLE_V1_RUNTIME: "${PROJECTTOWN_ENABLE_V1_RUNTIME:-true}"
-      PROJECTTOWN_VERSION: "${PROJECTTOWN_VERSION:-1.0.0}"
+      PROJECTTOWN_VERSION: "${PROJECTTOWN_VERSION:-3.0.0}"
     volumes:
       - projecttown-data:/app/data
       - projecttown-sandbox:/app/sandbox

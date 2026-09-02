@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_release_version_and_local_launcher_are_v1() -> None:
-    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == "1.0.0"
+    assert (ROOT / "VERSION").read_text(encoding="utf-8").strip() == "3.0.0"
 
     launcher = (ROOT / "scripts" / "run_v1.ps1").read_text(encoding="utf-8")
     backend_launcher = (ROOT / "scripts" / "run_backend.ps1").read_text(

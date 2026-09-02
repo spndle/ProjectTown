@@ -39,7 +39,7 @@ def test_health_and_templates(api: APIContext) -> None:
     assert health_response.status_code == 200
     assert health_response.json() == {
         "status": "ok",
-        "version": "1.0.0",
+        "version": "3.0.0",
         "agent": "rule_based",
         "database": "ok",
     }

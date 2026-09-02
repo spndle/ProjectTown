@@ -172,7 +172,7 @@ def create_app(
     application = FastAPI(
         title="ProjectTown API",
         description=(
-            "ProjectTown v1.0 event-sourced Agent runtime with a frozen "
+            "ProjectTown v3.0 event-sourced Agent runtime with a frozen "
             "v0.1 compatibility API"
         ),
         version=settings.version,

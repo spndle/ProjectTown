@@ -1,4 +1,4 @@
-# ProjectTown Godot 客户端（v1.0）
+# ProjectTown Godot 客户端（v3.0）
 
 这是 ProjectTown 的可视化小镇客户端。仓库已自带像素背景、云层、建筑、环境、角色、肖像与开源中文像素字体，运行时不需要额外下载美术资源。
 

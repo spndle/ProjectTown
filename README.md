@@ -1,6 +1,6 @@
-# ProjectTown 1.0.0
+# ProjectTown 3.0.0
 
-ProjectTown turns a goal into an observable, replayable Quest runtime. Version 1.0 exposes the Goal Contract and runtime pipeline on `/api/v2`; `/api/v1` remains a compatibility API.
+ProjectTown turns a goal into an observable, replayable Quest runtime. Version 3.0 exposes the Goal Contract and runtime pipeline on `/api/v2`; `/api/v1` remains a compatibility API.
 
 The v2.0 development stream is now closed as a local, single-user,
 single-process development and portfolio baseline. It adds the isolated model

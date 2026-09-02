@@ -84,7 +84,7 @@ class Settings:
     profile: str = "production"
     secret_source: str = "environment"
     debug: bool = False
-    version: str = "1.0.0"
+    version: str = "3.0.0"
 
     def __post_init__(self) -> None:
         for field_name in _BOOLEAN_SETTING_FIELDS:
@@ -371,7 +371,7 @@ class Settings:
             profile=os.getenv("PROJECTTOWN_PROFILE", "production"),
             secret_source=os.getenv("PROJECTTOWN_SECRET_SOURCE", "environment"),
             debug=_env_bool("PROJECTTOWN_DEBUG", False),
-            version=os.getenv("PROJECTTOWN_VERSION", "1.0.0"),
+            version=os.getenv("PROJECTTOWN_VERSION", "3.0.0"),
         )
 
     @classmethod

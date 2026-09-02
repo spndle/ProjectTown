@@ -220,7 +220,7 @@ func _build_interface() -> void:
 	header_title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	header_title.clip_text = true
 	title_column.add_child(header_title)
-	header_subtitle = _label("PROJECTTOWN · v1.0", 11, COLOR_MUTED)
+	header_subtitle = _label("PROJECTTOWN · v3.0", 11, COLOR_MUTED)
 	header_subtitle.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	header_subtitle.clip_text = true
 	title_column.add_child(header_subtitle)
@@ -765,7 +765,7 @@ func _on_create_pressed() -> void:
 
 func _on_health_received(success: bool, data: Dictionary, message: String) -> void:
 	if success:
-		var version := str(data.get("version", "v1.0"))
+		var version := str(data.get("version", "v3.0"))
 		_set_backend_state(true, "在线 · %s" % version)
 	else:
 		_set_backend_state(false, "后端离线")

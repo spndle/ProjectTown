@@ -25,7 +25,7 @@ func _run() -> void:
 
 	api.fetch_health()
 	var health: Array = await api.health_received
-	if not bool(health[0]) or str((health[1] as Dictionary).get("version", "")) != "1.0.0":
+	if not bool(health[0]) or str((health[1] as Dictionary).get("version", "")) != "3.0.0":
 		_fail("health request failed")
 		return
 
