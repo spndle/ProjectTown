@@ -47,7 +47,13 @@ def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
     assert "$item -is [IO.DirectoryInfo]" in local_settings._windows_acl_restrict_script(True)
     assert "$item -is [IO.FileInfo]" in local_settings._windows_acl_restrict_script(False)
     assert "$groupBefore" in script and "$groupAfter" in script
+    assert "$allowedOwners -notcontains $ownerBefore" in script
+    assert "$allowedOwners -notcontains $ownerAfter" in script
+    assert "$groupAfter -ne $groupBefore" in script
+    assert "$allowedOwners -notcontains $groupBefore" not in script
+    assert "$allowedOwners -notcontains $groupAfter" not in script
     assert "Set-Acl" not in script and "SetOwner" not in script and "SetAuditRule" not in script
+    assert "SetGroup" not in script
     assert "owner denied" in script and "ACL verification failed" in script
     assert "$rule.IsInherited" in script and "AccessControlType]::Deny" in script
     assert "$currentAllowCount -ne 1" in script
