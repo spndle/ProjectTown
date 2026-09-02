@@ -28,6 +28,13 @@ jobs:
         shell: pwsh
         run: |
           Expand-Archive godot.zip godot-engine
+      - name: Configure deterministic capture display
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Set-DisplayResolution -Width 1920 -Height 1080 -Force
+          $display = (Get-DisplayResolution | Out-String).Trim()
+          if ($display -ne '1920x1080') { throw 'capture display resolution mismatch' }
       - name: Run Godot visual regression
         shell: pwsh
         run: |

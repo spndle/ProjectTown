@@ -114,11 +114,21 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
     assert workflow.count("Prepare protected pytest base temp") == 1
     assert "$ErrorActionPreference = \"Stop\"" in workflow
     assert "[Security.Principal.WindowsIdentity]::GetCurrent()" in workflow
-    assert "$identity.User.Value" in workflow and "$identity.Name" in workflow
+    assert "$identity.User.Value" in workflow
     assert "& \"$env:SystemRoot\\System32\\icacls.exe\"" in workflow
+    assert '"*${currentSid}:(OI)(CI)F"' in workflow
     assert "AreAccessRulesProtected" in workflow
     assert "unexpectedAllowSids" in workflow
-    assert "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run" in workflow
+    assert "$runnerTemp = (Resolve-Path -LiteralPath $env:RUNNER_TEMP).Path" in workflow
+    assert '$systemTemp = Join-Path $runnerTemp "projecttown-ci-system-temp"' in workflow
+    assert "icacls failed while protecting system temp" in workflow
+    assert "Resolve-Path -LiteralPath $systemTemp" in workflow
+    assert "system temp must remain outside the repository" in workflow
+    for variable in ("TEMP", "TMP", "TMPDIR"):
+        assert f'"{variable}=$canonicalSystemTemp" >> $env:GITHUB_ENV' in workflow
+    pytest_command = "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run"
+    assert pytest_command in workflow
+    assert workflow.index("TMPDIR=$canonicalSystemTemp") < workflow.index(pytest_command)
     assert "continue-on-error" not in workflow
     assert " -ra " in workflow
     assert "--cov-fail-under=80" in workflow

@@ -624,32 +624,58 @@ def _set_restricted_permissions(path: Path) -> None:
 
 
 def _icacls_restrict(path: Path, *, directory: bool) -> None:
-    principal = os.getenv("USERNAME")
-    domain = os.getenv("USERDOMAIN")
-    if not principal or not domain:
-        raise OSError("local settings ACL identity unavailable")
-    executable = Path(r"C:\Windows\System32\icacls.exe")
-    grant = f"{domain}\\{principal}:F"
-    if directory:
-        grant = f"{domain}\\{principal}:(OI)(CI)F"
-    completed = subprocess.run(
-        [
-            str(executable),
-            str(path),
-            "/inheritance:r",
-            "/grant:r",
-            grant,
-            "/remove:g",
-            "OWNER RIGHTS",
-        ],
-        stdin=subprocess.DEVNULL,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        timeout=3,
-        check=False,
-    )
-    if completed.returncode != 0:
+    before = _acl_target_identity(path, directory=directory)
+    executable = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
+    try:
+        _run_windows_acl(executable, _windows_acl_restrict_script(directory), path)
+        after = _acl_target_identity(path, directory=directory)
+    except OSError:
+        raise OSError("local settings ACL operation failed") from None
+    if before != after or not _windows_acl_is_restricted(path):
         raise OSError("local settings ACL operation failed")
+
+
+def _acl_target_identity(path: Path, *, directory: bool) -> tuple[int, int]:
+    try:
+        info = os.lstat(path)
+    except OSError:
+        raise OSError("local settings ACL operation failed") from None
+    expected = _directory_nonreparse(info) if directory else _regular_nonreparse(info)
+    if not expected:
+        raise OSError("local settings ACL operation failed")
+    return info.st_dev, info.st_ino
+
+
+def _windows_acl_restrict_script(directory: bool) -> str:
+    inheritance = (
+        "[System.Security.AccessControl.InheritanceFlags]::ObjectInherit -bor "
+        "[System.Security.AccessControl.InheritanceFlags]::ContainerInherit"
+        if directory
+        else "[System.Security.AccessControl.InheritanceFlags]::None"
+    )
+    expected_container = "$true" if directory else "$false"
+    expected_type = "[IO.DirectoryInfo]" if directory else "[IO.FileInfo]"
+    return (
+        "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
+        "if([string]::IsNullOrWhiteSpace($p)){throw 'missing path'};"
+        "$item=Get-Item -LiteralPath $p -Force;if($item.Attributes -band [IO.FileAttributes]::ReparsePoint){throw 'reparse path'};"
+        f"if(-not ($item -is {expected_type}) -or $item.PSIsContainer -ne {expected_container}){{throw 'invalid path type'}};"
+        "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;"
+        "$allowed=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');"
+        "$existing=Get-Acl -LiteralPath $p;$ownerBefore=$existing.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupBefore=$existing.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
+        "if($allowed -notcontains $ownerBefore -or $allowed -notcontains $groupBefore){throw 'owner denied'};"
+        "$existing.SetAccessRuleProtection($true,$false);"
+        "foreach($rule in @($existing.Access)){if(-not $rule.IsInherited -and ($rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Allow -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny)){$null=$existing.RemoveAccessRuleSpecific($rule)}};"
+        "$acl=$existing;"
+        f"$inheritance={inheritance};"
+        "$rule=New-Object Security.AccessControl.FileSystemAccessRule($currentSid,[Security.AccessControl.FileSystemRights]::FullControl,$inheritance,[Security.AccessControl.PropagationFlags]::None,[Security.AccessControl.AccessControlType]::Allow);"
+        "$acl.AddAccessRule($rule);$item.SetAccessControl($acl);"
+        f"$verifiedItem=Get-Item -LiteralPath $p -Force;if(($verifiedItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -or -not ($verifiedItem -is {expected_type}) -or $verifiedItem.PSIsContainer -ne $item.PSIsContainer){{throw 'ACL verification failed'}};"
+        "$verified=Get-Acl -LiteralPath $p;$ownerAfter=$verified.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupAfter=$verified.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
+        "if(-not $verified.AreAccessRulesProtected -or $ownerAfter -ne $ownerBefore -or $groupAfter -ne $groupBefore -or $allowed -notcontains $ownerAfter -or $allowed -notcontains $groupAfter){throw 'ACL verification failed'};"
+        "$currentAllowCount=0;foreach($rule in $verified.Access){if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny){throw 'ACL verification failed'};if($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){throw 'ACL verification failed'};$sid=$rule.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){throw 'ACL verification failed'};$currentAllowCount++};"
+        "if($currentAllowCount -ne 1){throw 'ACL verification failed'}"
+    )
 
 
 def _windows_acl_is_restricted(path: Path) -> bool:
@@ -657,8 +683,8 @@ def _windows_acl_is_restricted(path: Path) -> bool:
     script = (
         "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
         "if([string]::IsNullOrWhiteSpace($p)){exit 1};$acl=Get-Acl -LiteralPath $p;"
-        "if(-not $acl.AreAccessRulesProtected){exit 1};$allowed=@([Security.Principal.WindowsIdentity]::GetCurrent().User.Value,'S-1-5-18','S-1-5-32-544');"
-        "foreach($r in $acl.Access){if($r.AccessControlType -eq 'Allow'){$sid=$r.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $sid){exit 1}}};exit 0"
+        "if(-not $acl.AreAccessRulesProtected){exit 1};$current=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value;$allowed=@($current,'S-1-5-18','S-1-5-32-544');$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};$currentFull=$false;"
+        "foreach($r in $acl.Access){if($r.AccessControlType -eq 'Allow'){$sid=$r.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $sid){exit 1};if($sid -eq $current -and (($r.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -eq [Security.AccessControl.FileSystemRights]::FullControl)){$currentFull=$true}}};if(-not $currentFull){exit 1};exit 0"
     )
     try:
         _run_windows_acl(executable, script, path)

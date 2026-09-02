@@ -20,6 +20,133 @@ def _service(tmp_path: Path) -> LocalSettingsService:
     return service
 
 
+@pytest.mark.parametrize(
+    ("directory", "inheritance"),
+    [
+        (False, "[System.Security.AccessControl.InheritanceFlags]::None"),
+        (
+            True,
+            (
+                "[System.Security.AccessControl.InheritanceFlags]::ObjectInherit -bor "
+                "[System.Security.AccessControl.InheritanceFlags]::ContainerInherit"
+            ),
+        ),
+    ],
+)
+def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
+    directory: bool, inheritance: str
+) -> None:
+    script = local_settings._windows_acl_restrict_script(directory)
+    assert "WindowsIdentity]::GetCurrent().User" in script
+    assert "USERNAME" not in script and "USERDOMAIN" not in script
+    assert "SetAccessRuleProtection($true,$false)" in script
+    assert "RemoveAccessRuleSpecific" in script
+    assert inheritance in script
+    assert "$item.SetAccessControl($acl)" in script
+    assert "$verifiedItem=Get-Item -LiteralPath $p -Force" in script
+    assert "$item -is [IO.DirectoryInfo]" in local_settings._windows_acl_restrict_script(True)
+    assert "$item -is [IO.FileInfo]" in local_settings._windows_acl_restrict_script(False)
+    assert "$groupBefore" in script and "$groupAfter" in script
+    assert "Set-Acl" not in script and "SetOwner" not in script and "SetAuditRule" not in script
+    assert "owner denied" in script and "ACL verification failed" in script
+    assert "$rule.IsInherited" in script and "AccessControlType]::Deny" in script
+    assert "$currentAllowCount -ne 1" in script
+
+
+def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "settings.toml"
+    path.write_text("safe", encoding="utf-8")
+    calls: list[tuple[Path, str, Path]] = []
+    monkeypatch.setattr(
+        local_settings,
+        "_run_windows_acl",
+        lambda executable, script, target: calls.append((executable, script, target)),
+    )
+    monkeypatch.setattr(local_settings, "_windows_acl_is_restricted", lambda target: True)
+    local_settings._icacls_restrict(path, directory=False)
+    assert calls[0][0] == Path(
+        r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"
+    )
+    assert calls[0][2] == path
+
+    identities = iter(((1, 1), (1, 2)))
+    monkeypatch.setattr(
+        local_settings, "_acl_target_identity", lambda *args, **kwargs: next(identities)
+    )
+    with pytest.raises(OSError, match="local settings ACL operation failed"):
+        local_settings._icacls_restrict(path, directory=False)
+
+
+def test_windows_acl_restrict_converts_runner_failure_to_oserror(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "settings.toml"
+    path.write_text("safe", encoding="utf-8")
+    monkeypatch.setattr(
+        local_settings,
+        "_run_windows_acl",
+        lambda *args: (_ for _ in ()).throw(OSError("CANARY_ACL_FAILURE")),
+    )
+    with pytest.raises(OSError, match="local settings ACL operation failed"):
+        local_settings._icacls_restrict(path, directory=False)
+
+
+def test_windows_acl_runner_uses_minimal_environment_and_literal_path(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    path = tmp_path / "space ' & [\u4e2d\u6587].toml"
+    calls: list[tuple[list[str], dict[str, str]]] = []
+
+    class Completed:
+        returncode = 0
+
+    def fake_run(command, **kwargs):
+        calls.append((command, kwargs["env"]))
+        return Completed()
+
+    monkeypatch.setattr(local_settings.subprocess, "run", fake_run)
+    local_settings._run_windows_acl(
+        Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe"),
+        "Get-Acl -LiteralPath $env:PROJECTTOWN_LOCAL_SETTINGS_PATH",
+        path,
+    )
+    command, environment = calls[0]
+    assert command[:3] == [
+        r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe",
+        "-NoProfile",
+        "-NonInteractive",
+    ]
+    assert set(environment) == {"SystemRoot", "WINDIR", "PROJECTTOWN_LOCAL_SETTINGS_PATH"}
+    assert environment["PROJECTTOWN_LOCAL_SETTINGS_PATH"] == str(path)
+    assert str(path) not in command[-1]
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [
+        type("Completed", (), {"returncode": 1})(),
+        local_settings.subprocess.TimeoutExpired(["powershell"], 3),
+        OSError("runner unavailable"),
+    ],
+)
+def test_windows_acl_runner_fails_closed(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failure: object
+) -> None:
+    path = tmp_path / "settings.toml"
+    if isinstance(failure, Exception):
+        monkeypatch.setattr(
+            local_settings.subprocess,
+            "run",
+            lambda *args, **kwargs: (_ for _ in ()).throw(failure),
+        )
+    else:
+        monkeypatch.setattr(local_settings.subprocess, "run", lambda *args, **kwargs: failure)
+    with pytest.raises(OSError, match="local settings ACL operation failed"):
+        local_settings._run_windows_acl(Path("powershell.exe"), "exit 0", path)
+
+
 def test_get_is_redacted_and_put_uses_cas_and_atomic_file(tmp_path: Path) -> None:
     service = _service(tmp_path)
     try:

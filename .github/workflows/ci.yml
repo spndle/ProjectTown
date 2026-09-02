@@ -18,8 +18,7 @@ jobs:
           New-Item -ItemType Directory -Path $parent -Force | Out-Null
           $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
           $currentSid = $identity.User.Value
-          $currentAccount = $identity.Name
-          & "$env:SystemRoot\System32\icacls.exe" $parent /inheritance:r /grant:r "$currentAccount`:(OI)(CI)F" /remove:g "OWNER RIGHTS"
+          & "$env:SystemRoot\System32\icacls.exe" $parent /inheritance:r /grant:r "*${currentSid}:(OI)(CI)F" /remove:g "OWNER RIGHTS"
           if ($LASTEXITCODE -ne 0) {
             throw "icacls failed while protecting pytest base temp: $LASTEXITCODE"
           }
@@ -36,6 +35,21 @@ jobs:
           if (-not $acl.AreAccessRulesProtected -or $unexpectedAllowSids) {
             throw "pytest base temp ACL guard failed: protected=$($acl.AreAccessRulesProtected) unexpected=$($unexpectedAllowSids -join ',')"
           }
+          $runnerTemp = (Resolve-Path -LiteralPath $env:RUNNER_TEMP).Path
+          $systemTemp = Join-Path $runnerTemp "projecttown-ci-system-temp"
+          New-Item -ItemType Directory -Path $systemTemp -Force | Out-Null
+          & "$env:SystemRoot\System32\icacls.exe" $systemTemp /inheritance:r /grant:r "*${currentSid}:(OI)(CI)F" /remove:g "OWNER RIGHTS"
+          if ($LASTEXITCODE -ne 0) {
+            throw "icacls failed while protecting system temp: $LASTEXITCODE"
+          }
+          $canonicalSystemTemp = (Resolve-Path -LiteralPath $systemTemp).Path
+          $workspace = (Resolve-Path -LiteralPath $env:GITHUB_WORKSPACE).Path.TrimEnd('\')
+          if ($canonicalSystemTemp -eq $workspace -or $canonicalSystemTemp.StartsWith("$workspace\", [StringComparison]::OrdinalIgnoreCase)) {
+            throw "system temp must remain outside the repository"
+          }
+          "TEMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
+          "TMP=$canonicalSystemTemp" >> $env:GITHUB_ENV
+          "TMPDIR=$canonicalSystemTemp" >> $env:GITHUB_ENV
       - run: python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run -ra --cov=backend --cov-report=term-missing --cov-fail-under=80
   linux-platform:
     runs-on: ubuntu-latest
