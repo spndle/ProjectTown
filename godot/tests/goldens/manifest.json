@@ -767,6 +767,258 @@
         900,
         720
       ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "6960a269eec71a47623f41e5b9b01769f050b6ec8c3d96cc055d12afaa33d9c1",
+      "old_png_sha256": "c1e5b71ad07658d3d5f1a21de7ab26582a66637b74018087239af3d0a21d0ce6",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 65,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "89322f9248988bcedf94c58582a43396468fb510b4021ce5fc82f0e98c790fe6",
+      "old_png_sha256": "d359b0c92f762269682e256d135b5e533d7bc40ab23d0129b11b7d0e2264fa8b",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 66,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "main",
+      "new_png_sha256": "c26a2e9c133538261421c7ec8881713d0bd3e4204595c4b2ac7f0aa91cbcd550",
+      "old_png_sha256": "cab7ffddb359be9242c855895778d1929c4054232e31a925c7baa26f95be259b",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 67,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "cf34128789e1b57b2c8296c73187f7d6646323c46ec8c203fa7add22f96a02df",
+      "old_png_sha256": "696f7dfaf0c19b6d3e25b1c79e0ddefc3c0ee0e4166c403bcd878c7ce980f2cb",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 68,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "7f44b2ade06e88bc9ace58add227bd10d05c23aa1984fce72208b9d0d3f54470",
+      "old_png_sha256": "71a3db76d771efcecffb99abcd705ea1f80920ceab242d3e4db0c670ef1de176",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 69,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "tutorial",
+      "new_png_sha256": "fa81f6d046fcc3fcac7abd1aad04c8caf3532d84c14f1354efec5c3d11728bdf",
+      "old_png_sha256": "9e46414433f4f0b585c49d62648539b269f82f7ae2e32a14c763d18f9b7aee73",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 70,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "d86d592f01e6b997b7b029d43e881a5cf69cb7688ef1af53f1e486bb9f567ec0",
+      "old_png_sha256": "0e61ce45e3843dcb5874cdeb89927e931c65ef207b1cfeef07a1acabac7b8585",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 71,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "a7d0486f475dcf24128754898caa15763f6c41042f05966555eded9403d4bc00",
+      "old_png_sha256": "4890876e5111f300339ca49650c46405cf2aad4985ffbac712a4fae9cb1444cb",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 72,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "history",
+      "new_png_sha256": "b1ace2553856ebabc13a0d4756affd00e7725e9480ff42f1082f0173ef67dd2b",
+      "old_png_sha256": "523877e4b3534bfe54154239ade2ef49b64299ad58790f71db29e922651dc155",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 73,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "3c1795c4c004f11800d98b545450f4072d789c517cf06f8a79cf926d19044015",
+      "old_png_sha256": "c85128d588f7da892f184d2e9559d57fbd05672340d34e817afae806d7b4c37e",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 74,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "b52828b74dbf91efdfbe159a1c471c85b1c29579305ebbedd5b0094a59805230",
+      "old_png_sha256": "355e0556894f70afa71de48baff5d00d46201d1cd0d636e4777045392d30b921",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 75,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "failure",
+      "new_png_sha256": "d9d27d227dcfce2d886c614b557e9ca7801f23859519ae2da34514ac319b88f1",
+      "old_png_sha256": "b251c18178fb339f3b9b09970cc614b0900a39f0127e43c316efd1d9617c2346",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 76,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "2f3a89e624a4a31197b02f8335ff905f2aa7a8d89d58c06b274a4225c31b0695",
+      "old_png_sha256": "2f3a89e624a4a31197b02f8335ff905f2aa7a8d89d58c06b274a4225c31b0695",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 77,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "d82bf238dd8d668eb77386919f133bf444621acfb092c713b31c724e6d859d65",
+      "old_png_sha256": "d82bf238dd8d668eb77386919f133bf444621acfb092c713b31c724e6d859d65",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 78,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "artifact_review_waiting_user",
+      "new_png_sha256": "4d1ba28053e386a9e0e6dc2ba1205c79c2009e0ddad7ab7448ede2a23c17b5a2",
+      "old_png_sha256": "4d1ba28053e386a9e0e6dc2ba1205c79c2009e0ddad7ab7448ede2a23c17b5a2",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 79,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "3ee1844e03f57cc0304feb394407e2a3188e0f9d5b920893dfd27bc2ca21f195",
+      "old_png_sha256": "9d0f2fb3d200541520e9d451236da09d056e21b70bb8797ec0f6cccac773b6b0",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 80,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "9e56d8e0bfe1d93dae6cb549a7c4673f9cfbd8cd3bb126060ca184bba19838ed",
+      "old_png_sha256": "73694dad473b8276dd6ac136fa68270c1a34bb2affdd9ca9f37129206a8a34e1",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 81,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "restore_waiting_user",
+      "new_png_sha256": "ac401d7b4a478d434c477a7e287fbcea8a6554f900833bd36aac22f63fe981b8",
+      "old_png_sha256": "a3111fc40579f67e20e2d19c4b52ccbb229c3341b0987cc76b2f9a84011f122b",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 82,
+      "viewport": [
+        900,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "ca896dfba98ab6d5b91bcf995c8ee3f19f22e0ff09bb24d8913031a6fa7f74c2",
+      "old_png_sha256": "41feb243f428d5fb7fdb0b38cc27c10a9ffd7278539cb9afd83872d54f8145ab",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 83,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "ef5421e26f6c6d5b0baa94cd2ec80c00c1421ece00a929d5906b23653fb3f9d2",
+      "old_png_sha256": "45cfb613d5186f9bb0065fa702389a3c68c44d43a630ccc0defab3f0b5880ac2",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 84,
+      "viewport": [
+        1920,
+        1080
+      ]
+    },
+    {
+      "fixture_id": "settings",
+      "new_png_sha256": "0615968406cb2e180b57eddb1a36c87f238d40597319f3248ad29a8b10dfca5e",
+      "old_png_sha256": "02d6ff7afdf1d5b48b6ec668b59bde6453aa6252f27e99353c61017149048557",
+      "reason": "ProjectTown 3.0.0 product identity; hosted visual runs 33638361688 and 33639608974 produced 21 byte-identical candidates",
+      "reviewed_by": "spndle",
+      "revision": 85,
+      "viewport": [
+        900,
+        720
+      ]
     }
   ],
   "asset_hashes": {
@@ -813,7 +1065,7 @@
     "godot/project.godot": "64a609b96f94069daa40b961b4459d121f488f23aef2a925cdeccf424af39d53",
     "godot/scripts/api_client.gd": "a1807c94e8096f38b7de1c9ab20e11d598dd213e648ff306722875fb9f351325",
     "godot/scripts/api_client.gd.uid": "b3fa0a1969f607630a4f4a33fcc70c26ea3afc4a5a181f6c6fdec9ff3b3eb295",
-    "godot/scripts/main.gd": "af5fcd70f0ddd0b168ee82917a1d93490641b02fbdf8f4100f696a90d383cae1",
+    "godot/scripts/main.gd": "5e9073bee6e93a8f369bfa4e41058fd7b15aeffdad0e73cc5ff23ed477f55179",
     "godot/scripts/main.gd.uid": "0ca813e20a5c852f38c00a08fa6a10dbbac54fcb2fbf755f2997a31eeb0fcce6",
     "godot/scripts/town_draw_layer.gd": "d270fabfb01c1266cca9caa069bb54f1cafac7b0d422ba49d580a417a8a630a2",
     "godot/scripts/town_draw_layer.gd.uid": "8f34315f1122beb65772227e1cb599de180df70ceb60c4c1a05325a9b909478a",
@@ -840,8 +1092,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "c1e5b71ad07658d3d5f1a21de7ab26582a66637b74018087239af3d0a21d0ce6",
-      "expected_rgba_sha256": "0b59e69afa7e9854ee6d23d61c241ca393710e0475c6dd4c3d780c1f1d7a3eb3",
+      "expected_png_sha256": "6960a269eec71a47623f41e5b9b01769f050b6ec8c3d96cc055d12afaa33d9c1",
+      "expected_rgba_sha256": "405edf0b9ec78e83765a1a61dfc34418f4b663a070e9b5f008e99b9b8b6771c8",
       "id": "main",
       "script": "res://tests/capture/main.gd",
       "viewport": [
@@ -855,8 +1107,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "d359b0c92f762269682e256d135b5e533d7bc40ab23d0129b11b7d0e2264fa8b",
-      "expected_rgba_sha256": "2d08b9483184d7dfeb66c69c7985bd91539c39d077cf49e5278c16d9f797a6ac",
+      "expected_png_sha256": "89322f9248988bcedf94c58582a43396468fb510b4021ce5fc82f0e98c790fe6",
+      "expected_rgba_sha256": "59b4a1771b14834b6c3e73998bfbd1b5b52c365e1809d8195481f2926c2ca87c",
       "id": "main",
       "script": "res://tests/capture/main.gd",
       "viewport": [
@@ -870,8 +1122,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "cab7ffddb359be9242c855895778d1929c4054232e31a925c7baa26f95be259b",
-      "expected_rgba_sha256": "99645c92b627f25b4136840570291b98bcef43e3bb618a346f92faa0f6568925",
+      "expected_png_sha256": "c26a2e9c133538261421c7ec8881713d0bd3e4204595c4b2ac7f0aa91cbcd550",
+      "expected_rgba_sha256": "8782d782d9ab3286b4826dfedd5759bc230c33a8d6b6b535678de10fd4d03a36",
       "id": "main",
       "script": "res://tests/capture/main.gd",
       "viewport": [
@@ -885,8 +1137,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "696f7dfaf0c19b6d3e25b1c79e0ddefc3c0ee0e4166c403bcd878c7ce980f2cb",
-      "expected_rgba_sha256": "5e1f7a254066134571fdac81e25d3e291196c20c530d9462b2a7ba28445814c2",
+      "expected_png_sha256": "cf34128789e1b57b2c8296c73187f7d6646323c46ec8c203fa7add22f96a02df",
+      "expected_rgba_sha256": "445b4412dab8c6f550a0248748cb5a85a5df7620aadd941fee5c7ac186952ce3",
       "id": "tutorial",
       "script": "res://tests/capture/tutorial.gd",
       "viewport": [
@@ -900,8 +1152,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "71a3db76d771efcecffb99abcd705ea1f80920ceab242d3e4db0c670ef1de176",
-      "expected_rgba_sha256": "5b06b7526c0fe0c9f5bae3a12dee0675f73f0f36398456bca0dd95f9c49e14cd",
+      "expected_png_sha256": "7f44b2ade06e88bc9ace58add227bd10d05c23aa1984fce72208b9d0d3f54470",
+      "expected_rgba_sha256": "0c79f3e876f756d6620bdd1f7fe2a2a82ebcf5a999b2b67979478ee4140937a6",
       "id": "tutorial",
       "script": "res://tests/capture/tutorial.gd",
       "viewport": [
@@ -915,8 +1167,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "9e46414433f4f0b585c49d62648539b269f82f7ae2e32a14c763d18f9b7aee73",
-      "expected_rgba_sha256": "67e8a361866b6beaa5cb2be6fa41485b6a57e1f69ff7f7ec046a595b363aa7b7",
+      "expected_png_sha256": "fa81f6d046fcc3fcac7abd1aad04c8caf3532d84c14f1354efec5c3d11728bdf",
+      "expected_rgba_sha256": "7dcb4c71f7b8f87e5e8d6e8d1404436652dda675a11e700ff0724176e5774b72",
       "id": "tutorial",
       "script": "res://tests/capture/tutorial.gd",
       "viewport": [
@@ -930,8 +1182,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "0e61ce45e3843dcb5874cdeb89927e931c65ef207b1cfeef07a1acabac7b8585",
-      "expected_rgba_sha256": "38dd768ef57f161bfa8dd88eec3a4509aea75bcc47164437b0b790b7d4aa4730",
+      "expected_png_sha256": "d86d592f01e6b997b7b029d43e881a5cf69cb7688ef1af53f1e486bb9f567ec0",
+      "expected_rgba_sha256": "4012684fbd9b5f155d0058ef69ebd751012e6b5f8104273144f66affe6e74069",
       "id": "history",
       "script": "res://tests/capture/history.gd",
       "viewport": [
@@ -945,8 +1197,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "4890876e5111f300339ca49650c46405cf2aad4985ffbac712a4fae9cb1444cb",
-      "expected_rgba_sha256": "cd01b663d36e927acf631dec9758072c4f2e42f9aa9264734eb1b3f60aa12888",
+      "expected_png_sha256": "a7d0486f475dcf24128754898caa15763f6c41042f05966555eded9403d4bc00",
+      "expected_rgba_sha256": "a03c49ec600ac64204b6da6ce3e81f77b1c81abe90bbfc29c82960a3c84ca3be",
       "id": "history",
       "script": "res://tests/capture/history.gd",
       "viewport": [
@@ -960,8 +1212,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "523877e4b3534bfe54154239ade2ef49b64299ad58790f71db29e922651dc155",
-      "expected_rgba_sha256": "06c669ae8070909faae6e90cb699c7c7bd21dc990c78ca7b801934400476e914",
+      "expected_png_sha256": "b1ace2553856ebabc13a0d4756affd00e7725e9480ff42f1082f0173ef67dd2b",
+      "expected_rgba_sha256": "fdae7eb2c3a57fede3ce2f98b93054e0d9ea8b9fd6c92485df9fac737de09135",
       "id": "history",
       "script": "res://tests/capture/history.gd",
       "viewport": [
@@ -975,8 +1227,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "c85128d588f7da892f184d2e9559d57fbd05672340d34e817afae806d7b4c37e",
-      "expected_rgba_sha256": "788a3de23a734590ce4865902288c5435c71bfbb2d560a375bc85db581005e79",
+      "expected_png_sha256": "3c1795c4c004f11800d98b545450f4072d789c517cf06f8a79cf926d19044015",
+      "expected_rgba_sha256": "10a97850f96ecaf8da41fd5bf73d390f0417d2c8dc7ce8b4d6db6a5f82744b3d",
       "id": "failure",
       "script": "res://tests/capture/failure.gd",
       "viewport": [
@@ -990,8 +1242,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "355e0556894f70afa71de48baff5d00d46201d1cd0d636e4777045392d30b921",
-      "expected_rgba_sha256": "25f7b5da655e2b3b8d2906b171fdcf4c4ab1cc43da29e380daafa2ff46007f04",
+      "expected_png_sha256": "b52828b74dbf91efdfbe159a1c471c85b1c29579305ebbedd5b0094a59805230",
+      "expected_rgba_sha256": "7f160c8ecb097505b133c238fd2f706413a5fe8cf4883ae87a45ffd0550024bd",
       "id": "failure",
       "script": "res://tests/capture/failure.gd",
       "viewport": [
@@ -1005,8 +1257,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "b251c18178fb339f3b9b09970cc614b0900a39f0127e43c316efd1d9617c2346",
-      "expected_rgba_sha256": "47f200e28587466010d73099ac93d6a3ef028dbcf217e683ed11407758ae6997",
+      "expected_png_sha256": "d9d27d227dcfce2d886c614b557e9ca7801f23859519ae2da34514ac319b88f1",
+      "expected_rgba_sha256": "b878cbeb537b04d82df664822c774579fe005e699a0309086c9c19ad5d514155",
       "id": "failure",
       "script": "res://tests/capture/failure.gd",
       "viewport": [
@@ -1065,8 +1317,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "9d0f2fb3d200541520e9d451236da09d056e21b70bb8797ec0f6cccac773b6b0",
-      "expected_rgba_sha256": "f806a321a4cbe01e82e383d765a580e2083d1e4a77c1a3b04edc4b4475934ea5",
+      "expected_png_sha256": "3ee1844e03f57cc0304feb394407e2a3188e0f9d5b920893dfd27bc2ca21f195",
+      "expected_rgba_sha256": "86b97e23acfd93c9c89de68020e823d7f2bb240383b7d0adeff05780be699b03",
       "id": "restore_waiting_user",
       "script": "res://tests/capture/restore_waiting_user.gd",
       "viewport": [
@@ -1080,8 +1332,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "73694dad473b8276dd6ac136fa68270c1a34bb2affdd9ca9f37129206a8a34e1",
-      "expected_rgba_sha256": "c3dcee9277a3b422b7490ef2f3f0a560e2388e1002fcb13c0b4353188823a858",
+      "expected_png_sha256": "9e56d8e0bfe1d93dae6cb549a7c4673f9cfbd8cd3bb126060ca184bba19838ed",
+      "expected_rgba_sha256": "ab185a047526fc3dbabc4b7a7b9639da971b572085a211aa9331bad35bbda0ff",
       "id": "restore_waiting_user",
       "script": "res://tests/capture/restore_waiting_user.gd",
       "viewport": [
@@ -1095,8 +1347,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "a3111fc40579f67e20e2d19c4b52ccbb229c3341b0987cc76b2f9a84011f122b",
-      "expected_rgba_sha256": "ca8d118c5b85f308725ba2aec43a6dbf397f8b11916d700c3750b01c6d61bbd0",
+      "expected_png_sha256": "ac401d7b4a478d434c477a7e287fbcea8a6554f900833bd36aac22f63fe981b8",
+      "expected_rgba_sha256": "d00a479585f16fb8527fbf00fc168158248fde993124b103b2cb2e30af7c5cfb",
       "id": "restore_waiting_user",
       "script": "res://tests/capture/restore_waiting_user.gd",
       "viewport": [
@@ -1110,8 +1362,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "41feb243f428d5fb7fdb0b38cc27c10a9ffd7278539cb9afd83872d54f8145ab",
-      "expected_rgba_sha256": "d5248622a08bff6eea5acb3c621d249fcd881e4bc90d8e83c691a8fd1860936e",
+      "expected_png_sha256": "ca896dfba98ab6d5b91bcf995c8ee3f19f22e0ff09bb24d8913031a6fa7f74c2",
+      "expected_rgba_sha256": "8b0daeae46c302b481d2927d3826a96ae73eb321f9ee405b1814675c7f71cfdd",
       "id": "settings",
       "script": "res://tests/capture/settings.gd",
       "viewport": [
@@ -1125,8 +1377,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "45cfb613d5186f9bb0065fa702389a3c68c44d43a630ccc0defab3f0b5880ac2",
-      "expected_rgba_sha256": "a4b478989fb571a368b6698fc7f5fa40b8395edd8630d7464f54f6a4afca9853",
+      "expected_png_sha256": "ef5421e26f6c6d5b0baa94cd2ec80c00c1421ece00a929d5906b23653fb3f9d2",
+      "expected_rgba_sha256": "8b45c88b67cf24b74d55cf1879475fc81898a034856a7e3d5b113de200c76084",
       "id": "settings",
       "script": "res://tests/capture/settings.gd",
       "viewport": [
@@ -1140,8 +1392,8 @@
         "max_channel_error": 0.0,
         "mean_abs_channel_error": 0.0
       },
-      "expected_png_sha256": "02d6ff7afdf1d5b48b6ec668b59bde6453aa6252f27e99353c61017149048557",
-      "expected_rgba_sha256": "bf5fa7048ac401880c40eb0de0560b3d945f13f60780c99603583994a07616b9",
+      "expected_png_sha256": "0615968406cb2e180b57eddb1a36c87f238d40597319f3248ad29a8b10dfca5e",
+      "expected_rgba_sha256": "dc9fc1797783e2eb38a8c4902ea9a32ce1fb41c3545509f209ba0c61e464468f",
       "id": "settings",
       "script": "res://tests/capture/settings.gd",
       "viewport": [
