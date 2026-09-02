@@ -84,8 +84,13 @@ def test_material_workflow_uses_retained_deterministic_rag_and_zero_call_contrac
     assert fields["mcp_calls"].annotation == Literal[0]
 
 
-def test_phase4c_documents_follow_participant_only_v4_gate() -> None:
+def test_closeout_documents_preserve_v4_and_bind_only_gate_semantics() -> None:
     phase4 = (ROOT / "docs" / "v3-phase-4.md").read_text(encoding="utf-8")
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    phase3 = (ROOT / "docs" / "v3-phase-3.md").read_text(encoding="utf-8")
+    plan = (ROOT / "docs" / "v3-development-plan-2026-09-02.md").read_text(
+        encoding="utf-8"
+    )
     product_direction = (ROOT / "docs" / "v3-product-direction.md").read_text(
         encoding="utf-8"
     )
@@ -96,16 +101,30 @@ def test_phase4c_documents_follow_participant_only_v4_gate() -> None:
     assert "projecttown-phase3e-rc-v4" in phase4
     assert "participant_instance_plus_engineering_acceptance_plus_user_v1" in phase4
     assert "EngineeringAcceptanceV4" in phase4
-    assert "同一 Participant identity label 完成 R1/R2" in phase4
     assert "Independent Study Reviewer" not in phase4
     assert "Reviewer control rating" not in phase4
     assert "Reviewer PASS" not in phase4
-    assert "不创建第二套 4C Study、adapter" in phase4
-    assert "或任何新记录" in phase4
-    assert "RETAIN` 可以保留候选，但不能代替 4C 所需的 RC acceptance" in phase4
-    assert "4C 通过也不授权 4D" in phase4
+    assert "independent reviewer" not in readme.lower()
+    assert "不创建第二套" in phase4 and "4C Study" in phase4
+    assert "bind-only" in phase4
+    assert "Apply/restore" in phase4 and "不写 target" in phase4
+    assert "4E" in phase4 and "冻结" in phase4
+    assert "criteria_met_awaiting_user_rc_acceptance" in phase4
+    assert "rc_accepted_pending_version_gate" in phase4
+
+    for document in (readme, phase3, plan, product_direction, acceptance):
+        assert "hold_for_version_gate" in document
+
+    for document in (readme, phase3, plan):
+        assert "EngineeringAcceptanceV4" in document
+        assert "Apply" in document and "Restore" in document
+        assert "VERSION" in document and "Distribution" in document
+
+    assert "User RC" in readme and "ACCEPT" in readme
+    assert "4D bind-only" in phase3
+    assert "Apply/Restore" in phase3
+    assert "Git 已配置" in plan and "origin/main" in plan
     assert "3E v4 additive Study/Round/Summary/User RC records" in product_direction
     assert "每轮 EngineeringAcceptanceV4" in product_direction
-    assert "4C 对 Phase 3E v4 的只读 checkpoint" in product_direction
-    assert "4C 仅只读核验 Phase 3E v4 canonical check/status" in acceptance
-    assert "v4 Participant 两轮、每轮 EngineeringAcceptanceV4 与 User RC" in acceptance
+    assert "4C 仅只读核验" in acceptance
+    assert "EngineeringAcceptanceV4=PASS" in acceptance

@@ -267,7 +267,7 @@ v4 Study `projecttown-v3-phase3e-rc-v4-20260901-002` 已以 create-only records 
 `criteria_met_awaiting_user_rc_acceptance`，随后 User RC 为 `ACCEPT` / `rc_accepted_pending_version_gate`。
 Study/R1/R2/Summary/User RC 的精确 record/file hash 与只读 check/status 证据见
 [`v3-phase-0-4-acceptance-2026-09-01.md`](v3-phase-0-4-acceptance-2026-09-01.md)。当前
-`hold_for_version_gate` 不授权 VERSION、Git、Apply、Restore、Publish 或 Distribution。
+`hold_for_version_gate` 不授权 VERSION 变更、tag、Apply、Restore、Publish 或 Distribution。
 
 ## 8. 跨阶段 gate、权限与版本策略
 
@@ -302,9 +302,9 @@ recovery tests。3C 已新增 `backend/app/controlled_write.py`、`scripts/run_v
 模型；reconcile 与独立 restore 的责任人。external records 当前按用户决定保留到明确清理授权；
 container 模式仍需另行审查。v3 已冻结为历史 policy hold；v4 保留两轮同一 Participant 实例测试，
 不再要求独立真人 Reviewer，且 Participant evidence、Sol engineering acceptance、Summary 与 User RC 已
-形成 canonical chain；Release Gate 前仍须确认 version/tag/license/公开范围，且尚未获得 VERSION、Git 或
+形成 canonical chain；Release Gate 前仍须确认 version/tag/license/公开范围，且尚未获得 VERSION 变更、tag 或
 公开分发授权。
 
 Phase 4A/4B 已形成并工程验收；权威路线见 [`v3-phase-4.md`](v3-phase-4.md)。4C 只引用既有
-Phase 3E 人类门禁，4D controlled-write handoff 尚未授权/实现，provider、MCP、扩展 RAG、多代理、
-scheduler、benchmark 等 4E 能力保持逐项冻结。
+Phase 3E 人类门禁，4D bind-only controlled-write handoff 已完成；它不授权逐操作 Apply/Restore、真实目标
+写入或发布。provider、MCP、扩展 RAG、多代理、scheduler、benchmark 等 4E 能力保持逐项冻结。

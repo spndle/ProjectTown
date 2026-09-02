@@ -51,13 +51,14 @@ not authorize writing any real user target. Every real target still needs a new 
 authorization. Phase 3D now adds a default-off, native-loopback-only,
 pre-authorized operation vertical slice with an additive UI/API and versioned
 external binding/idempotency evidence; it has been engineering-verified only on
-disposable fixtures. Phase 3E now has an additive, record-only engineering protocol and
-CLI for exactly two rounds, canonical evidence cross-checks, an independent reviewer,
-a separate User RC decision, and a side-effect-free status projection. The create-only Phase 3E
-Study now exists, but both human rounds, Summary, User RC and per-operation authorizations remain explicit gates; even an
-accepted RC cannot change VERSION or authorize distribution. Real targets and Docker 3D
-remain blocked. Phase 4B adds a bounded, default-off task/material authoring UI, but broader
-workspace automation and every write authorization remain blocked. The
+disposable fixtures. Phase 3E v4 has a create-only, record-only protocol and CLI for
+exactly two rounds: the same Participant completed R1/R2, each round has an
+independent `EngineeringAcceptanceV4` `PASS`, and the separately recorded User RC is
+`ACCEPT`. Its canonical status is `hold_for_version_gate`; it does not authorize a
+VERSION change, tag, Distribution, real-target Apply, or Restore. Phase 4B adds a
+bounded, default-off task/material authoring UI, and Phase 4D adds only a verified
+bind-only handoff; neither authorizes target writes. Broader workspace automation,
+every real-target write authorization, and Docker 3D remain blocked. The
 [Phase 3A–3E development plan](docs/v3-phase-3.md),
 [Phase 3E engineering contract](docs/v3-phase-3e.md),
 [Phase 4 roadmap](docs/v3-phase-4.md),
@@ -108,7 +109,12 @@ The single event-ledger write path is the source of truth. Gateway policy and sa
 
 The committed formal benchmark contains 4,320 raw rows over 30 quests, B0-B4 baselines, and seven ablations. Its outputs are deterministic `runtime_simulation` artifacts (`model_calls=0`, `model_tokens=0`), not real LLM or engine measurements. Phase 2A RAG evaluation is a separate provider-free synthetic suite that writes only to `sandbox/tmp`; it must not be reported as formal runtime or real-model evaluation. See the [formal report](benchmark/results/formal-v1.0/report.md), [artifact manifest](benchmark/results/formal-v1.0/manifest.json), [`docs/benchmark.md`](docs/benchmark.md), [`docs/v2-phase-2.md`](docs/v2-phase-2.md), and the [v1.0 validation report](docs/validation-v1.0.md).
 
-The code and local deployment candidate are validated. Public release work is still explicit: choose a project license, initialize/attach the Git repository, decide the release version/tag, rotate the provider key previously exposed in conversation, and publish the final demo media. The user has explicitly deferred Git setup; these author-owned steps are not represented as completed in this workspace.
+The code and local deployment candidate are validated. The Git repository is configured
+with `origin/main`, and the current closeout includes green hosted CI plus two reviewed
+Windows visual-regression runs. Public release remains a separate user gate: choose a
+project license, decide the release version/tag, rotate the provider key previously
+exposed in conversation, and authorize final demo media and distribution. Git/CI status
+does not create a tag, change VERSION, or authorize a release.
 
 ## Repository map
 

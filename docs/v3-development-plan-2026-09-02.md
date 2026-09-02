@@ -1,6 +1,6 @@
 # ProjectTown v3 当前开发方案（2026-09-02）
 
-> 状态：**计划与当前状态记录，不是授权**。本文件将 Phase 0–4 收官后的工作拆为可执行的门禁工作包；它不替代既有规范、历史验收记录或 create-only canonical evidence，也不授予版本变更、Git、发布、真实写入、网络或外部能力权限。
+> 状态：**计划与当前状态记录，不是授权**。本文件将 Phase 0–4 收官后的工作拆为可执行的门禁工作包；它不替代既有规范、历史验收记录或 create-only canonical evidence，也不授予版本变更、tag、发布、真实写入、网络或外部能力权限。
 
 ## 1. 文档权威性、范围与状态语言
 
@@ -23,10 +23,10 @@
 |---|---|---|
 | Phase 0、1、2 | 历史验收记录存在；其具体样本、计数和范围见 [验收记录](v3-phase-0-4-acceptance-2026-09-01.md) | 历史结果不是本次重跑结果。 |
 | Phase 3A–3D | 3A 只读 preflight、3B create-only proposal、3C disposable-fixture 内核、3D default-off/native-loopback 预授权 binding 均保留 | 不授权真实目标 Apply/Restore，亦不产生浏览器 authorization。 |
-| Phase 3E v4 | 当前 Sol 观察为 `blocker_count=0`、`next_action=hold_for_version_gate`；Study/R1/R2/Summary/User RC 记录齐全，offline counters 均为 0，status exit 0 | 此状态不授权 VERSION、Git、Apply、Restore、Publish 或 Distribution。 |
-| Phase 4A/4B/4C/4D | 4A 只读 Workbench、4B offline create-only authoring/export、4C 只读 checkpoint、4D bind-only handoff 均已在代码与阶段文档中定义 | 4D 不等于逐操作 Apply/Restore；4E 保持冻结。 |
+| Phase 3E v4 | 当前 Sol 观察为 `blocker_count=0`、`next_action=hold_for_version_gate`；同一 Participant 完成 R1/R2、每轮 `EngineeringAcceptanceV4=PASS`、Summary 与 User RC `ACCEPT` 记录齐全，offline counters 均为 0，status exit 0 | 此状态不授权 VERSION 变更、tag、Apply、Restore、Publish 或 Distribution。 |
+| Phase 4A/4B/4C/4D | 4A 只读 Workbench、4B offline create-only authoring/export、4C 只读 checkpoint、4D bind-only handoff 均已完成并通过相应工程验证 | 4D 不等于逐操作 Apply/Restore；4E 保持冻结。 |
 | 版本身份 | [VERSION](../VERSION) 为 `1.0.0`；后端默认值、Compose defaults、README、Godot 标题/烟测仍与之关联 | 这是当前身份，不表示 v3 `3.0.0` 已获批准。 |
-| Git / Distribution | 当前工作树没有 `.git`；无 LICENSE、tag、发布或分发授权 | 均为独立的用户决策门禁。 |
+| Git / Distribution | Git 已配置且 `origin/main` 存在；当前 hosted CI 与两次 Windows visual runs 均为绿色；无 LICENSE、tag、发布或分发授权 | Git/CI 状态不替代独立的用户决策门禁。 |
 
 ### 2.2 代码能力与安全边界
 
@@ -38,7 +38,7 @@
 
 ### 2.3 本次观察的验证边界
 
-本次 Sol 已观察到：Phase 3E 状态检查 exit 0；五份权威文档哈希与交接文本一致；Ruff (`backend/scripts/tests`)、`compileall` (`backend/scripts`) 和 `pip check` exit 0；独立 loopback 聚焦套件 `35 passed`。另一次当前聚焦运行结果为 **`63 passed, 1 skipped, 1 failed`**，唯一失败位于 [Phase 4 selective-extension contract](../tests/contract/test_phase4_selective_extensions.py) 的陈旧精确短语断言。
+本次 Sol 已观察到：Phase 3E 状态检查 exit 0；相对交接文本中的旧哈希，三份阶段规范保持不变，`v3-product-direction.md` 与 `v3-phase-0-4-acceptance-2026-09-01.md` 因已提交的 `d3e3fbd` v4/4D 说明更新而发生经核验的哈希漂移；Ruff (`backend/scripts/tests`)、`compileall` (`backend/scripts`) 和 `pip check` exit 0；独立 loopback 聚焦套件 `35 passed`。本工作包将陈旧的文档/合同语义对齐为已核验的 v4 与 4D 状态；其当前测试结果必须以本次命令输出为准。
 
 因此，本文**不得**把历史的全仓 `1266 passed, 18 skipped` 或任何旧验收计数称为当前全量通过。完整历史计数、证据根和适用边界仅见 [验收记录](v3-phase-0-4-acceptance-2026-09-01.md)。
 
@@ -49,16 +49,16 @@
 3. 保留历史 v1/v2 API、schema、fixture、目录、基准名称和证据名称。例如 `formal-v1.0`、`v1.rag`、`/api/v1`、`/api/v2`、`v0.1 compatibility API`、历史 manifest/hash domain 都是协议或历史标识，**不得**做全局字符串替换。
 4. Phase 3E v2/v3 为永久只读 `PROTOCOL_HOLD`；v4 canonical chain 是 create-only 证据，不能重写、删除或用新记录替代。
 5. 不读取或写入 `.secrets/**`、`.env*` 或外部 canonical evidence；不调用 provider、embedding、external MCP、网络/egress 或付费 API。
-6. 不实现、解冻或暗示 Phase 4E；不实现真实目标 Apply/Restore，不创建 target authorization，不发布、不打 tag、不初始化 Git。
+6. 不实现、解冻或暗示 Phase 4E；不实现真实目标 Apply/Restore，不创建 target authorization，不发布、不打 tag，也不变更现有 Git 远程、分支或历史。
 7. 不以 Phase 4C 通过、Participant `RETAIN`、EngineeringAcceptanceV4 `PASS` 或 User RC `ACCEPT` 互相替代；它们与 VERSION 和 Distribution Gate 逐级独立。
 
 ## 4. 已观察缺口与处理原则
 
 | 缺口 | 影响 | 正确处理 |
 |---|---|---|
-| README 的 3E/4C 描述仍为旧独立 Reviewer、真人轮次未完成、User RC 未完成 | 用户入口与 v4 Participant-only canonical state 不一致 | 工作包 A 只更新事实描述与边界。 |
-| [v3-phase-3.md](v3-phase-3.md) 约第 309 行仍称 4D 尚未实现/授权 | 与已存在 bind-only 4D 代码及 [Phase 4 路线](v3-phase-4.md) 冲突 | 工作包 A 改为“bind-only 已完成；逐操作 Apply/Restore 未授权”。 |
-| selective-extension 合同使用陈旧精确短语 | 当前聚焦测试有 1 个失败，不能称全绿 | 工作包 A 改为验证语义性不变量，不能向文档填充旧短语以迎合测试。 |
+| README 的 3E/4C 摘要 | 已与 v4 Participant-only canonical state 对齐 | A 已保留 VERSION、Distribution 与真实写入边界。 |
+| [v3-phase-3.md](v3-phase-3.md) 的 4D 摘要 | 已与 bind-only 4D 代码及 [Phase 4 路线](v3-phase-4.md) 对齐 | A 已明确逐操作 Apply/Restore 仍未授权。 |
+| selective-extension 合同 | 已验证 v4/4D/4E 的语义性不变量 | A 不依赖陈旧精确短语，也不向文档填充短语以迎合测试。 |
 | Windows symlink/reparse fixture skip | 该平台路径尚未被实测 | 保留 skip，不把 skip 记为通过；可在具备权限的 Windows 环境独立补验。 |
 | repo-wide `ruff format --check .` 有历史格式债 | 全仓格式门禁不绿 | 隔离记录，未获明确授权不格式化历史备份或无关文件。 |
 | offline-counter 可观察性有限 | 无法证明 OS 防火墙级 egress 阻断 | 继续如实报告为受检路径的计数合同，不扩展结论。 |
@@ -66,39 +66,36 @@
 
 ## 5. 严格顺序的工作包
 
-### A. 收官一致性修复（计划）
+### A. 收官一致性修复（已授权，Sol 已接受）
 
 **目标。** 使用户入口、Phase 3 描述和 Phase 4 文档合同与已核验的 v4 Participant-only/4D bind-only 状态一致，同时不改变任何 canonical evidence 或产品行为。
 
-**前置条件。** 用户明确授权仅作一致性文档与测试合同修复；确认当前 canonical status 仍为 `hold_for_version_gate`；记录开始时的 [README](../README.md)、[Phase 3](v3-phase-3.md) 与测试文件 SHA-256。
+**前置条件。** 用户已明确授权仅作一致性文档与测试合同修复；current canonical status 为 `hold_for_version_gate`；开始前已记录 [README](../README.md)、[Phase 3](v3-phase-3.md)、本计划与测试文件的状态。
 
-**精确候选路径。** `README.md`、`docs/v3-phase-3.md`、`tests/contract/test_phase4_selective_extensions.py`。不得改动这三个候选路径以外的任何文件；不得改动 `docs/v3-phase-4.md`、Phase 3E 模块、VERSION、记录或 evidence root。
+**精确候选路径。** `README.md`、`docs/v3-phase-3.md`、`docs/v3-development-plan-2026-09-02.md`、`tests/contract/test_phase4_selective_extensions.py`。不得改动这四个候选路径以外的任何文件；不得改动 `docs/v3-phase-4.md`、Phase 3E 模块、VERSION、记录或 evidence root。
 
 **步骤。**
 
-1. 将 README 的 3E 描述改为 v4 同一 Participant R1/R2、每轮独立 EngineeringAcceptanceV4、Summary 和 User RC `ACCEPT` 已完成，明确仍等待 VERSION Gate。
-2. 将 Phase 3 的 4D 描述限制为“bind-only handoff 已完成”，逐操作 Apply/Restore、真实目标和发布仍未授权。
-3. 将陈旧测试的精确文案匹配替换为对 v4 Participant-only、EngineeringAcceptanceV4、无独立 Reviewer/第二 Study、4D/4E/版本门禁未被越权的语义断言。
-4. 重新检查三个文件之间的术语一致性，不变更 canonical docs 的事实边界。
+1. README 已改为 v4 同一 Participant R1/R2、每轮独立 EngineeringAcceptanceV4、Summary 和 User RC `ACCEPT` 已完成，且仍等待 VERSION Gate。
+2. Phase 3 已改为“4D bind-only handoff 已完成”；逐操作 Apply/Restore、真实目标和发布仍未授权。
+3. 陈旧测试已改为对 v4 Participant-only、EngineeringAcceptanceV4、无独立 Reviewer/第二 Study、4D/4E/版本门禁未被越权的语义断言。
+4. 已重新检查四个文件之间的术语一致性，未变更 canonical docs 的事实边界。
 
 **非目标。** 不更新版本号；不修复全仓格式债；不补 Windows symlink；不创建/运行新 3E record；不修改运行时代码或 4D 行为。
 
-**完成标准。** 三处陈旧描述均被准确修正；测试不再依赖不存在的精确短语；受影响的文档与测试在两个新鲜证据根均通过；所有改动均限于三个候选路径。
+**完成标准。** 陈旧描述均已准确修正；测试不再依赖不存在的精确短语；受影响的文档与测试在两个 fresh roots 均通过，并由 Sol 审核接受；所有改动均限于四个候选路径。
 
-**精确验证与证据根。** 在两个不同的新目录（例：`sandbox/tmp/closeout-a-YYYYMMDDHHMMSS`、`sandbox/tmp/closeout-b-YYYYMMDDHHMMSS`）各执行一次：
+**本次验证与证据根。** 本工作包使用两个独立根执行：
 
 ```powershell
-& '.\.venv\Scripts\python.exe' -m pytest -q --basetemp=sandbox/tmp/closeout-a-YYYYMMDDHHMMSS tests/contract/test_phase4_selective_extensions.py tests/contract/test_release_artifacts.py
-& '.\.venv\Scripts\python.exe' -m pytest -q --basetemp=sandbox/tmp/closeout-b-YYYYMMDDHHMMSS tests/contract/test_phase4_selective_extensions.py tests/contract/test_release_artifacts.py
-& '.\.venv\Scripts\ruff.exe' check backend scripts tests
-& '.\.venv\Scripts\python.exe' -m compileall -q backend scripts
-& '.\.venv\Scripts\python.exe' -m pip check
-& '.\.venv\Scripts\python.exe' -m pytest -q --basetemp=sandbox/tmp/closeout-full-YYYYMMDDHHMMSS
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=sandbox/tmp/t03-final-a tests/contract/test_phase4_selective_extensions.py tests/contract/test_release_artifacts.py
+.\.venv\Scripts\python.exe -m pytest -q --basetemp=sandbox/tmp/t03-final-b tests/contract/test_phase4_selective_extensions.py tests/contract/test_release_artifacts.py
+git diff --check
 ```
 
-最后一条是当前工作树的完整回归，必须报告实际 exit code 与 pass/fail/skip；若未授权或未完成，不得用历史全量计数替代。记录每次命令、exit code、计数、根路径及受影响文件 SHA-256。
+两个命令均 exit 0，各 `12 passed, 0 failed, 0 skipped`；`git diff --check` exit 0。这只验证本工作包的文档/合同语义；它不替代 T04 的完整回归或历史验收。
 
-**回滚。** 若任一修复不符合语义或验证失败，只回退这三个文件至工作包开始前记录的内容；不删除或改写任何外部/canonical record。
+**回滚。** 若任一修复不符合语义或验证失败，只回退这四个文件中的本工作包 hunks 至开始前记录的内容；不删除或改写任何外部/canonical record。
 
 **决策所有者。** 用户授权范围；Sol 审核 diff、验证证据并接受；Terra 仅执行已签发的最小路径合同。
 
@@ -115,10 +112,10 @@
 1. 给出候选版本 **`3.0.0`** 的语义理由、兼容影响和替代方案。`3.0.0` 仅是推荐/决策输入，绝非已批准版本。
 2. 建立逐文件身份替换清单，并逐项标记“产品发布身份”或“不得替换的历史/协议标识”。
 3. 明确 `/api/v1`、`/api/v2`、migration 1–7、历史 schema/hash/manifest、`formal-v1.0` benchmark 路径、v1/v2 test/fixture 名称必须保留。
-4. 说明 Git 缺失时版本身份的可审计记录方法、证据清单、SHA-256、回滚内容及未解决的 LICENSE/公开范围。
+4. 说明现有 Git `origin/main` 基线下版本身份的可审计记录方法、证据清单、SHA-256、回滚内容及未解决的 LICENSE/公开范围。
 5. 请求用户以明确版本值、允许路径、验证范围和“仅身份更新、不 tag/不发布”形式批准或拒绝。
 
-**非目标。** 不编辑版本文件、不初始化 Git、不创建 tag、不选许可证、不发布、不变更 API、schema 或 benchmark。
+**非目标。** 不编辑版本文件、不新建或重新关联 Git 远程、不创建 tag、不选许可证、不发布、不变更 API、schema 或 benchmark。
 
 **完成标准。** 用户收到可审计的候选路径清单、不可替换清单、测试计划、风险和明确批准问题；未获批准时停在 Gate。
 
@@ -164,7 +161,7 @@ rg -n "1\.0\.0|v1\.0|3\.0\.0|formal-v1\.0|/api/v1|/api/v2|migration [1-7]|hash d
 
 并复用 B 的精确 `rg` 检索覆盖批准路径和相关合同，人工核对没有机械替换。若实际环境可运行 Godot，再在新日志根运行现有 `scripts/validate_godot_v1.ps1`；不可运行时如实报告为未核验，不能称通过。
 
-**回滚。** 在未建立 Git 的前提下，以批准前逐文件备份/哈希恢复**仅** C 的批准路径，重跑 release-artifact contract；不通过 destructive Git 命令回滚。
+**回滚。** 以批准前逐文件备份/哈希恢复**仅** C 的批准路径，重跑 release-artifact contract；不通过 destructive Git 命令回滚。
 
 **决策所有者。** 用户批准版本值与范围；Sol 接受；Terra 仅在精确合同内修改。
 
@@ -179,7 +176,7 @@ rg -n "1\.0\.0|v1\.0|3\.0\.0|formal-v1\.0|/api/v1|/api/v2|migration [1-7]|hash d
 **步骤。**
 
 1. 先做只读 release inventory：秘密排除、第三方 notices、许可证兼容性、公开示例、构建产物和撤回面。
-2. 由用户批准许可证与公开范围后，单独签发 Git 初始化/关联、首个提交、tag、包/镜像或渠道发布的独立合同。
+2. 由用户批准许可证与公开范围后，单独签发 Git 分支/提交、tag、包/镜像或渠道发布的独立合同。
 3. 每个外部动作都需有发布前核对、目标确认、发布后验证与可执行撤回步骤。
 
 **非目标。** VERSION Gate 不包含 Distribution；不得因为 C 完成就创建 Git、tag、LICENSE 或公开任何内容。
@@ -215,13 +212,13 @@ rg -n "1\.0\.0|v1\.0|3\.0\.0|formal-v1\.0|/api/v1|/api/v2|migration [1-7]|hash d
 ## 6. 依赖与门禁流
 
 ```text
-当前：3E v4 / 4C 已核验当前，next_action=hold_for_version_gate
+当前：3E v4 / 4C / 4D bind-only 已核验当前，next_action=hold_for_version_gate
   |
-  +--> A 收官一致性修复（需最小文档/合同授权）
-  |      |
-  |      +--> 两个 fresh roots + 全量当前回归记录
+  +--> A 收官一致性修复（已授权，实施完成，待 Sol 接受）
   |
-  +--> B VERSION Gate 决策包（只读；用户决定）
+  +--> Sol 接受 A 后的 T04 工程验收
+         |
+         +--> B VERSION Gate 决策包（只读；用户决定）
          |
          +-- 用户拒绝/暂缓 --> 保持 hold_for_version_gate
          |
@@ -262,13 +259,13 @@ Windows symlink/reparse skip 必须单列为 `skipped`，不可计入通过。�
 
 | 编号 | 决策 | 当前状态 | 所需决定者 |
 |---|---|---|---|
-| D-01 | 是否授权 A 的三文件一致性修复 | 待决定 | 用户 |
+| D-01 | A 的四文件一致性修复 | 已授权，Sol 已接受 | 用户 / Sol |
 | D-02 | VERSION 是否变更；若变更，具体值为何 | 待决定；`3.0.0` 只是推荐输入 | 用户 |
 | D-03 | C 的精确允许路径及是否要求 Godot live smoke | 待决定 | 用户 |
 | D-04 | LICENSE、Git、tag、公开渠道与撤回策略 | 未开始，独立 Distribution Gate | 用户 |
 | D-05 | 4E 任一能力或真实 Apply/Restore | 冻结；须单独提案 | 用户 |
 
-**精确下一动作：** 在不触及 VERSION/Git/Distribution 的前提下，请用户决定是否授权工作包 A，允许路径严格限于 `README.md`、`docs/v3-phase-3.md` 和 `tests/contract/test_phase4_selective_extensions.py`，并确认其要求采用两个 fresh evidence roots 和一次新的完整 pytest 回归。未获该授权时，项目保持 `hold_for_version_gate`。
+**精确下一动作：** Sol 接受 A 后执行 T04 工程验收；在 T04 完成前保持 `hold_for_version_gate`。不得因为 Git/CI 已配置或 A 实施完成而修改 VERSION、创建 tag、选择 LICENSE、发布或授权真实 Apply/Restore。
 
 ## 10. 后续交接模板
 
