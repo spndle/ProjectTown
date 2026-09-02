@@ -686,15 +686,15 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
         "$currentSid=[Security.Principal.WindowsIdentity]::GetCurrent().User;"
         + marker("IDENTITY_READY")
         +
-        "$allowedOwners=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');"
-        "$existing=Get-Acl -LiteralPath $p;$ownerBefore=$existing.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupBefore=$existing.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
+        "$allowedOwners=@($currentSid.Value,'S-1-5-18','S-1-5-32-544');$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;"
+        "$existing=$item.GetAccessControl($sections);$ownerBefore=$existing.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupBefore=$existing.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
         + marker("DESCRIPTOR_READ")
         +
         "if($allowedOwners -notcontains $ownerBefore){throw 'owner denied'};"
         + marker("OWNER_VALIDATED")
         +
         "$existing.SetAccessRuleProtection($true,$false);"
-        "foreach($rule in @($existing.Access)){if(-not $rule.IsInherited -and ($rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Allow -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny)){$null=$existing.RemoveAccessRuleSpecific($rule)}};"
+        "$existingRules=@($existing.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));foreach($rule in $existingRules){if(-not $rule.IsInherited -and ($rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Allow -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny)){$null=$existing.RemoveAccessRuleSpecific($rule)}};"
         + marker("EXISTING_RULES_ENUMERATED")
         +
         "$acl=$existing;"
@@ -709,11 +709,11 @@ def _windows_acl_restrict_script(directory: bool, *, trace: bool = False) -> str
         f"$verifiedItem=Get-Item -LiteralPath $p -Force;if(($verifiedItem.Attributes -band [IO.FileAttributes]::ReparsePoint) -or -not ($verifiedItem -is {expected_type}) -or $verifiedItem.PSIsContainer -ne $item.PSIsContainer){{throw 'ACL verification failed'}};"
         + marker("VERIFIED_ITEM")
         +
-        "$verified=Get-Acl -LiteralPath $p;$ownerAfter=$verified.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupAfter=$verified.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
+        "$verified=$verifiedItem.GetAccessControl($sections);$ownerAfter=$verified.GetOwner([Security.Principal.SecurityIdentifier]).Value;$groupAfter=$verified.GetGroup([Security.Principal.SecurityIdentifier]).Value;"
         + marker("VERIFIED_DESCRIPTOR")
         +
         "if(-not $verified.AreAccessRulesProtected -or $ownerAfter -ne $ownerBefore -or $groupAfter -ne $groupBefore -or $allowedOwners -notcontains $ownerAfter){throw 'ACL verification failed'};"
-        "$currentAllowCount=0;foreach($rule in $verified.Access){if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny){throw 'ACL verification failed'};if($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){throw 'ACL verification failed'};$sid=$rule.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){throw 'ACL verification failed'};$currentAllowCount++};"
+        "$verifiedRules=@($verified.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));$currentAllowCount=0;foreach($rule in $verifiedRules){if($rule.IsInherited -or $rule.AccessControlType -eq [Security.AccessControl.AccessControlType]::Deny){throw 'ACL verification failed'};if($rule.AccessControlType -ne [Security.AccessControl.AccessControlType]::Allow){throw 'ACL verification failed'};$sid=$rule.IdentityReference.Value;if($sid -ne $currentSid.Value -or (($rule.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -ne [Security.AccessControl.FileSystemRights]::FullControl) -or $rule.InheritanceFlags -ne $inheritance){throw 'ACL verification failed'};$currentAllowCount++};"
         + marker("VERIFIED_RULES_ENUMERATED")
         +
         "if($currentAllowCount -ne 1){throw 'ACL verification failed'}"
@@ -725,9 +725,9 @@ def _windows_acl_is_restricted(path: Path) -> bool:
     executable = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
     script = (
         "$ErrorActionPreference='Stop';$p=$env:PROJECTTOWN_LOCAL_SETTINGS_PATH;"
-        "if([string]::IsNullOrWhiteSpace($p)){exit 1};$acl=Get-Acl -LiteralPath $p;"
-        "if(-not $acl.AreAccessRulesProtected){exit 1};$current=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value;$allowed=@($current,'S-1-5-18','S-1-5-32-544');$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};$currentFull=$false;"
-        "foreach($r in $acl.Access){if($r.AccessControlType -eq 'Allow'){$sid=$r.IdentityReference.Translate([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $sid){exit 1};if($sid -eq $current -and (($r.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -eq [Security.AccessControl.FileSystemRights]::FullControl)){$currentFull=$true}}};if(-not $currentFull){exit 1};exit 0"
+        "if([string]::IsNullOrWhiteSpace($p)){exit 1};$item=Get-Item -LiteralPath $p -Force;$sections=[Security.AccessControl.AccessControlSections]::Access -bor [Security.AccessControl.AccessControlSections]::Owner -bor [Security.AccessControl.AccessControlSections]::Group;$acl=$item.GetAccessControl($sections);"
+        "if(-not $acl.AreAccessRulesProtected){exit 1};$current=[Security.Principal.WindowsIdentity]::GetCurrent().User.Value;$allowed=@($current,'S-1-5-18','S-1-5-32-544');$owner=$acl.GetOwner([Security.Principal.SecurityIdentifier]).Value;if($allowed -notcontains $owner){exit 1};$currentFull=$false;$rules=@($acl.GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier]));"
+        "foreach($r in $rules){if($r.AccessControlType -eq 'Allow'){$sid=$r.IdentityReference.Value;if($allowed -notcontains $sid){exit 1};if($sid -eq $current -and (($r.FileSystemRights -band [Security.AccessControl.FileSystemRights]::FullControl) -eq [Security.AccessControl.FileSystemRights]::FullControl)){$currentFull=$true}}};if(-not $currentFull){exit 1};exit 0"
     )
     try:
         _run_windows_acl(executable, script, path)

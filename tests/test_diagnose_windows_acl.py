@@ -41,7 +41,7 @@ def test_main_prints_only_last_marker_and_uses_bounded_safe_runner(
     kwargs = run.call_args.kwargs
     assert kwargs["timeout"] == diagnose.DIAGNOSTIC_TIMEOUT_SECONDS
     assert kwargs["stderr"] is subprocess.DEVNULL
-    assert kwargs["env"]["PROJECTTOWN_LOCAL_SETTINGS_PATH"] == str(tmp_path)
+    assert kwargs["env"]["PROJECTTOWN_LOCAL_SETTINGS_PATH"] == str(tmp_path.resolve())
     assert run.call_args.args[0][:3] == [str(diagnose.POWERSHELL), "-NoProfile", "-NonInteractive"]
 
 

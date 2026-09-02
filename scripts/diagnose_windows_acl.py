@@ -15,7 +15,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
 from backend.app import local_settings
 
 TRACE_PREFIX = "PROJECTTOWN_ACL_TRACE:"
-DIAGNOSTIC_TIMEOUT_SECONDS = 60
+DIAGNOSTIC_TIMEOUT_SECONDS = 15
 POWERSHELL = Path(r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe")
 ALLOWED_MARKERS = frozenset(
     f"{TRACE_PREFIX}{marker}" for marker in local_settings.WINDOWS_ACL_TRACE_MARKERS
@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None) -> int:
     environment = {
         "SystemRoot": os.environ.get("SystemRoot", r"C:\Windows"),
         "WINDIR": os.environ.get("WINDIR", r"C:\Windows"),
-        "PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path),
+        "PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path.resolve()),
     }
     try:
         completed = subprocess.run(

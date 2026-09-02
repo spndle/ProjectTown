@@ -138,9 +138,9 @@ def test_release_ci_keeps_quality_and_coverage_gates() -> None:
         encoding="utf-8"
     )
     assert "local_settings._windows_acl_restrict_script(True, trace=True)" in diagnostic
-    assert "DIAGNOSTIC_TIMEOUT_SECONDS = 60" in diagnostic
+    assert "DIAGNOSTIC_TIMEOUT_SECONDS = 15" in diagnostic
     assert r"C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe" in diagnostic
-    assert '"PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path)' in diagnostic
+    assert '"PROJECTTOWN_LOCAL_SETTINGS_PATH": str(args.path.resolve())' in diagnostic
     assert ".secrets" not in workflow[workflow.index("Diagnose Local Settings ACL primitive"):]
     assert "Remove-Item -LiteralPath $probe -Recurse -Force" in workflow
     pytest_command = "python -m pytest -q --basetemp=sandbox/tmp/ci-pytest-parent/run"

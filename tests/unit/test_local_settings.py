@@ -73,6 +73,33 @@ def test_windows_acl_script_uses_current_sid_and_expected_inheritance(
     )
 
 
+def test_windows_acl_scripts_use_sid_native_dotnet_descriptors(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    restrict = local_settings._windows_acl_restrict_script(True)
+    captured: list[str] = []
+    monkeypatch.setattr(
+        local_settings,
+        "_run_windows_acl",
+        lambda _executable, script, _path: captured.append(script),
+    )
+    assert local_settings._windows_acl_is_restricted(tmp_path)
+    verify = captured[0]
+    for script in (restrict, verify):
+        assert "Get-Acl" not in script and "Translate(" not in script
+        assert "$existing.Access" not in script
+        assert "$verified.Access" not in script
+        assert "$acl.Access" not in script
+        assert "AccessControlSections]::Access" in script
+        assert "AccessControlSections]::Owner" in script
+        assert "AccessControlSections]::Group" in script
+        assert "GetAccessControl($sections)" in script
+        assert "GetAccessRules($true,$true,[Security.Principal.SecurityIdentifier])" in script
+        assert "Audit" not in script and "SACL" not in script
+        assert "PSModulePath" not in script
+        assert "LOCALAPPDATA" not in script and "USERPROFILE" not in script
+
+
 def test_windows_acl_restrict_uses_fixed_powershell_and_rejects_identity_race(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
