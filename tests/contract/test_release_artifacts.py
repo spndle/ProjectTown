@@ -185,6 +185,28 @@ def test_public_candidate_keeps_sol_terra_config_and_preserves_font_notices() ->
     assert (font_root / "THIRD_PARTY_NOTICES.md").is_file()
 
 
+def test_project_mit_license_and_t10_artifact_boundary_are_explicit() -> None:
+    license_text = (ROOT / "LICENSE").read_text(encoding="utf-8")
+    assert license_text.startswith("MIT License\n\nCopyright (c) 2026 spndle\n")
+    assert "Permission is hereby granted, free of charge" in license_text
+    assert "THE SOFTWARE IS PROVIDED \"AS IS\"" in license_text
+
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    limitations = (ROOT / "docs" / "limitations.md").read_text(encoding="utf-8")
+    assert "The project root has no source-code license yet." not in limitations
+    assert "a project license, the release video and a Git tag remain outside" not in readme
+    assert "under the [MIT License](LICENSE)" in readme
+    assert "third-party font notices remain separate" in readme
+    assert (
+        "`v3.0.0` tag and a public GitHub Release with no attachments"
+        in " ".join(readme.split())
+    )
+    assert (
+        "No binary, media, or package artifacts are authorized."
+        in " ".join(limitations.split())
+    )
+
+
 def test_default_pytest_scope_excludes_workspace_backups() -> None:
     pytest_config = (ROOT / "pytest.ini").read_text(encoding="utf-8")
     assert "testpaths = tests" in pytest_config

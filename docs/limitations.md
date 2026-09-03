@@ -58,6 +58,9 @@ administrators and the same Windows user can still access their respective local
 - Godot 4.7.1 project loading, the main scene, time-of-day rendering, live REST + WebSocket transport, read-only restoration, and a deterministic fixed-fixture visual-regression baseline were validated. The baseline covers controlled viewport/layout states, not exhaustive devices, platforms, accessibility settings or a substitute for manual product review.
 - Docker Compose has been exercised locally on loopback. The release remains a
   single-node development deployment, not an authenticated public service.
-- The project root has no source-code license yet. Third-party font licenses are included, but the author must choose the project license before presenting the repository as open source.
-- A release video and Git tag are not included. This workspace has no Git metadata, so a release tag cannot be created or verified here.
+- The project source is MIT licensed. Third-party font licenses and notices remain
+  separate from the project license under `godot/assets/fonts/`.
+- A release video is not included. The authorized T10 scope is limited to the `v3.0.0`
+  tag and a public GitHub Release with no attachments. No binary, media, or package
+  artifacts are authorized.
 - Godot Quest history has search, filters and pagination, but archive semantics and failure/recovery navigation remain incomplete.

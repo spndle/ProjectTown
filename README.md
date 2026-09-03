@@ -109,12 +109,14 @@ The single event-ledger write path is the source of truth. Gateway policy and sa
 
 The committed formal benchmark contains 4,320 raw rows over 30 quests, B0-B4 baselines, and seven ablations. Its outputs are deterministic `runtime_simulation` artifacts (`model_calls=0`, `model_tokens=0`), not real LLM or engine measurements. Phase 2A RAG evaluation is a separate provider-free synthetic suite that writes only to `sandbox/tmp`; it must not be reported as formal runtime or real-model evaluation. See the [formal report](benchmark/results/formal-v1.0/report.md), [artifact manifest](benchmark/results/formal-v1.0/manifest.json), [`docs/benchmark.md`](docs/benchmark.md), [`docs/v2-phase-2.md`](docs/v2-phase-2.md), and the [v1.0 validation report](docs/validation-v1.0.md).
 
-The code and local deployment candidate are validated. The Git repository is configured
-with `origin/main`, and the current closeout includes green hosted CI plus two reviewed
-Windows visual-regression runs. Public release remains a separate user gate: choose a
-project license, decide the release version/tag, rotate the provider key previously
-exposed in conversation, and authorize final demo media and distribution. Git/CI status
-does not create a tag, change VERSION, or authorize a release.
+The code and local deployment candidate are validated. The project source is licensed
+under the [MIT License](LICENSE); third-party font notices remain separate in
+[`godot/assets/fonts/`](godot/assets/fonts/). The Git repository is configured with
+`origin/main`, and the current closeout includes green hosted CI plus two reviewed Windows
+visual-regression runs. The user-authorized T10 scope is limited to the `v3.0.0` tag and a
+public GitHub Release with no attachments. No binary, media, or package artifacts are
+authorized. Git/CI status does not itself create a tag, change VERSION, or authorize a
+release.
 
 ## Repository map
 
@@ -126,4 +128,4 @@ does not create a tag, change VERSION, or authorize a release.
 
 ## Compatibility and limits
 
-The supported deployment is local, loopback-bound, single-node SQLite. Non-loopback use has no built-in authentication and requires an authenticated proxy. There are no accepted real LLM calls or unrestricted production tool execution; providers remain default-off and isolated from Quest execution. P2A RAG is an offline, unconnected retrieval/evaluation component, not an answer service or Quest knowledge base. P3A local MCP is fixture-only, default-off and requires explicit application injection of fixed server descriptors; it adds no user-facing arbitrary-command API and is not a production subprocess sandbox. The Quest-console Settings button is disabled by default and only exposes a loopback-only development/test configuration plane. An explicit Docker development override stores provider configuration only in a named volume and mirrors only a short-lived token to host `.secrets`; it remains default-off, bridge-gateway/token restricted, and is not a production secret manager. It can configure OpenAI or Qwen, but opening, saving, or selecting Qwen does not authorize or make a provider call; DeepSeek remains unavailable. A replacement API key must be entered directly by the user in that panel after rotation, never in documentation or repository files. Docker, Godot engine loading, live transport, Quest restoration, representative graphical layouts, and a deterministic Godot visual-regression baseline are covered; a project license, the release video and a Git tag remain outside the completed workspace. Full constraints are in [`docs/limitations.md`](docs/limitations.md).
+The supported deployment is local, loopback-bound, single-node SQLite. Non-loopback use has no built-in authentication and requires an authenticated proxy. There are no accepted real LLM calls or unrestricted production tool execution; providers remain default-off and isolated from Quest execution. P2A RAG is an offline, unconnected retrieval/evaluation component, not an answer service or Quest knowledge base. P3A local MCP is fixture-only, default-off and requires explicit application injection of fixed server descriptors; it adds no user-facing arbitrary-command API and is not a production subprocess sandbox. The Quest-console Settings button is disabled by default and only exposes a loopback-only development/test configuration plane. An explicit Docker development override stores provider configuration only in a named volume and mirrors only a short-lived token to host `.secrets`; it remains default-off, bridge-gateway/token restricted, and is not a production secret manager. It can configure OpenAI or Qwen, but opening, saving, or selecting Qwen does not authorize or make a provider call; DeepSeek remains unavailable. A replacement API key must be entered directly by the user in that panel after rotation, never in documentation or repository files. Docker, Godot engine loading, live transport, Quest restoration, representative graphical layouts, and a deterministic Godot visual-regression baseline are covered; the project source is MIT licensed, while release video and binary, media, or package artifacts remain outside the authorized distribution scope. Full constraints are in [`docs/limitations.md`](docs/limitations.md).
